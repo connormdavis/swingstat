@@ -37,12 +37,12 @@
 		2F2ECC3327BAD5D600FF7475 = {
 			isa = PBXGroup;
 			children = (
-				2F2ECC3827BAD5D600FF7475 /* Shared */,
+				2F2ECC3827BAD5D600FF7475 /* SwingStat */,
 				2F2ECC4127BAD5D800FF7475 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		2F2ECC3827BAD5D600FF7475 /* Shared */ = {
+		2F2ECC3827BAD5D600FF7475 /* SwingStat */ = {
 			isa = PBXGroup;
 			children = (
 				2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */,
@@ -51,7 +51,7 @@
 				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
 				2F2ECC5927BAF22C00FF7475 /* dustin.mov */,
 			);
-			path = Shared;
+			path = SwingStat;
 			sourceTree = "<group>";
 		};
 		2F2ECC4127BAD5D800FF7475 /* Products */ = {
