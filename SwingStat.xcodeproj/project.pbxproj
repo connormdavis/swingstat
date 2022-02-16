@@ -11,16 +11,24 @@
 		2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */; };
 		2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */; };
 		2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC5727BAE00200FF7475 /* Dashboard.swift */; };
-		2F2ECC5A27BAF22C00FF7475 /* dustin.mov in Resources */ = {isa = PBXBuildFile; fileRef = 2F2ECC5927BAF22C00FF7475 /* dustin.mov */; };
+		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
+		2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */; };
+		2F93B95927BC6646006FDAA9 /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = 2F93B95827BC6646006FDAA9 /* reg_swing.mov */; };
+		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingStatApp.swift; sourceTree = "<group>"; };
 		2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F2ECC4027BAD5D800FF7475 /* SwingStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwingStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F2ECC5727BAE00200FF7475 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
-		2F2ECC5927BAF22C00FF7475 /* dustin.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = dustin.mov; path = ../../../dustin.mov; sourceTree = "<group>"; };
+		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
+		2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessing.swift; sourceTree = "<group>"; };
+		2F93B95827BC6646006FDAA9 /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = ../../../reg_swing.mov; sourceTree = "<group>"; };
+		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
+		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +48,8 @@
 			children = (
 				2F2ECC3827BAD5D600FF7475 /* SwingStat */,
 				2F2ECC4127BAD5D800FF7475 /* Products */,
+				4BB55DDE35CC67D549220E82 /* Pods */,
+				7AAA15E25746860DB3B8774C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -49,7 +60,9 @@
 				2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */,
 				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
 				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
-				2F2ECC5927BAF22C00FF7475 /* dustin.mov */,
+				2F93B95827BC6646006FDAA9 /* reg_swing.mov */,
+				2F93B95427BC541F006FDAA9 /* Swing.swift */,
+				2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */,
 			);
 			path = SwingStat;
 			sourceTree = "<group>";
@@ -62,6 +75,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4BB55DDE35CC67D549220E82 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */,
+				1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7AAA15E25746860DB3B8774C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -69,9 +99,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F2ECC5127BAD5D800FF7475 /* Build configuration list for PBXNativeTarget "SwingStat (iOS)" */;
 			buildPhases = (
+				90265AA362B3E8F506016EB9 /* [CP] Check Pods Manifest.lock */,
 				2F2ECC3C27BAD5D800FF7475 /* Sources */,
 				2F2ECC3D27BAD5D800FF7475 /* Frameworks */,
 				2F2ECC3E27BAD5D800FF7475 /* Resources */,
+				A3CEFF78FD605724AC5A7219 /* [CP] Embed Pods Frameworks */,
+				41DD2BAC1F9B1D98FCC01AFE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -121,19 +154,80 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */,
-				2F2ECC5A27BAF22C00FF7475 /* dustin.mov in Resources */,
+				2F93B95927BC6646006FDAA9 /* reg_swing.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41DD2BAC1F9B1D98FCC01AFE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		90265AA362B3E8F506016EB9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwingStat (iOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3CEFF78FD605724AC5A7219 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2F2ECC3C27BAD5D800FF7475 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */,
 				2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */,
 				2F2ECC4927BAD5D800FF7475 /* SwingStatApp.swift in Sources */,
+				2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */,
 				2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +348,7 @@
 		};
 		2F2ECC5227BAD5D800FF7475 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -262,6 +357,7 @@
 				DEVELOPMENT_TEAM = 6FZPG5TSUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to process user's golf swing";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +380,7 @@
 		};
 		2F2ECC5327BAD5D800FF7475 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -292,6 +389,7 @@
 				DEVELOPMENT_TEAM = 6FZPG5TSUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to process user's golf swing";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

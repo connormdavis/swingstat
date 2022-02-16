@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var swing = Swing()
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .center) {
@@ -26,7 +28,7 @@ struct ContentView: View {
                         .fontWeight(.light)
                 }
                 HStack {
-                    NavigationLink(destination: Dashboard()) {
+                    NavigationLink(destination: Dashboard(swing: swing)) {
                         Text("Begin")
                             .frame(minWidth: 0, maxWidth: 100, maxHeight: 15)
                             .padding()

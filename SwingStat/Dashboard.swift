@@ -9,18 +9,30 @@ import SwiftUI
 import AVKit
 
 struct Dashboard: View {
+    @ObservedObject var swing: Swing
     
-    let avPlayer = AVPlayer(url: Bundle.main.url(forResource: "dustin", withExtension: "mov")!)
+//    let updateLandmarkText = { (txt: String) in
+//        landmarkText = txt
+//    }
+    
+    let avPlayer = AVPlayer(url: Bundle.main.url(forResource: "reg_swing", withExtension: "mov")!)
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             VideoPlayer(player: avPlayer)
                 .frame(width: 325, height: 335)
                 .cornerRadius(25)
 
-            Text("Welcome to SwingStat!")
+            Text("Landmark data:")
                 .font(.title)
                 .fontWeight(.bold)
+            
+            TextEditor(text: $swing.landmarksText)
+            
+            Button("Generate landmarks") {
+                swing.generateLandmarks(desiredFrames: [1, 100, 500, 1000])
+            }
+            
         }
         .padding()
         .navigationTitle("Dashboard")
@@ -28,7 +40,9 @@ struct Dashboard: View {
 }
 
 struct Dashboard_Previews: PreviewProvider {
+    static let swing = Swing()
+    
     static var previews: some View {
-        Dashboard()
+        Dashboard(swing: swing)
     }
 }
