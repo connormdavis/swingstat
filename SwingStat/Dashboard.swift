@@ -20,7 +20,7 @@ struct Dashboard: View {
                 print("NEW VIDEO - launch camera")
             }
                 .padding()
-                .background(Color.black)
+                .background(Color.gray)
                 .clipShape(Capsule())
             
             VideoPlayer(player: avPlayer)
