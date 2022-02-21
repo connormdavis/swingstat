@@ -11,26 +11,12 @@ import AssetsLibrary
 import AVFoundation
 
 
-/*
- Ensures the given code is run on the main thread. Useful for calling from background task.
- */
-func RunInMainThread(execute: @escaping ()->Void) {
-    if Thread.isMainThread {
-         execute()
-    }
-    else {
-        DispatchQueue.main.async {
-            execute()
-        }
-    }
-}
-
-
 class Swing: ObservableObject {
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
-    var landmarksText: String = "----"
-    var landmarks: [Pose] = []
+    @Published var processing = false            // 'true' when the landmarks are in the process of being generated
+    var landmarksText: String = ""
+    var landmarks: [Int: Pose] = [:]
     
     // Swing video used for temp. testing
     let test_video = Bundle.main.url(forResource: "reg_swing", withExtension: "mov")
@@ -45,6 +31,8 @@ class Swing: ObservableObject {
      Generates the pose landmarks for the swing instance
      */
     func generateLandmarks(desiredFrames: [Int]) {
+        self.processing = true      // used for activity indicator
+        
         DispatchQueue.global().async {
             let options = AccuratePoseDetectorOptions()
             options.detectorMode = .stream
@@ -54,56 +42,48 @@ class Swing: ObservableObject {
             let frames = VideoProcessing.extractFramesToVisionImages(from: asset, at: desiredFrames)
             
 
+            var poses: [Int: Pose] = [:]
+            var poseText = ""
+            
             var results: [Pose]?
-            
-            do {
-                results = try poseDetector.results(in: frames[0])
-            } catch let error {
-                print("Failed to detect pose with error: \(error.localizedDescription).")
-                return
+            for frameNum in desiredFrames {
+                do {
+                    guard let visionImgFrame = frames[frameNum] else {
+                        print("Couldn't find frame #\(frameNum) in extracted frames dictionary.")
+                        return
+                    }
+                    results = try poseDetector.results(in: visionImgFrame)
+                } catch let error {
+                    print("Failed to detect pose with error: \(error.localizedDescription).")
+                    return
+                }
+                guard let detectedPoses = results, !detectedPoses.isEmpty else {
+                    print("Pose detector returned no results.")
+                    return
+                }
+                
+                // Extract first (and only) pose object
+                let pose = detectedPoses[0]
+                poses[frameNum] = pose
+                
+                // Assemble text for display
+                poseText += "Nose [\(frameNum)]: \(detectedPoses[0].landmark(ofType: .nose).position)\n"
             }
-            guard let detectedPoses = results, !detectedPoses.isEmpty else {
-                print("Pose detector returned no results.")
-                return
-            }
             
-            print("Nose location (frame 1): \(detectedPoses[0].landmark(ofType: .nose).position)")
-            
-            var landmarksText = "Nose location: \(detectedPoses[0].landmark(ofType: .nose).position)\n"
-            landmarksText += "Left toe location: \(detectedPoses[0].landmark(ofType: .leftToe).position)\n"
-            landmarksText += "Right toe location: \(detectedPoses[0].landmark(ofType: .rightToe).position)\n"
+//            landmarksText += "Left thumb location: \(detectedPoses[0].landmark(ofType: .leftThumb).position)\n"
+//            landmarksText += "Right thumb location: \(detectedPoses[0].landmark(ofType: .rightThumb).position)\n"
+//            landmarksText += "Left toe location: \(detectedPoses[0].landmark(ofType: .leftToe).position)\n"
+//            landmarksText += "Right toe location: \(detectedPoses[0].landmark(ofType: .rightToe).position)\n"
             
             // Trigger UI updates on main thread
             DispatchQueue.main.async {
-                self.landmarksText = landmarksText
-                self.landmarks.append(detectedPoses[0])
+                self.landmarksText = poseText
+                self.landmarks = poses
                 self.landmarksGenerated = true
+                
+                self.processing = false     // stop activity indicator
             }
         }
-        
-        
-        
-
-//        print("Detected poses: \(detectedPoses)")
-        
-//        for i in stride(from: 0, to: numFrames, by: 100) {
-//            var results: [Pose]?
-//            do {
-//                results = try poseDetector.results(in: frames[i])
-//            } catch let error {
-//                print("Failed to detect pose with error: \(error.localizedDescription).")
-//                return
-//            }
-//            guard let detectedPoses = results, !detectedPoses.isEmpty else {
-//                print("Pose detector returned no results.")
-//                return
-//            }
-//            print("Detected poses: \(detectedPoses)")
-//        }
-        
-//        print("# frames: \(frames.count)")
-        
-//        let poseDetector = PoseDetector.poseDetector(options: options)
         
     }
     

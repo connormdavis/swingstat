@@ -71,7 +71,7 @@ class VideoProcessing {
      Takes an AVAsset video and returns an array where each element is a single frame
      of the video stored as a 'VisionImage', the type required by ML Kit for detecting poses.
      */
-    static func extractFramesToVisionImages(from video: AVAsset, at indices: [Int]) -> [VisionImage] {
+    static func extractFramesToVisionImages(from video: AVAsset, at indices: [Int]) -> [Int: VisionImage] {
         let reader = try! AVAssetReader(asset: video)
         
         let videoTrack = video.tracks(withMediaType: AVMediaType.video)[0]
@@ -82,7 +82,7 @@ class VideoProcessing {
         reader.startReading()
         
         // Will contain VisionImage representation of desired frames
-        var frames: [VisionImage] = []
+        var frames: [Int: VisionImage] = [:]
         
         var frameCount = 0
         // getting frames ref: https://stackoverflow.com/questions/49390728/how-to-get-frames-from-a-local-video-file-in-swift/49394183c
@@ -97,7 +97,7 @@ class VideoProcessing {
                 
                 // Create VisionImage and add to list
                 let visionImage = VisionImage(buffer: sampleBuffer)
-                frames.append(visionImage)
+                frames[frameCount] = visionImage
             }
             
             frameCount += 1
