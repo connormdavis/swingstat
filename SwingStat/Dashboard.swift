@@ -55,9 +55,15 @@ struct Dashboard: View {
                     .background(Color.black)
                     .clipShape(Capsule())
             }
+            
         }
         .padding()
-        .navigationTitle("Dashboard")
+//        .navigationTitle("Dashboard")
+        .navigationBarBackButtonHidden(true)
+        
+        
+        
+        
     }
 }
 
