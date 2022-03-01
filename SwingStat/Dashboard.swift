@@ -201,6 +201,7 @@ struct Dashboard: View {
                 }
                 
             }
+            
         }
         .onChange(of: selectedVideoUrl) { newUrl in
             avPlayer = AVPlayer(url: newUrl)    // Update viewer
@@ -210,7 +211,12 @@ struct Dashboard: View {
             CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
         }
         .padding()
-        .navigationTitle("Dashboard")
+//        .navigationTitle("Dashboard")
+        .navigationBarBackButtonHidden(true)
+        
+        
+        
+        
     }
 }
 

@@ -11,7 +11,7 @@ import SwiftUI
 struct SwingStatApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Authentication()
         }
     }
 }
