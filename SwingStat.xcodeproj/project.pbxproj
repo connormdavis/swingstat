@@ -11,8 +11,14 @@
 		2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */; };
 		2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */; };
 		2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC5727BAE00200FF7475 /* Dashboard.swift */; };
+		2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66327C57EA8008DD180 /* CameraView.swift */; };
+		2F81E66627C67515008DD180 /* PoseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66527C67515008DD180 /* PoseSerializable.swift */; };
+		2F81E66827C676FE008DD180 /* PoseLandmarkSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */; };
+		2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66927C677CF008DD180 /* Point3DSerializable.swift */; };
+		2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
 		2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */; };
+		2F9EF3AB27C43A6900D3C4A9 /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */; };
 		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
 		B75F6A1F27C439BE0082C6C1 /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = B75F6A1E27C439BE0082C6C1 /* reg_swing.mov */; };
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
@@ -31,8 +37,14 @@
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F2ECC4027BAD5D800FF7475 /* SwingStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwingStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F2ECC5727BAE00200FF7475 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		2F81E66327C57EA8008DD180 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		2F81E66527C67515008DD180 /* PoseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSerializable.swift; sourceTree = "<group>"; };
+		2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseLandmarkSerializable.swift; sourceTree = "<group>"; };
+		2F81E66927C677CF008DD180 /* Point3DSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3DSerializable.swift; sourceTree = "<group>"; };
+		2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseCollectionSerializable.swift; sourceTree = "<group>"; };
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
 		2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessing.swift; sourceTree = "<group>"; };
+		2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = "../../../../Library/Messages/Attachments/cb/11/957BB466-4506-4B17-928C-9DBE882E98EF/reg_swing.mov"; sourceTree = "<group>"; };
 		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75F6A1E27C439BE0082C6C1 /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = "../../../../../Library/Messages/Attachments/dd/13/4658294A-E63B-42E2-B160-D46F7E8EE12C/reg_swing.mov"; sourceTree = "<group>"; };
@@ -78,10 +90,15 @@
 				B7BA712627C5F5B700AA3F7D /* Authentication */,
 				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
 				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
-				B75F6A1E27C439BE0082C6C1 /* reg_swing.mov */,
+				2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */,
 				2F93B95427BC541F006FDAA9 /* Swing.swift */,
 				2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */,
 				B7BA712727C6A42800AA3F7D /* Settings.swift */,
+				2F81E66327C57EA8008DD180 /* CameraView.swift */,
+				2F81E66527C67515008DD180 /* PoseSerializable.swift */,
+				2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */,
+				2F81E66927C677CF008DD180 /* Point3DSerializable.swift */,
+				2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */,
 			);
 			path = SwingStat;
 			sourceTree = "<group>";
@@ -183,7 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */,
-				B75F6A1F27C439BE0082C6C1 /* reg_swing.mov in Resources */,
+				2F9EF3AB27C43A6900D3C4A9 /* reg_swing.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,10 +272,15 @@
 			files = (
 				B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */,
 				B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */,
+				2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */,
 				2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */,
+				2F81E66827C676FE008DD180 /* PoseLandmarkSerializable.swift in Sources */,
+				2F81E66627C67515008DD180 /* PoseSerializable.swift in Sources */,
 				2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */,
 				2F2ECC4927BAD5D800FF7475 /* SwingStatApp.swift in Sources */,
 				B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */,
+				2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */,
+				2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */,
 				2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */,
 				2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */,
 				B7BA712827C6A42800AA3F7D /* Settings.swift in Sources */,
@@ -393,7 +415,10 @@
 				DEVELOPMENT_TEAM = 6FZPG5TSUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to record the user's golf swing.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need audio for the video capturing process.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to process user's golf swing";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to allow the user to select pre-existing golf swing videos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -425,7 +450,10 @@
 				DEVELOPMENT_TEAM = 6FZPG5TSUX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to record the user's golf swing.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need audio for the video capturing process.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to process user's golf swing";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to allow the user to select pre-existing golf swing videos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var swing = Swing()
+    @Environment(\.colorScheme) var colorScheme
+    
+    static let stockUrl = Bundle.main.url(forResource: "reg_swing", withExtension: "mov")!
+    @StateObject var swing = Swing(url: ContentView.stockUrl)
     
     var body: some View {
         NavigationView {

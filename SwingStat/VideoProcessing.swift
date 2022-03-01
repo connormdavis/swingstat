@@ -34,28 +34,32 @@ class VideoProcessing {
     /*
      Returns the number of frames in an AVAsset holding a video
      */
-    static private func countFrames(in video: AVAsset) -> Int {
+    static func countFrames(in video: AVAsset) -> Int {
         let videoTrack = video.tracks(withMediaType: AVMediaType.video)[0]
-        let trackReaderOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: nil)
-        
-        let reader = try! AVAssetReader(asset: video)
-        
-        reader.add(trackReaderOutput)
-        reader.startReading()
-        
-        var nFrames = 0
-        while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
-            let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
-            guard let format = formatDescription else {
-                print("Error: No CMFormatDescription for CMSampleBuffer.")
-                return -1
-            }
-            let mediaType = CMFormatDescriptionGetMediaType(format)
-            if mediaType == kCMMediaType_Video {
-                nFrames += 1
-            }
-        }
-        return nFrames
+        let fps = videoTrack.nominalFrameRate
+        let duration = CMTimeGetSeconds(video.duration)
+        let numFrames = Int(duration * Double(fps))
+        return numFrames
+//        let trackReaderOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: nil)
+//
+//        let reader = try! AVAssetReader(asset: video)
+//
+//        reader.add(trackReaderOutput)
+//        reader.startReading()
+//
+//        var nFrames = 0
+//        while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
+//            let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
+//            guard let format = formatDescription else {
+//                print("Error: No CMFormatDescription for CMSampleBuffer.")
+//                return -1
+//            }
+//            let mediaType = CMFormatDescriptionGetMediaType(format)
+//            if mediaType == kCMMediaType_Video {
+//                nFrames += 1
+//            }
+//        }
+//        return nFrames
     }
     
     /*
@@ -89,11 +93,11 @@ class VideoProcessing {
         while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
 //            print("sample at time \(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))")
             
-            // Testing frame extraction
-            if indices.contains(frameCount) {
+            // If no indices specified, extract all frames
+            if indices.isEmpty || indices.contains(frameCount) {
                 // Optionally save to camera roll for validation
-                let image = convertCMSampleBufferToUIImage(buffer: sampleBuffer)
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//                let image = convertCMSampleBufferToUIImage(buffer: sampleBuffer)
+//                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                 
                 // Create VisionImage and add to list
                 let visionImage = VisionImage(buffer: sampleBuffer)

@@ -18,19 +18,37 @@ class Swing: ObservableObject {
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
     
-    // Swing video used for temp. testing
-    let test_video = Bundle.main.url(forResource: "reg_swing", withExtension: "mov")
     
-    init() {
-        self.video = self.test_video
+    init(url: URL) {
+        self.video = url
     }
     
+    /*
+     Writes JSON to a given file URL
+     */
+    static func writePoseJsonToFile(fileUrl: URL, json: Data) {
+        do {
+            try json.write(to: fileUrl)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 
+    /*
+     Resets the state when an entirely new swing video is selected.
+     */
+    func changeVideo(url: URL) {
+        self.video = url
+        self.landmarksGenerated = false
+        self.processing = false
+        self.landmarksText = ""
+        self.landmarks = [:]
+    }
     
     /*
      Generates the pose landmarks for the swing instance
      */
-    func generateLandmarks(desiredFrames: [Int]) {
+    func generateLandmarks(usingFrames: [Int], increment: Int = 1) {
         self.processing = true      // used for activity indicator
         
         DispatchQueue.global().async {
@@ -38,14 +56,24 @@ class Swing: ObservableObject {
             options.detectorMode = .stream
             let poseDetector = PoseDetector.poseDetector(options: options)
             
-            let asset = AVAsset(url: self.test_video!)
-            let frames = VideoProcessing.extractFramesToVisionImages(from: asset, at: desiredFrames)
+            let asset = AVAsset(url: self.video!)
+            let frames = VideoProcessing.extractFramesToVisionImages(from: asset, at: usingFrames)
             
-
+            // If no frames specified, create an array with all frames
+            var desiredFrames: [Int] = []
+            if usingFrames.isEmpty {
+                for i in stride(from: 0, to: frames.count, by: increment) {
+                    desiredFrames.append(i)
+                }
+            } else {
+                desiredFrames = usingFrames
+            }
+            
             var poses: [Int: Pose] = [:]
             var poseText = ""
-            
+
             var results: [Pose]?
+            var count = 0
             for frameNum in desiredFrames {
                 do {
                     guard let visionImgFrame = frames[frameNum] else {
@@ -67,8 +95,20 @@ class Swing: ObservableObject {
                 poses[frameNum] = pose
                 
                 // Assemble text for display
-                poseText += "Nose [\(frameNum)]: \(detectedPoses[0].landmark(ofType: .nose).position)\n"
+//                poseText += "Nose [\(frameNum)]: \(detectedPoses[0].landmark(ofType: .nose).position)\n"
+                
+                count += 1
+                
+                print(".nose raw value: \(detectedPoses[0].landmark(ofType: .nose).type.rawValue)")
+                print("Frame \(frameNum) (#\(count)) - posture analyzed.")
             }
+            
+            if usingFrames.isEmpty {
+                poseText = "\(count) total frames processed at increment \(increment).\n\n'swing.json' generated and ready to share."
+            } else {
+                poseText = "\(count) total frames processed. Specified frames: \(usingFrames)"
+            }
+            
             
 //            landmarksText += "Left thumb location: \(detectedPoses[0].landmark(ofType: .leftThumb).position)\n"
 //            landmarksText += "Right thumb location: \(detectedPoses[0].landmark(ofType: .rightThumb).position)\n"
