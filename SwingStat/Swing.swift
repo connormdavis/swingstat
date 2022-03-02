@@ -9,11 +9,14 @@ import Foundation
 import MLKitPoseDetectionAccurate
 import AssetsLibrary
 import AVFoundation
+import SwiftUI
 
 
 class Swing: ObservableObject {
     
     let id: String
+    let date: Date
+    let thumbnail: Image
     
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
@@ -21,10 +24,18 @@ class Swing: ObservableObject {
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
     
+    // Frame no's for specific moments
+    var setupFrame: Int = -1
+    var backswingFrame: Int = -1
+    var impactFrame: Int = -1
+    var totalFrames: Int = -1
+    
     
     init(url: URL?) {
         self.video = url
         self.id = UUID().uuidString
+        self.date = Date()
+        self.thumbnail = Image(systemName: "multiply.circle.fill")
     }
     
     /*

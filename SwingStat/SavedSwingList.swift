@@ -13,7 +13,7 @@ struct SavedSwingList: View {
     var body: some View {
         List(savedSwings, id: \.id) { swing in
             NavigationLink {
-                SwingAnalysis(name: swing.video!.lastPathComponent)
+                SwingEventChooser(swingVideo: swing.video!)
             } label: {
                 SavedSwingItem(swing: swing)
             }

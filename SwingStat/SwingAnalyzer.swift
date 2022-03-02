@@ -38,7 +38,7 @@ struct SwingAnalyzer: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: SwingAnalysis(name: selectedVideoUrl.lastPathComponent), isActive: $showSwingAnalysis) { EmptyView() }
+                NavigationLink(destination: SwingEventChooser(swingVideo: selectedVideoUrl), isActive: $showSwingAnalysis) { EmptyView() }
                 
                 HStack {
                     Button("Record new video") {
