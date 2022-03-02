@@ -34,6 +34,7 @@ struct Main: View {
                     Text("Settings")
                 }
         }
+        .accentColor(Color.green)
     }
 }
 

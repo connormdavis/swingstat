@@ -23,7 +23,6 @@
 		2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
 		2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */; };
-		2F9EF3AB27C43A6900D3C4A9 /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = 2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */; };
 		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
 		B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712227C5F35400AA3F7D /* SignIn.swift */; };
@@ -32,6 +31,7 @@
 		B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712927C6A57100AA3F7D /* Main.swift */; };
 		B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712B27C6AAD700AA3F7D /* Profile.swift */; };
 		B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712D27C6AAEF00AA3F7D /* Stats.swift */; };
+		B7C5AD2327CFCC0F0086C01E /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +53,6 @@
 		2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseCollectionSerializable.swift; sourceTree = "<group>"; };
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
 		2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessing.swift; sourceTree = "<group>"; };
-		2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = "../../../../Library/Messages/Attachments/cb/11/957BB466-4506-4B17-928C-9DBE882E98EF/reg_swing.mov"; sourceTree = "<group>"; };
 		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BA711E27C5F0A400AA3F7D /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		B7BA712927C6A57100AA3F7D /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		B7BA712B27C6AAD700AA3F7D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B7BA712D27C6AAEF00AA3F7D /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = ../../../../../Downloads/reg_swing.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 				B7BA712627C5F5B700AA3F7D /* Authentication */,
 				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
 				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
-				2F9EF3AA27C43A6900D3C4A9 /* reg_swing.mov */,
+				B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */,
 				2F93B95427BC541F006FDAA9 /* Swing.swift */,
 				2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */,
 				B7BA712727C6A42800AA3F7D /* Settings.swift */,
@@ -213,7 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */,
-				2F9EF3AB27C43A6900D3C4A9 /* reg_swing.mov in Resources */,
+				B7C5AD2327CFCC0F0086C01E /* reg_swing.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
