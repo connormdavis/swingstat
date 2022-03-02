@@ -22,21 +22,25 @@ struct Authentication: View {
             if authState.loggedIn {
                 Main().transition(.opacity)
             } else {
-                HStack {
-                    Text("SwingStat")
-                        .font(.system(size: 40))
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.green)
+                VStack{
+                    HStack {
+                        Text("SwingStat")
+                            .font(.system(size: 40))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.green)
+                    }
+          
+                    
+                    HStack {
+                        Text("Helping you go low!")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                            .foregroundColor(Color(hue: 1.0, saturation: 0.0, brightness: 0.498))
+                    }
                 }
-
-                
-                HStack {
-                    Text("Helping you go low!")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                        .foregroundColor(Color(hue: 1.0, saturation: 0.0, brightness: 0.498))
-                }
-                
+                .offset(y: 20)
+                .padding(.bottom, 30)
+                                
                 HStack(spacing: 0){
                     Button(action: {
                         
@@ -108,28 +112,29 @@ struct Authentication: View {
                 if index == 0{
                     SignIn()
                     
-                    // Log in
-                    Button(action: {
-                        authState.loggedIn = true
-                    }, label: {
-                        Text("Login")
-                            .font(.system(size: 20))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical)
-                            .frame(width: UIScreen.main.bounds.width - 100)
-                            .background(Color.green)
-                            .cornerRadius(8)
-                    })
+                    VStack{
+                        // Log in
+                        Button(action: {
+                            authState.loggedIn = true
+                        }, label: {
+                            Text("Login")
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.vertical)
+                                .frame(width: UIScreen.main.bounds.width - 100)
+                                .background(Color.green)
+                                .cornerRadius(8)
+                        })
+                    }
+                    .padding(.top, 20)
                     
                     Spacer()
                     
                 } else{
-                    
+                    SignUp()
+
                     VStack{
-                        SignUp()
-                        Spacer()
-                            
                         // Sign up
                         Button(action: {
                             authState.loggedIn = true
@@ -143,8 +148,10 @@ struct Authentication: View {
                                 .background(Color.green)
                                 .cornerRadius(8)
                         })
+                        Spacer()
                     }
-                    
+                    .padding(.top, 30)
+
                 }
             }
             

@@ -40,25 +40,46 @@ struct SwingAnalyzer: View {
             VStack {
                 NavigationLink(destination: SwingEventChooser(swingVideo: selectedVideoUrl), isActive: $showSwingAnalysis) { EmptyView() }
                 
+                VStack{
+                    Text("Analyze New Swing:")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.title2)
+                }
+                .padding(.horizontal, 25)
+                .padding(.top, 20)
+                
                 HStack {
-                    Button("Record new video") {
+                    Button("Take New Video") {
                         newVideoMode = .camera
                         showCameraModal = true
                     }
                         .padding()
-                        .background(colorScheme == .dark ? Color.white : Color.black)
+                        .background(Color.green)
                         .clipShape(Capsule())
                     
-                    Button("Choose new video") {
+                    Button("Take From Photos") {
                         newVideoMode = .photoLibrary
                         showCameraModal = true
                     }
                         .padding()
-                        .background(colorScheme == .dark ? Color.white : Color.black)
+                        .background(Color.green)
                         .clipShape(Capsule())
                 }
+                .padding(.top, 20)
+                .padding(.bottom, 40)
+                
+                VStack{
+                    Text("Past Swings:")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.title2)
+                }
+                .padding(.bottom, 10)
+                .padding(.horizontal, 25)
+                
                 SavedSwingList(savedSwings: createSwingsFromVideo())
+                
             }
+            
             .onChange(of: selectedVideoUrl) { newUrl in
                 // save the vid to documents directory
                 SavedSwingVideoManager.saveSwingVideo(videoUrl: selectedVideoUrl)
@@ -70,8 +91,11 @@ struct SwingAnalyzer: View {
             .sheet(isPresented: $showCameraModal) {
                 CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
             }
+            .navigationTitle("Swing Analyzer")
+            .accentColor(Color.white)
         }
-        .navigationTitle("Swing Analyzer")
+        
+
     }
 }
 

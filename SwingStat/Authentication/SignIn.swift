@@ -63,6 +63,7 @@ struct SignIn : View {
                 
             }
             .padding(.horizontal,25)
+            .padding(.top, 25)
             
         }
     }

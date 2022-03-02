@@ -110,14 +110,14 @@ struct Dashboard: View {
                     showCameraModal = true
                 }
                     .padding()
-                    .background(colorScheme == .dark ? Color.white : Color.black)
+                    .background(Color.green)
                     .clipShape(Capsule())
                 Button("Choose new video") {
                     newVideoMode = .photoLibrary
                     showCameraModal = true
                 }
                     .padding()
-                    .background(colorScheme == .dark ? Color.white : Color.black)
+                    .background(Color.green)
                     .clipShape(Capsule())
             }
             
@@ -135,7 +135,7 @@ struct Dashboard: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
                 Spacer()
                 Button(action: setBackswingTimestamp) {
@@ -146,7 +146,7 @@ struct Dashboard: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
                 Spacer()
                 Button(action: setImpactTimestamp) {
@@ -157,7 +157,7 @@ struct Dashboard: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
                 
                 TextEditor(text: $increment)
@@ -192,7 +192,7 @@ struct Dashboard: View {
                     swing.generateLandmarks(usingFrames: [], increment: Int(increment)!)
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
             } else if swing.landmarksGenerated {
                 HStack {
@@ -213,7 +213,7 @@ struct Dashboard: View {
                 }
                 
             }
-            
+                
         }
         .onChange(of: selectedVideoUrl) { newUrl in
             avPlayer = AVPlayer(url: newUrl)    // Update viewer
@@ -222,8 +222,8 @@ struct Dashboard: View {
         .sheet(isPresented: $showCameraModal) {
             CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
         }
+        .accentColor(Color.white)
         .padding()
-//        .navigationTitle("Dashboard")
         .navigationBarBackButtonHidden(true)
         
         
