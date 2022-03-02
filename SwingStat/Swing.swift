@@ -12,6 +12,9 @@ import AVFoundation
 
 
 class Swing: ObservableObject {
+    
+    let id: String
+    
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
     @Published var processing = false            // 'true' when the landmarks are in the process of being generated
@@ -19,8 +22,9 @@ class Swing: ObservableObject {
     var landmarks: [Int: Pose] = [:]
     
     
-    init(url: URL) {
+    init(url: URL?) {
         self.video = url
+        self.id = UUID().uuidString
     }
     
     /*
@@ -32,6 +36,18 @@ class Swing: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    
+    /*
+     Returns file name of the swing's video
+     */
+    func getFilename() -> String {
+        guard let filename = self.video?.lastPathComponent else {
+            print("Error: Swing doesn't have a URL.")
+            return "--no video URL--"
+        }
+        return filename
     }
 
     /*

@@ -7,21 +7,28 @@
 
 import SwiftUI
 
+class AuthenticationState: ObservableObject {
+    @Published var loggedIn = false
+}
+
 struct Authentication: View {
+    @ObservedObject var authState = AuthenticationState()
+    
     @State var index = 0
     @Namespace var name
-    @StateObject var swing = Swing()
     
     var body: some View{
-        NavigationView {
-            VStack{
+        VStack {
+            if authState.loggedIn {
+                Main().transition(.opacity)
+            } else {
                 HStack {
                     Text("SwingStat")
                         .font(.system(size: 40))
                         .fontWeight(.bold)
                         .foregroundColor(Color.green)
                 }
-                .offset(y: -20)
+
                 
                 HStack {
                     Text("Helping you go low!")
@@ -29,13 +36,11 @@ struct Authentication: View {
                         .fontWeight(.light)
                         .foregroundColor(Color(hue: 1.0, saturation: 0.0, brightness: 0.498))
                 }
-                .offset(y: -20)
                 
                 HStack(spacing: 0){
                     Button(action: {
                         
                         withAnimation(.spring()) {
-                            
                             index = 0
                         }
                         
@@ -103,9 +108,10 @@ struct Authentication: View {
                 if index == 0{
                     SignIn()
                     
-                    // Login button leads to Dashboard
-                    NavigationLink(destination: Main()) {
-
+                    // Log in
+                    Button(action: {
+                        authState.loggedIn = true
+                    }, label: {
                         Text("Login")
                             .font(.system(size: 20))
                             .fontWeight(.bold)
@@ -114,7 +120,8 @@ struct Authentication: View {
                             .frame(width: UIScreen.main.bounds.width - 100)
                             .background(Color.green)
                             .cornerRadius(8)
-                    }
+                    })
+                    
                     Spacer()
                     
                 } else{
@@ -123,10 +130,11 @@ struct Authentication: View {
                         SignUp()
                         Spacer()
                             
-                        // Sign up button leading to dashboard
-                        NavigationLink(destination: Main()) {
-
-                            Text("Sign Up")
+                        // Sign up
+                        Button(action: {
+                            authState.loggedIn = true
+                        }, label: {
+                            Text("Sign up")
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -134,24 +142,22 @@ struct Authentication: View {
                                 .frame(width: UIScreen.main.bounds.width - 100)
                                 .background(Color.green)
                                 .cornerRadius(8)
-                        }
+                        })
                     }
                     
                 }
             }
+            
         }
-        
     }
+        
+    
 }
 
 
 struct Authentication_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
             Authentication()
                 .previewInterfaceOrientation(.portrait)
-            Authentication()
-                .previewInterfaceOrientation(.portraitUpsideDown)
-        }
     }
 }

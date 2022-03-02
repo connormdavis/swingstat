@@ -18,7 +18,7 @@ struct SignUp: View {
             
             HStack{
                 
-                VStack(alignment: .leading, spacing: 12){
+                VStack(alignment: .center, spacing: 12){
 
                     Text("Create Account")
                         .font(.title)

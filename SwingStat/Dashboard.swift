@@ -23,6 +23,10 @@ struct Dashboard: View {
     @State var setupFrameNum: Int?
     @State var backswingFrameNum: Int?
     @State var impactFrameNum: Int?
+    
+    @State var increment = "1"
+    
+    @FocusState private var changingIncrement: Bool
 
 
     
@@ -52,6 +56,9 @@ struct Dashboard: View {
     }
     
     func setImpactTimestamp() {
+        // REMOVE THIS LATER
+        self.changingIncrement = false
+        
         let num = getCurrentFrameNum()
         self.impactFrameNum = num
     }
@@ -152,6 +159,11 @@ struct Dashboard: View {
                 .padding()
                 .background(colorScheme == .dark ? Color.white : Color.black)
                 .clipShape(Capsule())
+                
+                TextEditor(text: $increment)
+                    .frame(width: 20, height: 40)
+                    .cornerRadius(8.0)
+                    .focused($changingIncrement)
             }
             
             Spacer()
@@ -177,7 +189,7 @@ struct Dashboard: View {
             // If we haven't generated or aren't generating - show button (IF WE'VE SET TIMESTAMPS TOO)
             if !swing.landmarksGenerated && !swing.processing && allTimestampsSet() {
                 Button("Generate landmarks") {
-                    swing.generateLandmarks(usingFrames: [])
+                    swing.generateLandmarks(usingFrames: [], increment: Int(increment)!)
                 }
                 .padding()
                 .background(colorScheme == .dark ? Color.white : Color.black)

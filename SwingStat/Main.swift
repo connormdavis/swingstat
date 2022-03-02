@@ -9,29 +9,26 @@ import SwiftUI
 
 struct Main: View {
     
-    @StateObject var swing = Swing()
+    @StateObject var swing = Swing(url: ContentView.stockUrl)
     
     var body: some View {
         TabView {
-            Dashboard(swing: swing)
+            SwingAnalyzer()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            
             Stats()
                 .tabItem {
                     Image(systemName: "chart.bar.xaxis")
                     Text("Stats")
                 }
-            
             Profile()
                 .tabItem {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-            
-            Settings()
+            Dashboard(swing: swing)
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")

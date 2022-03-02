@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+
 @main
 struct SwingStatApp: App {
+    
     var body: some Scene {
         WindowGroup {
             Authentication()
