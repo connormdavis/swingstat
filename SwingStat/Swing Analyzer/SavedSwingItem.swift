@@ -14,9 +14,13 @@ struct SavedSwingItem: View {
     
     var body: some View {
         HStack {
-            Text(swing.getFilename())
-                .padding()
+            Image(systemName: "video.fill")
+                .resizable()
+                .frame(width: 50, height: 35)
+            Text(swing.getFilename()).lineLimit(1).font(.subheadline)
             Spacer()
+            Text("03/4/22").font(.caption)
+            Text("8s").font(.caption)
         }
     }
 }

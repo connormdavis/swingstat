@@ -77,7 +77,7 @@ struct SwingEventChooser: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
                 
                 Button(action: setBackswingTimestamp) {
@@ -88,7 +88,7 @@ struct SwingEventChooser: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
                 
                 Button(action: setImpactTimestamp) {
@@ -99,7 +99,7 @@ struct SwingEventChooser: View {
                     }
                 }
                 .padding()
-                .background(colorScheme == .dark ? Color.white : Color.black)
+                .background(Color.green)
                 .clipShape(Capsule())
             }
             .padding()
@@ -122,6 +122,7 @@ struct SwingEventChooser: View {
             }
             
         }
+        .accentColor(Color.white)
     }
 }
 
