@@ -20,13 +20,14 @@
 		2F7BB03C27CF2E4A00C149DD /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB03B27CF2E4A00C149DD /* UIUtilities.swift */; };
 		2F7BB03E27CF3C3A00C149DD /* MLKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB03D27CF3C3A00C149DD /* MLKitExtensions.swift */; };
 		2F7BB04027CFC30F00C149DD /* SwingEventChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */; };
+		2F7BB04227D002D300C149DD /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = 2F7BB04127D002D300C149DD /* reg_swing.mov */; };
 		2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66327C57EA8008DD180 /* CameraView.swift */; };
 		2F81E66627C67515008DD180 /* PoseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66527C67515008DD180 /* PoseSerializable.swift */; };
 		2F81E66827C676FE008DD180 /* PoseLandmarkSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */; };
 		2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66927C677CF008DD180 /* Point3DSerializable.swift */; };
 		2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */; };
+		2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
-		2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */; };
 		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
 		B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712227C5F35400AA3F7D /* SignIn.swift */; };
@@ -35,32 +36,32 @@
 		B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712927C6A57100AA3F7D /* Main.swift */; };
 		B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712B27C6AAD700AA3F7D /* Profile.swift */; };
 		B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712D27C6AAEF00AA3F7D /* Stats.swift */; };
-		B7C5AD2327CFCC0F0086C01E /* reg_swing.mov in Resources */ = {isa = PBXBuildFile; fileRef = B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingStatApp.swift; sourceTree = "<group>"; };
-		2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = SwingStat/Old/ContentView.swift; sourceTree = SOURCE_ROOT; };
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F2ECC4027BAD5D800FF7475 /* SwingStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwingStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F2ECC5727BAE00200FF7475 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
-		2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingAnalyzer.swift; sourceTree = "<group>"; };
-		2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSwingItem.swift; sourceTree = "<group>"; };
-		2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingAnalysis.swift; sourceTree = "<group>"; };
-		2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSwingList.swift; sourceTree = "<group>"; };
-		2F7BB03627CEC8E000C149DD /* SavedSwingVideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSwingVideoManager.swift; sourceTree = "<group>"; };
+		2F2ECC5727BAE00200FF7475 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dashboard.swift; path = SwingStat/Old/Dashboard.swift; sourceTree = SOURCE_ROOT; };
+		2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwingAnalyzer.swift; path = "SwingStat/Swing Analyzer/SwingAnalyzer.swift"; sourceTree = SOURCE_ROOT; };
+		2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedSwingItem.swift; path = "SwingStat/Swing Analyzer/SavedSwingItem.swift"; sourceTree = SOURCE_ROOT; };
+		2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwingAnalysis.swift; path = "SwingStat/Swing Analyzer/SwingAnalysis.swift"; sourceTree = SOURCE_ROOT; };
+		2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedSwingList.swift; path = "SwingStat/Swing Analyzer/SavedSwingList.swift"; sourceTree = SOURCE_ROOT; };
+		2F7BB03627CEC8E000C149DD /* SavedSwingVideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedSwingVideoManager.swift; path = SwingStat/Lib/SavedSwingVideoManager.swift; sourceTree = SOURCE_ROOT; };
 		2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosturePhoto.swift; sourceTree = "<group>"; };
 		2F7BB03B27CF2E4A00C149DD /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		2F7BB03D27CF3C3A00C149DD /* MLKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLKitExtensions.swift; sourceTree = "<group>"; };
-		2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingEventChooser.swift; sourceTree = "<group>"; };
+		2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwingEventChooser.swift; path = "SwingStat/Swing Analyzer/SwingEventChooser.swift"; sourceTree = SOURCE_ROOT; };
+		2F7BB04127D002D300C149DD /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = reg_swing.mov; sourceTree = "<group>"; };
 		2F81E66327C57EA8008DD180 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		2F81E66527C67515008DD180 /* PoseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSerializable.swift; sourceTree = "<group>"; };
 		2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseLandmarkSerializable.swift; sourceTree = "<group>"; };
 		2F81E66927C677CF008DD180 /* Point3DSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3DSerializable.swift; sourceTree = "<group>"; };
 		2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseCollectionSerializable.swift; sourceTree = "<group>"; };
+		2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoProcessing.swift; path = SwingStat/VideoProcessing.swift; sourceTree = SOURCE_ROOT; };
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
-		2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProcessing.swift; sourceTree = "<group>"; };
 		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7BA711E27C5F0A400AA3F7D /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -70,7 +71,6 @@
 		B7BA712927C6A57100AA3F7D /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		B7BA712B27C6AAD700AA3F7D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B7BA712D27C6AAEF00AA3F7D /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
-		B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = reg_swing.mov; path = ../../../../../Downloads/reg_swing.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,28 +102,14 @@
 				B7BA712927C6A57100AA3F7D /* Main.swift */,
 				B7BA712B27C6AAD700AA3F7D /* Profile.swift */,
 				B7BA712D27C6AAEF00AA3F7D /* Stats.swift */,
-				2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */,
-				B7BA712627C5F5B700AA3F7D /* Authentication */,
-				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
-				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
-				B7C5AD2227CFCC0F0086C01E /* reg_swing.mov */,
-				2F93B95427BC541F006FDAA9 /* Swing.swift */,
-				2F93B95627BC5BEC006FDAA9 /* VideoProcessing.swift */,
 				B7BA712727C6A42800AA3F7D /* Settings.swift */,
-				2F81E66327C57EA8008DD180 /* CameraView.swift */,
-				2F81E66527C67515008DD180 /* PoseSerializable.swift */,
-				2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */,
-				2F81E66927C677CF008DD180 /* Point3DSerializable.swift */,
-				2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */,
-				2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */,
-				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
-				2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */,
-				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
-				2F7BB03627CEC8E000C149DD /* SavedSwingVideoManager.swift */,
-				2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */,
-				2F7BB03B27CF2E4A00C149DD /* UIUtilities.swift */,
-				2F7BB03D27CF3C3A00C149DD /* MLKitExtensions.swift */,
-				2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */,
+				B7BA712627C5F5B700AA3F7D /* Authentication */,
+				2F82CCCE27D2A9B6006B5B5E /* Model */,
+				2F82CCC927D2A882006B5B5E /* Swing Analyzer */,
+				2F82CCCB27D2A964006B5B5E /* Lib */,
+				2F82CCCF27D2A9CE006B5B5E /* Old */,
+				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
+				2F7BB04127D002D300C149DD /* reg_swing.mov */,
 			);
 			path = SwingStat;
 			sourceTree = "<group>";
@@ -134,6 +120,52 @@
 				2F2ECC4027BAD5D800FF7475 /* SwingStat.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2F82CCC927D2A882006B5B5E /* Swing Analyzer */ = {
+			isa = PBXGroup;
+			children = (
+				2F81E66327C57EA8008DD180 /* CameraView.swift */,
+				2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */,
+				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
+				2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */,
+				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
+				2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */,
+				2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */,
+			);
+			path = "Swing Analyzer";
+			sourceTree = "<group>";
+		};
+		2F82CCCB27D2A964006B5B5E /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				2F7BB03D27CF3C3A00C149DD /* MLKitExtensions.swift */,
+				2F7BB03B27CF2E4A00C149DD /* UIUtilities.swift */,
+				2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */,
+				2F7BB03627CEC8E000C149DD /* SavedSwingVideoManager.swift */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		2F82CCCE27D2A9B6006B5B5E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F93B95427BC541F006FDAA9 /* Swing.swift */,
+				2F81E66527C67515008DD180 /* PoseSerializable.swift */,
+				2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */,
+				2F81E66927C677CF008DD180 /* Point3DSerializable.swift */,
+				2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2F82CCCF27D2A9CE006B5B5E /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				2F2ECC5727BAE00200FF7475 /* Dashboard.swift */,
+				2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */,
+			);
+			path = Old;
 			sourceTree = "<group>";
 		};
 		4BB55DDE35CC67D549220E82 /* Pods */ = {
@@ -224,8 +256,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7BB04227D002D300C149DD /* reg_swing.mov in Resources */,
 				2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */,
-				B7C5AD2327CFCC0F0086C01E /* reg_swing.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +330,6 @@
 				B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */,
 				B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */,
 				2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */,
-				2F93B95727BC5BEC006FDAA9 /* VideoProcessing.swift in Sources */,
 				2F81E66827C676FE008DD180 /* PoseLandmarkSerializable.swift in Sources */,
 				2F81E66627C67515008DD180 /* PoseSerializable.swift in Sources */,
 				2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */,
@@ -308,6 +339,7 @@
 				2F7BB03527CEBD5C00C149DD /* SavedSwingList.swift in Sources */,
 				B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */,
 				2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */,
+				2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */,
 				2F7BB04027CFC30F00C149DD /* SwingEventChooser.swift in Sources */,
 				2F7BB03E27CF3C3A00C149DD /* MLKitExtensions.swift in Sources */,
 				2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */,
