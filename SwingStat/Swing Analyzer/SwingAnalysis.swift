@@ -136,6 +136,9 @@ struct SwingAnalysis: View {
                 
                 Text("Swing tips")
                     .font(.headline)
+                
+                SwingTipList()
+
                 List {
                     HStack {
                         Text("Left arm angle ❌")
