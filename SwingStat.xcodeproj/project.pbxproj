@@ -27,6 +27,7 @@
 		2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66927C677CF008DD180 /* Point3DSerializable.swift */; };
 		2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */; };
 		2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */; };
+		2F82CCD127D58769006B5B5E /* SwingTipResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCD027D58769006B5B5E /* SwingTipResults.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
 		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
 		B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6527D55163007BEF8B /* SwingTipItem.swift */; };
@@ -65,6 +66,7 @@
 		2F81E66927C677CF008DD180 /* Point3DSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3DSerializable.swift; sourceTree = "<group>"; };
 		2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseCollectionSerializable.swift; sourceTree = "<group>"; };
 		2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoProcessing.swift; path = SwingStat/VideoProcessing.swift; sourceTree = SOURCE_ROOT; };
+		2F82CCD027D58769006B5B5E /* SwingTipResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipResults.swift; sourceTree = "<group>"; };
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
 		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,7 +135,6 @@
 		2F82CCC927D2A882006B5B5E /* Swing Analyzer */ = {
 			isa = PBXGroup;
 			children = (
-				2F81E66327C57EA8008DD180 /* CameraView.swift */,
 				2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */,
 				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
 				B7886C6527D55163007BEF8B /* SwingTipItem.swift */,
@@ -141,8 +142,12 @@
 				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
 				B7886C6727D552E7007BEF8B /* SwingTipList.swift */,
 				B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */,
-				2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */,
 				2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */,
+				2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */,
+				2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */,
+				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
+				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
+				2F81E66327C57EA8008DD180 /* CameraView.swift */,
 			);
 			path = "Swing Analyzer";
 			sourceTree = "<group>";
@@ -167,6 +172,7 @@
 				2F81E66927C677CF008DD180 /* Point3DSerializable.swift */,
 				2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */,
 				B7886C6927D5555A007BEF8B /* SwingTip.swift */,
+				2F82CCD027D58769006B5B5E /* SwingTipResults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -365,6 +371,7 @@
 				2F7BB03A27CF2D5A00C149DD /* PosturePhoto.swift in Sources */,
 				B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */,
 				2F7BB02F27CEB36800C149DD /* SwingAnalyzer.swift in Sources */,
+				2F82CCD127D58769006B5B5E /* SwingTipResults.swift in Sources */,
 				2F7BB03327CEB3E400C149DD /* SwingAnalysis.swift in Sources */,
 				2F7BB03C27CF2E4A00C149DD /* UIUtilities.swift in Sources */,
 				B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */,

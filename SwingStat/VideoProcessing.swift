@@ -109,4 +109,58 @@ class VideoProcessing {
         
         return frames
     }
+    
+    /*
+     Returns the UIImage form of the given frame number
+     */
+    static func getFrameAsImage(frameNum: Int, url: URL) -> UIImage? {
+        let avAsset = AVAsset(url: url)
+        let reader = try! AVAssetReader(asset: avAsset)
+        
+        let videoTrack = avAsset.tracks(withMediaType: AVMediaType.video)[0]
+        
+        let trackReaderOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: [String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)])
+        
+        reader.add(trackReaderOutput)
+        reader.startReading()
+        
+        var frameCount = 0
+        // getting frames ref: https://stackoverflow.com/questions/49390728/how-to-get-frames-from-a-local-video-file-in-swift/49394183c
+        while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
+//            print("sample at time \(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))")
+            
+            // If no indices specified, extract all frames
+            if frameCount == frameNum {
+                // Optionally save to camera roll for validation
+                let image = VideoProcessing.convertCMSampleBufferToUIImage(buffer: sampleBuffer)
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    
+                return image
+            }
+            
+            frameCount += 1
+        }
+        
+        return nil
+    }
+    
+    static func deleteVideo(at path: URL) {
+        do {
+             let fileManager = FileManager.default
+            
+            // Check if file exists
+            if fileManager.fileExists(atPath: path.path) {
+                // Delete file
+                try fileManager.removeItem(atPath: path.path)
+            } else {
+                print("File does not exist")
+            }
+         
+        }
+        catch let error as NSError {
+            print("An error took place: \(error)")
+        }
+    }
+    
+    
 }

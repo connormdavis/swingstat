@@ -9,16 +9,25 @@ import SwiftUI
 import AVKit
 
 struct SavedSwingList: View {
-    var savedSwings: [Swing]
+    @State var savedSwings: [Swing]
     
     var body: some View {
-        List(savedSwings, id: \.id) { swing in
-            NavigationLink {
-                SwingEventChooser(avPlayer: AVPlayer(url: swing.video!), swingVideo: swing.video!)
-            } label: {
-                SavedSwingItem(swing: swing)
+        List {
+            ForEach(savedSwings, id: \.id) { swing in
+                NavigationLink {
+                    SwingEventChooser(avPlayer: AVPlayer(url: swing.video!), swingVideo: swing.video!)
+                } label: {
+                    SavedSwingItem(swing: swing)
+                }
+            }
+            .onDelete { idxSet in
+                for idx in idxSet {
+                    savedSwings[idx].delete()
+                    self.savedSwings.remove(at: idx)
+                }
             }
         }
+        
     }
 }
 
