@@ -9,23 +9,44 @@ import Foundation
 import SwiftUI
 import UIKit
 import MLKitPoseDetectionAccurate
+import AVFoundation
 
 
-struct PosturePhoto: UIViewRepresentable {
+struct PosturePhoto {
     @State var image: UIImage
     @State var pose: Pose?
     
-    func createImageViewWithAnnotations() -> UIImageView {
+    static func createImageViewFromImage(image: UIImage, pose: Pose) -> UIImageView {
         let imageView = UIImageView()
-        imageView.image = self.image
+        imageView.image = image
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let imageSize = CGSize(width: image.size.width, height: image.size.width)
+        let screenRect = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        let imageRect = AVMakeRect(aspectRatio: imageSize, insideRect: screenRect)
+        imageView.frame = imageRect
+        
+        let renderer = UIGraphicsImageRenderer(size: imageView.bounds.size)
+        let image = renderer.image { ctx in
+            let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
+            print("res: \(res)")
+        }
+        
+        
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    
+//        imageView.contentMode = .scaleAspectFit
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
         // use UIUtilities.addCircle() & shite to add subviews to the main 'imageView' and return it
     }
     
-    func makeUIView(context: Context) -> UIImageView {
-        return createImageViewWithAnnotations()
-    }
+//    func makeUIView(context: Context) -> UIImageView {
+//        return createImageViewWithAnnotations()
+//    }
+//
+//    func updateUIView(_ uiView: UIImageView, context: Context) {
+//    }
+    
 
-    func updateUIView(_ uiView: UIImageView, context: Context) {
-    }
 }

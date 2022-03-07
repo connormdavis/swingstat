@@ -30,10 +30,7 @@ struct SwingAnalyzer: View {
         return swings
     }
     
-    
-    func doSomething() {
-        
-    }
+
     
     
     var body: some View {
@@ -95,8 +92,6 @@ struct SwingAnalyzer: View {
             .navigationTitle("Swing Analyzer")
             .accentColor(Color.white)
         }
-        
-
     }
 }
 

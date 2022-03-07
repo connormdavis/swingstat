@@ -10,12 +10,15 @@ import AVKit
 
 struct SwingEventChooser: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
     
     @State var avPlayer: AVPlayer
     @State var swingVideo: URL
     @State var setupFrame: Int?
     @State var backswingFrame: Int?
     @State var impactFrame: Int?
+    
+    @State var analysisFailed = false
     
     func framesSet() -> Bool {
         if (setupFrame != nil && backswingFrame != nil && impactFrame != nil) {
@@ -26,7 +29,13 @@ struct SwingEventChooser: View {
     
     func createSwingAndBeginAnalysis() -> Swing {
         let swing = Swing(url: swingVideo)
+        // Save key moments
+        swing.backswingFrame = backswingFrame!
+        swing.setupFrame = setupFrame!
+        swing.impactFrame = impactFrame!
+        
         swing.generateLandmarks(usingFrames: [])
+        swing.generateImages()
         return swing
     }
     
@@ -46,13 +55,21 @@ struct SwingEventChooser: View {
     }
     
     func setBackswingTimestamp() {
-        let num = getCurrentFrameNum()
-        self.backswingFrame = num
+        if self.setupFrame != nil {
+            let num = getCurrentFrameNum()
+            if setupFrame != num {
+                self.backswingFrame = num
+            }
+        }
     }
     
     func setImpactTimestamp() {
-        let num = getCurrentFrameNum()
-        self.impactFrame = num
+        if self.setupFrame != nil && self.backswingFrame != nil {
+            let num = getCurrentFrameNum()
+            if setupFrame != num && backswingFrame != num {
+                self.impactFrame = num
+            }
+        }
     }
     
 
@@ -107,7 +124,7 @@ struct SwingEventChooser: View {
             if framesSet() {
                 Spacer()
                 NavigationLink {
-                    SwingAnalysis(swing: createSwingAndBeginAnalysis())
+                    SwingAnalysis(swing: createSwingAndBeginAnalysis(), analysisFailed: $analysisFailed)
                 } label: {
                     Text("Analyze")
                     .padding()
@@ -123,6 +140,19 @@ struct SwingEventChooser: View {
             
         }
         .accentColor(Color.white)
+
+
+        .onAppear {
+            // If the analysis failed, return the user to the media picker
+            if analysisFailed {
+                dismiss()
+            }
+        }
+        .onDisappear() {
+            self.setupFrame = nil
+            self.impactFrame = nil
+            self.backswingFrame = nil
+        }
     }
 }
 
