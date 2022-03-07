@@ -46,48 +46,8 @@ struct SwingAnalysis: View {
                 
                 Text("Swing tips")
                     .font(.headline)
-                List {
-                    HStack {
-                        Text("Left arm angle ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your left arm is overly bent.")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Vertical head movement ✅")
-                            .font(.subheadline)
-                            .foregroundColor(Color.green)
-                            .padding()
-                        Spacer()
-                        Text("You had very little vertical head movement. Nice!")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Horizontal head movement ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your head moved laterally more than it should.")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Hip sway ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your hips moved too much during your backswing.")
-                            .font(.caption)
-                    }
-                }
                 
+                SwingTipList()
             }
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)

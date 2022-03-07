@@ -29,6 +29,10 @@
 		2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
 		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
+		B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6527D55163007BEF8B /* SwingTipItem.swift */; };
+		B7886C6827D552E7007BEF8B /* SwingTipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6727D552E7007BEF8B /* SwingTipList.swift */; };
+		B7886C6A27D5555A007BEF8B /* SwingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6927D5555A007BEF8B /* SwingTip.swift */; };
+		B7886C6C27D56E99007BEF8B /* SwingTipDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */; };
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
 		B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712227C5F35400AA3F7D /* SignIn.swift */; };
 		B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712427C5F3A500AA3F7D /* SignUp.swift */; };
@@ -64,6 +68,10 @@
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
 		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7886C6527D55163007BEF8B /* SwingTipItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipItem.swift; sourceTree = "<group>"; };
+		B7886C6727D552E7007BEF8B /* SwingTipList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipList.swift; sourceTree = "<group>"; };
+		B7886C6927D5555A007BEF8B /* SwingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTip.swift; sourceTree = "<group>"; };
+		B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipDetailed.swift; sourceTree = "<group>"; };
 		B7BA711E27C5F0A400AA3F7D /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		B7BA712227C5F35400AA3F7D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B7BA712427C5F3A500AA3F7D /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
@@ -128,8 +136,11 @@
 				2F81E66327C57EA8008DD180 /* CameraView.swift */,
 				2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */,
 				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
+				B7886C6527D55163007BEF8B /* SwingTipItem.swift */,
 				2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */,
 				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
+				B7886C6727D552E7007BEF8B /* SwingTipList.swift */,
+				B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */,
 				2F7BB03927CF2D5A00C149DD /* PosturePhoto.swift */,
 				2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */,
 			);
@@ -155,6 +166,7 @@
 				2F81E66727C676FE008DD180 /* PoseLandmarkSerializable.swift */,
 				2F81E66927C677CF008DD180 /* Point3DSerializable.swift */,
 				2F81E66B27C6CF96008DD180 /* PoseCollectionSerializable.swift */,
+				B7886C6927D5555A007BEF8B /* SwingTip.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,11 +347,14 @@
 				2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */,
 				2F7BB03727CEC8E000C149DD /* SavedSwingVideoManager.swift in Sources */,
 				2F2ECC4927BAD5D800FF7475 /* SwingStatApp.swift in Sources */,
+				B7886C6C27D56E99007BEF8B /* SwingTipDetailed.swift in Sources */,
 				2F7BB03127CEB3B500C149DD /* SavedSwingItem.swift in Sources */,
 				2F7BB03527CEBD5C00C149DD /* SavedSwingList.swift in Sources */,
+				B7886C6827D552E7007BEF8B /* SwingTipList.swift in Sources */,
 				B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */,
 				2F81E66C27C6CF96008DD180 /* PoseCollectionSerializable.swift in Sources */,
 				2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */,
+				B7886C6A27D5555A007BEF8B /* SwingTip.swift in Sources */,
 				2F7BB04027CFC30F00C149DD /* SwingEventChooser.swift in Sources */,
 				2F7BB03E27CF3C3A00C149DD /* MLKitExtensions.swift in Sources */,
 				2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */,
@@ -353,6 +368,7 @@
 				2F7BB03327CEB3E400C149DD /* SwingAnalysis.swift in Sources */,
 				2F7BB03C27CF2E4A00C149DD /* UIUtilities.swift in Sources */,
 				B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */,
+				B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
