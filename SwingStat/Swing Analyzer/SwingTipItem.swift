@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwingTipItem: View {
     
-    var swingTip: SwingTip
+    @State var swingTip: SwingTip
     
     var body: some View {
         HStack {
@@ -26,7 +26,8 @@ struct SwingTipItem: View {
             }
             
             Spacer()
-            Text(swingTip.description).font(.caption)
+            Text(swingTip.miniDescription)
+                .font(.caption)
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: .infinity, alignment: .center)
     }
@@ -34,6 +35,6 @@ struct SwingTipItem: View {
 
 struct SwingTipItem_Previews: PreviewProvider {
     static var previews: some View {
-        SwingTipItem(swingTip: SwingTip(type: "Left arm angle", passed: false, description: "Your left arm is overly bent.", help: ""))
+        SwingTipItem(swingTip: SwingTip(type: "Left arm angle", passed: false, miniDescription: "", passedDescription: "", failedDescription: "Your left arm is overly bent.", help: ""))
     }
 }

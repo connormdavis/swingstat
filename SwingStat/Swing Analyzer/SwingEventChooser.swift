@@ -12,11 +12,15 @@ struct SwingEventChooser: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     
+    @State var swing: Swing = Swing(url: ContentView.stockUrl)
+    
     @State var avPlayer: AVPlayer
     @State var swingVideo: URL
     @State var setupFrame: Int?
     @State var backswingFrame: Int?
     @State var impactFrame: Int?
+    
+    @State var showAnalysis: Bool = false
     
     @State var analysisFailed = false
     
@@ -27,8 +31,9 @@ struct SwingEventChooser: View {
         return false
     }
     
-    func createSwingAndBeginAnalysis() -> Swing {
-        let swing = Swing(url: swingVideo)
+    func createSwingAndBeginAnalysis() {
+        swing.changeVideo(url: swingVideo)
+
         // Save key moments
         swing.backswingFrame = backswingFrame!
         swing.setupFrame = setupFrame!
@@ -36,7 +41,6 @@ struct SwingEventChooser: View {
         
         swing.generateLandmarks(usingFrames: [])
         swing.generateImages()
-        return swing
     }
     
     private func getCurrentFrameNum() -> Int {
@@ -44,8 +48,12 @@ struct SwingEventChooser: View {
         let totalTime = avPlayer.currentItem!.duration.seconds
         let numFrames = VideoProcessing.countFrames(in: AVAsset(url: swingVideo))
         
+        print("Current time: \(currentTime)")
+        
         let fps = Double(numFrames) / totalTime
-        let chosenFrame = Int(fps * currentTime)
+        let chosenFrame = Int(ceil(fps * currentTime))
+        print("FPS: \(fps)")
+        print("Chosen frame: \(chosenFrame)")
         return chosenFrame
     }
     
@@ -75,6 +83,7 @@ struct SwingEventChooser: View {
 
     
     var body: some View {
+        NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed), isActive: $showAnalysis) { EmptyView() }
         VStack(alignment: .center) {
             Text("Choose the 3 swing events:")
                 .font(.headline)
@@ -123,15 +132,14 @@ struct SwingEventChooser: View {
             
             if framesSet() {
                 Spacer()
-                NavigationLink {
-                    SwingAnalysis(swing: createSwingAndBeginAnalysis(), analysisFailed: $analysisFailed)
-                } label: {
-                    Text("Analyze")
+                Button("Analyze") {
+                    createSwingAndBeginAnalysis()
+                    showAnalysis = true
+                }
                     .padding()
                     .foregroundColor(Color.white)
                     .background(Color.green)
                     .clipShape(Capsule())
-                }
                 Spacer()
             } else {
                 Text("Select landmarks to perform analysis.")

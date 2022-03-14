@@ -10,6 +10,8 @@ import Foundation
 struct SwingTip: Hashable, Codable {
     var type: String
     var passed: Bool
-    var description: String
+    var miniDescription: String
+    var passedDescription: String
+    var failedDescription: String
     var help: String
 }

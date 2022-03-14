@@ -16,12 +16,15 @@ struct SavedSwingItem: View {
         HStack {
             Image(systemName: "video.fill")
                 .resizable()
-                .frame(width: 50, height: 35)
+                .frame(width: 30, height: 20)
             Text(swing.getFilename()).lineLimit(1).font(.subheadline)
             Spacer()
             Text("03/4/22").font(.caption)
+                .fontWeight(.bold)
             Text("8s").font(.caption)
+                .fontWeight(.bold)
         }
+        .padding()
     }
 }
 

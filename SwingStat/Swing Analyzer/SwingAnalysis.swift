@@ -13,6 +13,7 @@ struct SwingAnalysis: View {
     @Environment(\.dismiss) var dismiss
 
     @ObservedObject var swing: Swing
+    @State var swingTips: [SwingTip]?
     @Binding var analysisFailed: Bool
     
     @State var viewingAnnotatedImage: Bool = false
@@ -44,7 +45,7 @@ struct SwingAnalysis: View {
         // TODO: Update swing's processing state to include posture generation AND analysis
         if swing.noPostureDetected {
             VStack(alignment: .center) {
-                Text("No person detected")
+                Text("No person  ")
                     .font(.headline)
                     .foregroundColor(Color.red)
                 Text("Make sure the chosen video contains a golf swing!")
@@ -62,19 +63,39 @@ struct SwingAnalysis: View {
             }
             .padding()
         }
-        else if swing.processing {
+        else if swing.processing || swing.analyzing {
             VStack(alignment: .center) {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color.green))
                     .scaleEffect(3.0, anchor: .center)
                     .padding()
-                Text("Analyzing...")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.green)
-                    .padding()
+                if swing.processing {
+                    Text("Processing video for posture information...")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.green)
+                        .padding()
+                }
+                
+                if swing.analyzing {
+                    Text("Analyzing...")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.green)
+                        .padding()
+                }
+                
             }
+            .task {
+                let tips = await swing.analyzePostureInformation()
+                self.swingTips = tips
+                self.swing.analyzing = false
+            }
+//            .onReceive(swing.$analyzing) { analyzing in
+//                let tips = await swing.analyzePostureInformation()
+//            }
         } else {
+            
             VStack {
                 Text(swing.video!.lastPathComponent)
                     .font(.headline)
@@ -137,49 +158,7 @@ struct SwingAnalysis: View {
                 Text("Swing tips")
                     .font(.headline)
                 
-                SwingTipList()
-
-                List {
-                    HStack {
-                        Text("Left arm angle ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your left arm is overly bent.")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Vertical head movement ✅")
-                            .font(.subheadline)
-                            .foregroundColor(Color.green)
-                            .padding()
-                        Spacer()
-                        Text("You had very little vertical head movement. Nice!")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Horizontal head movement ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your head moved laterally more than it should.")
-                            .font(.caption)
-                    }
-                    
-                    HStack {
-                        Text("Hip sway ❌")
-                            .font(.subheadline)
-                            .foregroundColor(Color.red)
-                            .padding()
-                        Spacer()
-                        Text("Your hips moved too much during your backswing.")
-                            .font(.caption)
-                    }
-                }
+                SwingTipList(savedTips: self.swingTips!)
 //                Button("Create annotated images") {
 //                    print("Creating images and saving!!!!!")
 //                    if swing.imagesGenerated() {

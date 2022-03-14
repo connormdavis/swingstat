@@ -22,7 +22,10 @@ class Swing: ObservableObject {
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
     @Published var processing = false            // 'true' when the landmarks are in the process of being generated
+    @Published var analyzing = false
     @Published var noPostureDetected = false
+    @Published var swingTips: [SwingTip] = []
+    
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
     
@@ -92,56 +95,99 @@ class Swing: ObservableObject {
         return false
     }
     
-    func analyzePostureInformation() async -> SwingTipResults? {
+    func analyzePostureInformation() async -> [SwingTip] {
         while self.processing {
             // Wait here until we have our posture info
-            Thread.sleep(forTimeInterval: 0.1)
+            do {
+                try await Task.sleep(nanoseconds: 100000000)
+            } catch {
+                print("ERROR: \(error)")
+                return []
+            }
         }
         
+        var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        var serializedPoses: [Int: PoseSerializable] = [:]
+        for (frameNum, pose) in self.landmarks {
+            let loadedPose = PoseSerializable.loadFromPose(pose: pose)
+            serializedPoses[frameNum] = loadedPose  // added serializable pose to dict mapping frame -> pose
+        }
+        
+        let totalFrames = VideoProcessing.countFrames(in: AVAsset(url: self.video!))
+        let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: self.setupFrame, backswingFrame: self.backswingFrame, impactFrame: self.impactFrame, totalFrames: totalFrames)
+        
+        let encoder = JSONEncoder()
+        let poseJson = try! encoder.encode(poseCollection)
+        
+        request.httpBody = poseJson
+        
         do {
-            let swingTipResults = try await self.fetchPostureAnalysis()
-            return swingTipResults
+            // Send request
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+            
+            // TEMPORARY CONTENT - SHOULD BE MOVED
+            let leftArmAngleMiniDesc = "More info"
+            let leftArmAnglePassedDesc = "Nice! You maintained a straight left arm in your backswing. This is important for making consistent ball contact."
+            let leftArmAngleFailedDesc = "During your backswing your left arm was overly bent. Try and maintain a straight left arm to improve ball contact."
+            
+            let hipSwayMiniDesc = "More info"
+            let hipSwayPassedDesc = "Good work. Your hips were very still during your swing. This is important for swing timing and consistent ball contact."
+            let hipSwayFailedDesc = "You had too much movement in your hips during your backswing. Keep your hips still for much easier ball contact."
+            
+            let vertHeadMovementMiniDesc = "More info"
+            let vertHeadMovementPassedDesc = "Well done. You didn't dip or raise your head during your swing. Ducking your head or standing up makes it very difficult to make clean contact."
+            let vertHeadMovementFailedDesc = "Your head moved vertically too much during your swing. Keep a level head position to prevent topping or chunking the ball."
+            
+            let lateralHeadMovementMiniDesc = "More info"
+            let lateralHeadMovementPassedDesc = "Nice! You had very little lateral head movement during your swing. This will help ensure you don't throw off your swing plane and mishit the ball."
+            let lateralHeadMovementFailedDesc = "Your head moved laterally too much. Try and keep your head still to see major improvements in consistency."
+            
+            // Create swing tips w/ content
+            var tips: [SwingTip] = []
+            
+            tips.append(SwingTip(type: "Left arm angle", passed: swingTipResults.leftArmAngle, miniDescription: leftArmAngleMiniDesc, passedDescription: leftArmAnglePassedDesc, failedDescription: leftArmAngleFailedDesc, help: ""))
+
+            tips.append(SwingTip(type: "Hip sway", passed: swingTipResults.hipSway, miniDescription: hipSwayMiniDesc, passedDescription: hipSwayPassedDesc, failedDescription: hipSwayFailedDesc, help: ""))
+
+            tips.append(SwingTip(type: "Vertical head movement", passed: swingTipResults.verticalHeadMovement, miniDescription: vertHeadMovementMiniDesc, passedDescription: vertHeadMovementPassedDesc, failedDescription: vertHeadMovementFailedDesc, help: ""))
+
+            tips.append(SwingTip(type: "Lateral head movement", passed: swingTipResults.lateralHeadMovement, miniDescription: lateralHeadMovementMiniDesc, passedDescription: lateralHeadMovementPassedDesc, failedDescription: lateralHeadMovementFailedDesc, help: ""))
+            
+            return tips
+        
         } catch {
-            print("Request failed with error: \(error)")
-            return nil
+            print("Error: \(error.localizedDescription)")
+            return []
         }
     }
-    
-    private func fetchPostureAnalysis() async throws -> SwingTipResults? {
-        guard let url = URL(string: "https://itunes.apple.com/search?term=taylor+swift&entity=album") else {
-            print("Error requesting posture analysis.")
-            return nil
-        }
 
-        // Use the async variant of URLSession to fetch data
-        // Code might suspend here
-        let (data, _) = try await URLSession.shared.data(from: url)
-
-        // Parse the JSON data
-        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
-        return swingTipResults
-    }
     
     func generateImages() {
+        
         DispatchQueue.global().async {
             let setupImage = VideoProcessing.getFrameAsImage(frameNum: self.setupFrame, url: self.video!)
             let backswingImage = VideoProcessing.getFrameAsImage(frameNum: self.backswingFrame, url: self.video!)
             let impactImage = VideoProcessing.getFrameAsImage(frameNum: self.impactFrame, url: self.video!)
             
-            while self.processing {
+            while self.processing  {
                 // Wait here until we have our posture info
                 Thread.sleep(forTimeInterval: 0.1)
+//                print("waiting on processing")
             }
-        
+            
             
             DispatchQueue.main.async {
                 let setupImageAnnotated = Swing.createAnnotatedUIImage(image: setupImage!, pose: self.landmarks[self.setupFrame]!)
                 let backswingImageAnnotated = Swing.createAnnotatedUIImage(image: backswingImage!, pose: self.landmarks[self.backswingFrame]!)
                 let impactImageAnnotated = Swing.createAnnotatedUIImage(image: impactImage!, pose: self.landmarks[self.impactFrame]!)
                 
-                self.setupImage = setupImageAnnotated
-                self.backswingImage = backswingImageAnnotated
-                self.impactImage = impactImageAnnotated
+                self.setupImage = setupImageAnnotated.rotate(radians: .pi/2)
+                self.backswingImage = backswingImageAnnotated.rotate(radians: .pi/2)
+                self.impactImage = impactImageAnnotated.rotate(radians: .pi/2)
             }
         }
     }
@@ -173,8 +219,6 @@ class Swing: ObservableObject {
             var poses: [Int: Pose] = [:]
             var poseText = ""
 
-            // Used to determine if there was a posture tracking issue to update on main thread
-            var error = false
             
             var results: [Pose]?
             var count = 0
@@ -207,8 +251,9 @@ class Swing: ObservableObject {
                 
                 count += 1
                 
-                print(".nose raw value: \(detectedPoses[0].landmark(ofType: .nose).type.rawValue)")
-                print("Frame \(frameNum) (#\(count)) - posture analyzed.")
+//                print(".nose raw value: \(detectedPoses[0].landmark(ofType: .nose).type.rawValue)")
+//                print("Frame \(frameNum) (#\(count)) - posture analyzed.")
+                
             }
             
             if usingFrames.isEmpty {
@@ -216,9 +261,6 @@ class Swing: ObservableObject {
             } else {
                 poseText = "\(count) total frames processed. Specified frames: \(usingFrames)"
             }
-            
-            
-            
             
 //            landmarksText += "Left thumb location: \(detectedPoses[0].landmark(ofType: .leftThumb).position)\n"
 //            landmarksText += "Right thumb location: \(detectedPoses[0].landmark(ofType: .rightThumb).position)\n"
@@ -231,7 +273,14 @@ class Swing: ObservableObject {
                 self.landmarks = poses
                 self.landmarksGenerated = true
                 
-                self.processing = false     // stop activity indicator
+                // Backend analysis begins
+                self.analyzing = true
+                // No longer processing posture
+                self.processing = false
+                
+                
+                print("Number of frames: \(count)")
+                print("Poses size: \(poses.count)")
             }
         }
         
@@ -253,7 +302,7 @@ class Swing: ObservableObject {
         ])
         
         let transform = self.transformMatrix(image: image, imageView: imageView)
-        let overlay = UIUtilities.createPoseOverlayView(forPose: pose, inViewWithBounds: imageView.bounds, lineWidth: 2.0, dotRadius: 5.0,
+        let overlay = UIUtilities.createPoseOverlayView(forPose: pose, inViewWithBounds: imageView.bounds, lineWidth: 1.5, dotRadius: 4.0,
             positionTransformationClosure: { (position) -> CGPoint in
                 return self.pointFrom(position).applying(transform)
             }
@@ -285,7 +334,6 @@ class Swing: ObservableObject {
         let renderer = UIGraphicsImageRenderer(size: imageView.bounds.size)
         let image = renderer.image { ctx in
             let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
-            print("res: \(res)")
         }
         
         if saveToPhotos {
@@ -309,7 +357,6 @@ class Swing: ObservableObject {
         let renderer = UIGraphicsImageRenderer(size: imageView.bounds.size)
         let image = renderer.image { ctx in
             let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
-            print("res: \(res)")
         }
         
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
