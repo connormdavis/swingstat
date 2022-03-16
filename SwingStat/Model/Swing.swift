@@ -10,6 +10,7 @@ import MLKit
 import AssetsLibrary
 import AVFoundation
 import SwiftUI
+import AVKit
 import UIKit
 
 
@@ -99,12 +100,15 @@ class Swing: ObservableObject {
         while self.processing {
             // Wait here until we have our posture info
             do {
+                print("Waiting to request backend analysis...")
                 try await Task.sleep(nanoseconds: 100000000)
             } catch {
                 print("ERROR: \(error)")
                 return []
             }
         }
+        
+        print("-> MARK: Requesting backend analysis!")
         
         var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
         request.httpMethod = "POST"
@@ -121,6 +125,18 @@ class Swing: ObservableObject {
         
         let encoder = JSONEncoder()
         let poseJson = try! encoder.encode(poseCollection)
+        
+        // TEMPORARY ------------------------
+
+        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
+            
+            Swing.writePoseJsonToFile(fileUrl: fileUrl, json: poseJson)
+        } else {
+            print("Failed to load documents directory.")
+        }
+
+        // ------------------------------------------------
         
         request.httpBody = poseJson
         
@@ -199,77 +215,13 @@ class Swing: ObservableObject {
         self.processing = true      // used for activity indicator
         
         DispatchQueue.global().async {
-            let options = AccuratePoseDetectorOptions()
-            options.detectorMode = .stream
-            let poseDetector = PoseDetector.poseDetector(options: options)
             
             let asset = AVAsset(url: self.video!)
-            let frames = VideoProcessing.extractFramesToVisionImages(from: asset, at: usingFrames)
-            
-            // If no frames specified, create an array with all frames
-            var desiredFrames: [Int] = []
-            if usingFrames.isEmpty {
-                for i in stride(from: 0, to: frames.count, by: increment) {
-                    desiredFrames.append(i)
-                }
-            } else {
-                desiredFrames = usingFrames
-            }
-            
-            var poses: [Int: Pose] = [:]
-            var poseText = ""
+            let poses = VideoProcessing.extractFramesAndGeneratePoseData(from: asset, at: usingFrames, forSwing: self)
 
-            
-            var results: [Pose]?
-            var count = 0
-            for frameNum in desiredFrames {
-                do {
-                    guard let visionImgFrame = frames[frameNum] else {
-                        print("Couldn't find frame #\(frameNum) in extracted frames dictionary.")
-                        return
-                    }
-                    results = try poseDetector.results(in: visionImgFrame)
-                } catch let error {
-                    print("Failed to detect pose with error: \(error.localizedDescription).")
-                    // Trigger return to media picker
-                    self.noPostureDetected = true
-                    return
-                }
-                guard let detectedPoses = results, !detectedPoses.isEmpty else {
-                    print("Pose detector returned no results.")
-                    // Trigger return to media picker
-                    self.noPostureDetected = true
-                    return
-                }
                 
-                // Extract first (and only) pose object
-                let pose = detectedPoses[0]
-                poses[frameNum] = pose
-                
-                // Assemble text for display
-//                poseText += "Nose [\(frameNum)]: \(detectedPoses[0].landmark(ofType: .nose).position)\n"
-                
-                count += 1
-                
-//                print(".nose raw value: \(detectedPoses[0].landmark(ofType: .nose).type.rawValue)")
-//                print("Frame \(frameNum) (#\(count)) - posture analyzed.")
-                
-            }
-            
-            if usingFrames.isEmpty {
-                poseText = "\(count) total frames processed at increment \(increment).\n\n'swing.json' generated and ready to share."
-            } else {
-                poseText = "\(count) total frames processed. Specified frames: \(usingFrames)"
-            }
-            
-//            landmarksText += "Left thumb location: \(detectedPoses[0].landmark(ofType: .leftThumb).position)\n"
-//            landmarksText += "Right thumb location: \(detectedPoses[0].landmark(ofType: .rightThumb).position)\n"
-//            landmarksText += "Left toe location: \(detectedPoses[0].landmark(ofType: .leftToe).position)\n"
-//            landmarksText += "Right toe location: \(detectedPoses[0].landmark(ofType: .rightToe).position)\n"
-            
             // Trigger UI updates on main thread
             DispatchQueue.main.async {
-                self.landmarksText = poseText
                 self.landmarks = poses
                 self.landmarksGenerated = true
                 
@@ -277,10 +229,6 @@ class Swing: ObservableObject {
                 self.analyzing = true
                 // No longer processing posture
                 self.processing = false
-                
-                
-                print("Number of frames: \(count)")
-                print("Poses size: \(poses.count)")
             }
         }
         
@@ -293,7 +241,9 @@ class Swing: ObservableObject {
         let annotationOverlayView = UIView(frame: .zero)
             annotationOverlayView.translatesAutoresizingMaskIntoConstraints = false
             annotationOverlayView.clipsToBounds = true
+        
         imageView.addSubview(annotationOverlayView)
+        
         NSLayoutConstraint.activate([
               annotationOverlayView.topAnchor.constraint(equalTo: imageView.topAnchor),
               annotationOverlayView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
@@ -359,7 +309,7 @@ class Swing: ObservableObject {
             let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
         }
         
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     
         return imageView
         // use UIUtilities.addCircle() & shite to add subviews to the main 'imageView' and return it

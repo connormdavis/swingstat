@@ -136,10 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */,
-				2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */,
 				B7886C6527D55163007BEF8B /* SwingTipItem.swift */,
-				2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */,
-				2F7BB03427CEBD5C00C149DD /* SavedSwingList.swift */,
 				B7886C6727D552E7007BEF8B /* SwingTipList.swift */,
 				B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */,
 				2F7BB03F27CFC30F00C149DD /* SwingEventChooser.swift */,
@@ -513,7 +510,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,7 +545,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

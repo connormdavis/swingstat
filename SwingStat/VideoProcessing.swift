@@ -64,7 +64,7 @@ class VideoProcessing {
     }
     
     /*
-     Returns the number of seconds in an AVAsset video
+     Returns the number of seconds in an AVAsset video/Users/connordavis/Desktop/Repos/SwingStat/SwingStat/Model/Swing.swift
      */
     static func getDuration(from video: AVAsset) -> Float64 {
         let duration = video.duration
@@ -76,7 +76,7 @@ class VideoProcessing {
      Takes an AVAsset video and returns an array where each element is a single frame
      of the video stored as a 'VisionImage', the type required by ML Kit for detecting poses.
      */
-    static func extractFramesToVisionImages(from video: AVAsset, at indices: [Int]) -> [Int: VisionImage] {
+    static func extractFramesAndGeneratePoseData(from video: AVAsset, at indices: [Int], forSwing swing: Swing) -> [Int: Pose] {
         let reader = try! AVAssetReader(asset: video)
         
         let videoTrack = video.tracks(withMediaType: AVMediaType.video)[0]
@@ -86,8 +86,13 @@ class VideoProcessing {
         reader.add(trackReaderOutput)
         reader.startReading()
         
-        // Will contain VisionImage representation of desired frames
-        var frames: [Int: VisionImage] = [:]
+        // Config posture detector
+        let options = AccuratePoseDetectorOptions()
+        options.detectorMode = .stream
+        let poseDetector = PoseDetector.poseDetector(options: options)
+        
+        // Will contain Pose representation of desired frames
+        var poses: [Int: Pose] = [:]
         
         var frameCount = 0
         // getting frames ref: https://stackoverflow.com/questions/49390728/how-to-get-frames-from-a-local-video-file-in-swift/49394183c
@@ -102,13 +107,39 @@ class VideoProcessing {
                 
                 // Create VisionImage and add to list
                 let visionImage = VisionImage(buffer: sampleBuffer)
-                frames[frameCount] = visionImage
+                
+                // Generate pose data
+                var results: [Pose]?
+                do {
+                    results = try poseDetector.results(in: visionImage)
+                } catch let error {
+                    print("Failed to detect pose with error: \(error.localizedDescription).")
+                    // Trigger return to media picker on main thread
+                    DispatchQueue.main.async {
+                        swing.noPostureDetected = true
+                    }
+                    return [:]
+                }
+                guard let detectedPoses = results, !detectedPoses.isEmpty else {
+                    print("Pose detector returned no results.")
+                    // Trigger return to media picker on main thread
+                    DispatchQueue.main.async {
+                        swing.noPostureDetected = true
+                    }
+                    return [:]
+                }
+                
+                // Extract first (and only) pose object
+                let pose = detectedPoses[0]
+                
+                
+                poses[frameCount] = pose
             }
             
             frameCount += 1
         }
         
-        return frames
+        return poses
     }
     
     /*

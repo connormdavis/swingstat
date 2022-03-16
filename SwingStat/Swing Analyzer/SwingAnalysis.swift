@@ -40,6 +40,8 @@ struct SwingAnalysis: View {
         return UIImage(systemName: "photo")!
     }
     
+
+    
     var body: some View {
         // Display loading when processing
         // TODO: Update swing's processing state to include posture generation AND analysis
@@ -102,6 +104,20 @@ struct SwingAnalysis: View {
                     .fontWeight(.bold)
                     .foregroundColor(Color.green)
                     .padding()
+                
+                Button("Share posture file") {
+                    if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+                        let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
+                        
+                        let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+                        
+                        print("presenting activity VC")
+                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                    } else {
+                        print("Failed to load documents directory.")
+                        return
+                    }
+                }
                 
                 HStack(alignment: .center) {
 //                    PosturePhoto(image: UIImage(named: "dustin_thumbnail")!)
