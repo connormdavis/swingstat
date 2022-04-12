@@ -9,11 +9,13 @@ import SwiftUI
 
 struct Settings: View {
     var body: some View {
-        VStack {
-            Text("Settings")
+        NavigationView {
+            VStack {
+                Text("Settings")
+            }
+            .navigationTitle("Settings")
         }
     }
-        
 }
 
 struct Settings_Previews: PreviewProvider {

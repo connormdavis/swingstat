@@ -28,7 +28,7 @@ struct Main: View {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-            Dashboard(swing: swing)
+            Settings()
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
