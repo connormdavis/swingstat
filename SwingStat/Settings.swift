@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct Settings: View {
+    @State private var height = false
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Settings")
+            Form {
+                Section(header: Text("User")) {
+                    Toggle(isOn: $height,
+                           label:{
+                        Text("Height")
+                    })
+                    
+                }
             }
             .navigationTitle("Settings")
         }
+        
     }
 }
 
