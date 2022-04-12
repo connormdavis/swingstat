@@ -12,7 +12,6 @@ struct SwingTipList: View {
 
     var body: some View {
         
-        // uncomment when getting data from backend
         List(savedTips, id: \.type) { tip in
             NavigationLink {
                 SwingTipDetailed(swingTip: tip)

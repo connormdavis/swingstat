@@ -97,7 +97,6 @@ struct PoseSerializable: Codable {
             let landmarkSerializable = PoseLandmarkSerializable(inFrameLikelihood: inFrameLikelihood, landmarkType: landmarkType, position: Point3DSerializable(x: x, y: y, z: z))
             poseLandmarks[landmarkType] = landmarkSerializable
         }
-        // TODO: Create & return
         return PoseSerializable(poseLandmarks: poseLandmarks)
     }
     

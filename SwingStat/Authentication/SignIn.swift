@@ -60,11 +60,9 @@ struct SignIn : View {
                         .foregroundColor(Color.blue)
                 }
                 .padding(.top,10)
-                
             }
             .padding(.horizontal,25)
             .padding(.top, 25)
-            
         }
     }
 }

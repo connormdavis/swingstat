@@ -28,7 +28,6 @@ struct SignUp: View {
                 
                 Spacer(minLength: 0)
                 
-                
             }
             .padding(.horizontal, 25)
             .padding(.top,30)
@@ -84,12 +83,10 @@ struct SignUp: View {
                     .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
                     .shadow(color: Color.black.opacity(0.08), radius: 5, x: 0, y: -5)
                 
-                
             }
             .padding(.horizontal,25)
             .padding(.top,25)
             
-    
         }
 
     }

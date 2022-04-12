@@ -35,18 +35,6 @@ struct PosturePhoto {
         
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-        // use UIUtilities.addCircle() & shite to add subviews to the main 'imageView' and return it
     }
-    
-//    func makeUIView(context: Context) -> UIImageView {
-//        return createImageViewWithAnnotations()
-//    }
-//
-//    func updateUIView(_ uiView: UIImageView, context: Context) {
-//    }
-    
-
 }

@@ -30,7 +30,6 @@ struct Authentication: View {
                             .foregroundColor(Color.green)
                     }
           
-                    
                     HStack {
                         Text("Helping you go low!")
                             .font(.subheadline)
@@ -157,8 +156,6 @@ struct Authentication: View {
             
         }
     }
-        
-    
 }
 
 

@@ -100,7 +100,6 @@ class Swing: ObservableObject {
         while self.processing {
             // Wait here until we have our posture info
             do {
-                print("Waiting to request backend analysis...")
                 try await Task.sleep(nanoseconds: 100000000)
             } catch {
                 print("ERROR: \(error)")
@@ -126,7 +125,7 @@ class Swing: ObservableObject {
         let encoder = JSONEncoder()
         let poseJson = try! encoder.encode(poseCollection)
         
-        // TEMPORARY ------------------------
+        // TEMPORARY ------------------------------------
 
         if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
             let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
@@ -192,7 +191,6 @@ class Swing: ObservableObject {
             while self.processing  {
                 // Wait here until we have our posture info
                 Thread.sleep(forTimeInterval: 0.1)
-//                print("waiting on processing")
             }
             
             
@@ -261,23 +259,6 @@ class Swing: ObservableObject {
         
         return self.createImageFromImageView(imageView: imageView, saveToPhotos: true)
         
-//        for landmark in pose.landmarks {
-//            let inFrameLikelihood = landmark.inFrameLikelihood
-//
-//            let point = self.pointFrom(landmark.position)
-//            let transform = self.transformMatrix(image: image, imageView: imageView)
-//            let transformedPoint = point.applying(transform)
-//
-//            UIUtilities.addCircle(
-//                atPoint: transformedPoint,
-//                to: annotationOverlayView,
-//                color: UIColor.red,
-//                radius: 7.0
-//            )
-//        }
-//
-//
-//        return self.createImageFromImageView(imageView: imageView, saveToPhotos: true)
     }
     
     private static func createImageFromImageView(imageView: UIImageView, saveToPhotos: Bool = false) -> UIImage {
@@ -308,11 +289,8 @@ class Swing: ObservableObject {
         let image = renderer.image { ctx in
             let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
         }
-        
-        //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-    
+            
         return imageView
-        // use UIUtilities.addCircle() & shite to add subviews to the main 'imageView' and return it
     }
     
     private static func pointFrom(_ visionPoint: VisionPoint) -> CGPoint {

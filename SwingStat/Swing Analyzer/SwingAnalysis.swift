@@ -44,7 +44,6 @@ struct SwingAnalysis: View {
     
     var body: some View {
         // Display loading when processing
-        // TODO: Update swing's processing state to include posture generation AND analysis
         if swing.noPostureDetected {
             VStack(alignment: .center) {
                 Text("No person  ")
@@ -93,9 +92,6 @@ struct SwingAnalysis: View {
                 self.swingTips = tips
                 self.swing.analyzing = false
             }
-//            .onReceive(swing.$analyzing) { analyzing in
-//                let tips = await swing.analyzePostureInformation()
-//            }
         } else {
             
             VStack {
@@ -120,12 +116,6 @@ struct SwingAnalysis: View {
                 }
                 
                 HStack(alignment: .center) {
-//                    PosturePhoto(image: UIImage(named: "dustin_thumbnail")!)
-////                        .resize(width: 100, height: 100)
-//                    PosturePhoto(image: UIImage(named: "dustin_thumbnail")!)
-////                        .resize(width: 100, height: 100)
-//                    PosturePhoto(image: UIImage(named: "dustin_thumbnail")!)
-//                        .resize(width: 100, height: 100)
                     VStack(alignment: .center, spacing: 0) {
                         Image(uiImage: getSetupImage())
                             .resizable()
@@ -175,15 +165,6 @@ struct SwingAnalysis: View {
                     .font(.headline)
                 
                 SwingTipList(savedTips: self.swingTips!)
-//                Button("Create annotated images") {
-//                    print("Creating images and saving!!!!!")
-//                    if swing.imagesGenerated() {
-//                        swing.setupImage = Swing.createAnnotatedUIImage(image: swing.setupImage!, pose: swing.landmarks[swing.setupFrame]!)
-//                        swing.backswingImage = Swing.createAnnotatedUIImage(image: swing.backswingImage!, pose: swing.landmarks[swing.backswingFrame]!)
-//                        swing.impactImage = Swing.createAnnotatedUIImage(image: swing.impactImage!, pose: swing.landmarks[swing.impactFrame]!)
-//                    }
-//                }
-//                .padding()
             }
             .sheet(isPresented: $viewingAnnotatedImage) {
                 if selectedImageIdx == 0 {

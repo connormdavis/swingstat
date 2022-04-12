@@ -27,8 +27,6 @@ struct SavedSwingList: View {
                 }
             }
         }
-        
-        
     }
 }
 
