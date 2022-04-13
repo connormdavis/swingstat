@@ -7,22 +7,118 @@
 
 import SwiftUI
 
+
+fileprivate enum OpenSetting {
+    case none, start, end
+}
+
+
 struct Settings: View {
-    @State private var height = false
+    // User info variables
+    @State private var firstName = ""
+    @State private var lastName = ""
+    @State private var userFeet = 0
+    @State private var userInches = 0
+    @State private var openSetting = OpenSetting.none
+
+    // Display settings variables
+    @State private var darkMode = false
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("User")) {
-                    Toggle(isOn: $height,
+                Section(header: Text("User Info")) {
+                    HStack {
+                        Text("First Name")
+
+                        Spacer()
+
+                        TextField("John", text: $firstName).multilineTextAlignment(.trailing)
+                    }
+                    HStack {
+                        Text("First Name")
+
+                        Spacer()
+
+                        TextField("Doe", text: $lastName).multilineTextAlignment(.trailing)
+                    }
+
+                
+                    HeightSetting(title: "User Height",
+                                  feet: userFeet,
+                                  inches: userInches,
+                                  setting: .start,
+                                  openSetting: $openSetting)
+                    if openSetting == .start {
+                        HeightPicker(feet: $userFeet, inches: $userInches)
+                    }
+                }
+                Section(header: Text("Display")) {
+                    Toggle(isOn: $darkMode,
                            label:{
-                        Text("Height")
+                        Text("Dark Mode")
                     })
-                    
                 }
             }
             .navigationTitle("Settings")
         }
         
+    }
+}
+
+// Custom view that will hold the height
+struct HeightSetting: View {
+    var title: String
+    var feet: Int
+    var inches: Int
+    fileprivate var setting: OpenSetting
+    fileprivate var openSetting: Binding<OpenSetting>
+
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            ZStack {
+                Text(toHeight(feet: feet, inches: inches))
+            }
+            .frame(width: 64, height: 32)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation() {
+                self.openSetting.wrappedValue = (self.openSetting.wrappedValue == self.setting) ? OpenSetting.none : self.setting
+            }
+        }
+    }
+
+    func toHeight(feet: Int, inches: Int) -> String {
+        let heightString = String(format: "%01d'", feet) + " " + String(format: "%01d\"", inches)
+        return heightString
+    }
+}
+
+// Custom view for selecting height in feet and inches side by side
+struct HeightPicker: View {
+    var feet: Binding<Int>
+    var inches: Binding<Int>
+
+    var body: some View {
+        HStack() {
+            Spacer()
+            Picker(selection: feet, label: EmptyView()) {
+                ForEach((2...7), id: \.self) { ix in
+                    Text("\(ix)").tag(ix)
+                }
+                }.pickerStyle(WheelPickerStyle()).frame(width: 50).clipped()
+            Text("feet")
+            Picker(selection: inches, label: EmptyView()) {
+                ForEach((0...11), id: \.self) { ix in
+                    Text("\(ix)").tag(ix)
+                }
+                }.pickerStyle(WheelPickerStyle()).frame(width: 50).clipped()
+            Text("inches")
+            Spacer()
+        }
     }
 }
 
