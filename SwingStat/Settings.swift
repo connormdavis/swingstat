@@ -25,44 +25,48 @@ struct Settings: View {
     @State private var darkMode = false
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("User Info")) {
-                    HStack {
-                        Text("First Name")
+        GeometryReader { geometry in
+            NavigationView {
+                Form {
+                    Section(header: Text("User Info")) {
+                        HStack {
+                            Text("First Name")
 
-                        Spacer()
+                            Spacer()
 
-                        TextField("John", text: $firstName).multilineTextAlignment(.trailing)
+                            TextField("John", text: $firstName).multilineTextAlignment(.trailing)
+                        }
+                        HStack {
+                            Text("Last Name")
+
+                            Spacer()
+
+                            TextField("Doe", text: $lastName).multilineTextAlignment(.trailing)
+                        }
+
+                    
+                        HeightSetting(title: "User Height",
+                                      feet: userFeet,
+                                      inches: userInches,
+                                      setting: .start,
+                                      openSetting: $openSetting)
+                        if openSetting == .start {
+                            HeightPicker(feet: $userFeet, inches: $userInches)
+                            
+                        }
                     }
-                    HStack {
-                        Text("First Name")
 
-                        Spacer()
-
-                        TextField("Doe", text: $lastName).multilineTextAlignment(.trailing)
+                    Section(header: Text("Display")) {
+                        Toggle(isOn: $darkMode,
+                               label:{
+                            Text("Dark Mode")
+                        })
                     }
-
-                
-                    HeightSetting(title: "User Height",
-                                  feet: userFeet,
-                                  inches: userInches,
-                                  setting: .start,
-                                  openSetting: $openSetting)
-                    if openSetting == .start {
-                        HeightPicker(feet: $userFeet, inches: $userInches)
-                    }
+                    
                 }
-                Section(header: Text("Display")) {
-                    Toggle(isOn: $darkMode,
-                           label:{
-                        Text("Dark Mode")
-                    })
-                }
+                .navigationTitle("Settings")
             }
-            .navigationTitle("Settings")
         }
-        
     }
 }
 
@@ -102,25 +106,59 @@ struct HeightPicker: View {
     var feet: Binding<Int>
     var inches: Binding<Int>
 
+//    var body: some View {
+//        GeometryReader { geometry in
+//            HStack() {
+//                VStack {
+//                    Picker(selection: feet, label: EmptyView()) {
+//                        ForEach((0...7), id: \.self) { ix in
+//                            Text("\(ix)").tag(ix)
+//                        }
+//                    }
+//
+//                    .pickerStyle(.wheel).frame(width: geometry.size.width/2.5, height: geometry.size.height, alignment: .center).compositingGroup().clipped()
+//
+//                }
+//                Text("ft.")
+//                VStack {
+//                    Picker(selection: inches, label: EmptyView()) {
+//                        ForEach((0...11), id: \.self) { ix in
+//                            Text("\(ix)").tag(ix)
+//                        }
+//                    }
+//                    .pickerStyle(.wheel).frame(width: geometry.size.width/2.5, height: geometry.size.height, alignment: .center).compositingGroup().clipped()
+//                }
+//                Text("in.")
+//            }
+//        }
+//
+//    }
     var body: some View {
-        HStack() {
-            Spacer()
-            Picker(selection: feet, label: EmptyView()) {
-                ForEach((2...7), id: \.self) { ix in
-                    Text("\(ix)").tag(ix)
-                }
-                }.pickerStyle(WheelPickerStyle()).frame(width: 50).clipped()
-            Text("feet")
-            Picker(selection: inches, label: EmptyView()) {
-                ForEach((0...11), id: \.self) { ix in
-                    Text("\(ix)").tag(ix)
-                }
-                }.pickerStyle(WheelPickerStyle()).frame(width: 50).clipped()
-            Text("inches")
-            Spacer()
+            HStack() {
+                Spacer()
+                Picker(selection: feet, label: EmptyView()) {
+                    ForEach((2...7), id: \.self) { ix in
+                        Text("\(ix)").tag(ix)
+                    }
+                    }.pickerStyle(WheelPickerStyle()).frame(width: 100).clipped()
+                Text("ft.")
+                Picker(selection: inches, label: EmptyView()) {
+                    ForEach((0...11), id: \.self) { ix in
+                        Text("\(ix)").tag(ix)
+                    }
+                    }.pickerStyle(WheelPickerStyle()).frame(width: 100).clipped()
+                Text("in.")
+                Spacer()
+            }
         }
-    }
 }
+
+
+extension UIPickerView {
+   open override var intrinsicContentSize: CGSize {
+      return CGSize(width: UIView.noIntrinsicMetric, height: super.intrinsicContentSize.height)}
+}
+
 
 struct Settings_Previews: PreviewProvider {
     static var previews: some View {
