@@ -29,7 +29,13 @@
 		2F82CCCD27D2A977006B5B5E /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */; };
 		2F82CCD127D58769006B5B5E /* SwingTipResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82CCD027D58769006B5B5E /* SwingTipResults.swift */; };
 		2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F93B95427BC541F006FDAA9 /* Swing.swift */; };
-		5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */; };
+		2FD57DEF2816FB01002B7C1F /* CGImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DEE2816FB01002B7C1F /* CGImageExtension.swift */; };
+		2FD57DF22816FB6E002B7C1F /* CameraError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DF12816FB6E002B7C1F /* CameraError.swift */; };
+		2FD57DF52816FC07002B7C1F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DF42816FC07002B7C1F /* ErrorView.swift */; };
+		2FD57DF72816FCA1002B7C1F /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DF62816FCA1002B7C1F /* FrameView.swift */; };
+		2FD57DF928170610002B7C1F /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DF828170610002B7C1F /* CameraManager.swift */; };
+		2FD57DFB28170B5D002B7C1F /* FrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DFA28170B5D002B7C1F /* FrameManager.swift */; };
+		2FD57DFD28170D57002B7C1F /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD57DFC28170D57002B7C1F /* CameraViewModel.swift */; };
 		B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6527D55163007BEF8B /* SwingTipItem.swift */; };
 		B7886C6827D552E7007BEF8B /* SwingTipList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6727D552E7007BEF8B /* SwingTipList.swift */; };
 		B7886C6A27D5555A007BEF8B /* SwingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6927D5555A007BEF8B /* SwingTip.swift */; };
@@ -41,10 +47,10 @@
 		B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712927C6A57100AA3F7D /* Main.swift */; };
 		B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712B27C6AAD700AA3F7D /* Profile.swift */; };
 		B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712D27C6AAEF00AA3F7D /* Stats.swift */; };
+		FCE7AA5F244AE81EA6C8E39D /* Pods_SwingStat__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 560528ACF1240333A5F0F0AF /* Pods_SwingStat__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingStatApp.swift; sourceTree = "<group>"; };
 		2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = SwingStat/Old/ContentView.swift; sourceTree = SOURCE_ROOT; };
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,8 +74,15 @@
 		2F82CCCC27D2A977006B5B5E /* VideoProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoProcessing.swift; path = SwingStat/VideoProcessing.swift; sourceTree = SOURCE_ROOT; };
 		2F82CCD027D58769006B5B5E /* SwingTipResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipResults.swift; sourceTree = "<group>"; };
 		2F93B95427BC541F006FDAA9 /* Swing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swing.swift; sourceTree = "<group>"; };
-		6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
-		7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD57DEE2816FB01002B7C1F /* CGImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImageExtension.swift; sourceTree = "<group>"; };
+		2FD57DF12816FB6E002B7C1F /* CameraError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraError.swift; path = /Users/connordavis/Library/Developer/swingstat/SwingStat/CameraError.swift; sourceTree = "<absolute>"; };
+		2FD57DF42816FC07002B7C1F /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		2FD57DF62816FCA1002B7C1F /* FrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
+		2FD57DF828170610002B7C1F /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		2FD57DFA28170B5D002B7C1F /* FrameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameManager.swift; sourceTree = "<group>"; };
+		2FD57DFC28170D57002B7C1F /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
+		560528ACF1240333A5F0F0AF /* Pods_SwingStat__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwingStat__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81FD03F1F723EF7CF27C7151 /* Pods-SwingStat (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		B7886C6527D55163007BEF8B /* SwingTipItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipItem.swift; sourceTree = "<group>"; };
 		B7886C6727D552E7007BEF8B /* SwingTipList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTipList.swift; sourceTree = "<group>"; };
 		B7886C6927D5555A007BEF8B /* SwingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingTip.swift; sourceTree = "<group>"; };
@@ -81,6 +94,7 @@
 		B7BA712927C6A57100AA3F7D /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		B7BA712B27C6AAD700AA3F7D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B7BA712D27C6AAEF00AA3F7D /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		FCDDBE60F20EE8B862B2F7C5 /* Pods-SwingStat (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */,
+				FCE7AA5F244AE81EA6C8E39D /* Pods_SwingStat__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +115,7 @@
 				2F2ECC3827BAD5D600FF7475 /* SwingStat */,
 				2F2ECC4127BAD5D800FF7475 /* Products */,
 				4BB55DDE35CC67D549220E82 /* Pods */,
-				7AAA15E25746860DB3B8774C /* Frameworks */,
+				A6585AF6A9B5FAA220B9CF52 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,7 +130,9 @@
 				B7BA712627C5F5B700AA3F7D /* Authentication */,
 				2F82CCCE27D2A9B6006B5B5E /* Model */,
 				2F82CCC927D2A882006B5B5E /* Swing Analyzer */,
+				2FD57DF32816FB72002B7C1F /* Camera */,
 				2F82CCCB27D2A964006B5B5E /* Lib */,
+				2FD57DF02816FB0F002B7C1F /* Extensions */,
 				2F82CCCF27D2A9CE006B5B5E /* Old */,
 				2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */,
 				2F7BB04127D002D300C149DD /* reg_swing.mov */,
@@ -183,19 +199,40 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
+		2FD57DF02816FB0F002B7C1F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2FD57DEE2816FB01002B7C1F /* CGImageExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2FD57DF32816FB72002B7C1F /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				2FD57DF12816FB6E002B7C1F /* CameraError.swift */,
+				2FD57DF42816FC07002B7C1F /* ErrorView.swift */,
+				2FD57DF62816FCA1002B7C1F /* FrameView.swift */,
+				2FD57DF828170610002B7C1F /* CameraManager.swift */,
+				2FD57DFA28170B5D002B7C1F /* FrameManager.swift */,
+				2FD57DFC28170D57002B7C1F /* CameraViewModel.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		4BB55DDE35CC67D549220E82 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */,
-				1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */,
+				81FD03F1F723EF7CF27C7151 /* Pods-SwingStat (iOS).debug.xcconfig */,
+				FCDDBE60F20EE8B862B2F7C5 /* Pods-SwingStat (iOS).release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		7AAA15E25746860DB3B8774C /* Frameworks */ = {
+		A6585AF6A9B5FAA220B9CF52 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7CDDA5C653825556A4194892 /* Pods_SwingStat__iOS_.framework */,
+				560528ACF1240333A5F0F0AF /* Pods_SwingStat__iOS_.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -217,12 +254,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F2ECC5127BAD5D800FF7475 /* Build configuration list for PBXNativeTarget "SwingStat (iOS)" */;
 			buildPhases = (
-				90265AA362B3E8F506016EB9 /* [CP] Check Pods Manifest.lock */,
+				359F15757F436BFFDCD05BD1 /* [CP] Check Pods Manifest.lock */,
 				2F2ECC3C27BAD5D800FF7475 /* Sources */,
 				2F2ECC3D27BAD5D800FF7475 /* Frameworks */,
 				2F2ECC3E27BAD5D800FF7475 /* Resources */,
-				A3CEFF78FD605724AC5A7219 /* [CP] Embed Pods Frameworks */,
-				41DD2BAC1F9B1D98FCC01AFE /* [CP] Copy Pods Resources */,
+				46DCFF3FFB62B793D8AD1356 /* [CP] Embed Pods Frameworks */,
+				5A262419AD97DE9A0EF58F53 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -279,24 +316,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41DD2BAC1F9B1D98FCC01AFE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		90265AA362B3E8F506016EB9 /* [CP] Check Pods Manifest.lock */ = {
+		359F15757F436BFFDCD05BD1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,7 +338,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A3CEFF78FD605724AC5A7219 /* [CP] Embed Pods Frameworks */ = {
+		46DCFF3FFB62B793D8AD1356 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -335,6 +355,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5A262419AD97DE9A0EF58F53 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS)-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -343,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */,
+				2FD57DFD28170D57002B7C1F /* CameraViewModel.swift in Sources */,
 				B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */,
 				2F81E66A27C677CF008DD180 /* Point3DSerializable.swift in Sources */,
 				2F81E66827C676FE008DD180 /* PoseLandmarkSerializable.swift in Sources */,
@@ -363,16 +401,22 @@
 				2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */,
 				2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */,
 				2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */,
+				2FD57DF52816FC07002B7C1F /* ErrorView.swift in Sources */,
 				B7BA712827C6A42800AA3F7D /* Settings.swift in Sources */,
 				B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */,
+				2FD57DF22816FB6E002B7C1F /* CameraError.swift in Sources */,
 				2F7BB03A27CF2D5A00C149DD /* PosturePhoto.swift in Sources */,
 				B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */,
 				2F7BB02F27CEB36800C149DD /* SwingAnalyzer.swift in Sources */,
 				2F82CCD127D58769006B5B5E /* SwingTipResults.swift in Sources */,
+				2FD57DEF2816FB01002B7C1F /* CGImageExtension.swift in Sources */,
 				2F7BB03327CEB3E400C149DD /* SwingAnalysis.swift in Sources */,
 				2F7BB03C27CF2E4A00C149DD /* UIUtilities.swift in Sources */,
 				B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */,
+				2FD57DF72816FCA1002B7C1F /* FrameView.swift in Sources */,
+				2FD57DF928170610002B7C1F /* CameraManager.swift in Sources */,
 				B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */,
+				2FD57DFB28170B5D002B7C1F /* FrameManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,7 +536,7 @@
 		};
 		2F2ECC5227BAD5D800FF7475 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C4369BBB3BFEBD7BCBF5A2A /* Pods-SwingStat (iOS).debug.xcconfig */;
+			baseConfigurationReference = 81FD03F1F723EF7CF27C7151 /* Pods-SwingStat (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -527,7 +571,7 @@
 		};
 		2F2ECC5327BAD5D800FF7475 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */;
+			baseConfigurationReference = FCDDBE60F20EE8B862B2F7C5 /* Pods-SwingStat (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

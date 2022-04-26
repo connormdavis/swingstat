@@ -11,6 +11,8 @@ import AVKit
 struct SwingAnalyzer: View {
     @Environment(\.colorScheme) var colorScheme
     
+    @StateObject private var model = CameraViewModel()
+    
     // Used for communicating to/from CameraView sheet
     @State var showCameraModal: Bool = false
     @State var selectedVideoUrl: URL = ContentView.stockUrl
@@ -75,7 +77,7 @@ struct SwingAnalyzer: View {
                 .padding(.horizontal, 25)
                 
                 SavedSwingList(savedSwings: createSwingsFromVideo())
-                
+                 
             }
             
             .onChange(of: selectedVideoUrl) { newUrl in
@@ -87,7 +89,9 @@ struct SwingAnalyzer: View {
                 self.showSwingAnalysis = true
             }
             .sheet(isPresented: $showCameraModal) {
-                CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
+//                CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
+                FrameView(image: model.frame)
+                    .edgesIgnoringSafeArea(.all)
             }
             .navigationTitle("Swing Analyzer")
             .accentColor(Color.white)
