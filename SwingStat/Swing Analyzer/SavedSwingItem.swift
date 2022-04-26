@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct SavedSwingItem: View {
     
     var swing: Swing
-    
+
     
     var body: some View {
         HStack {
-            Image(systemName: "video.fill")
-                .resizable()
+            Image(uiImage: getThumbnailFrom(path: swing.getVideoURL())!)
                 .frame(width: 30, height: 20)
             Text(swing.getFilename()).lineLimit(1).font(.subheadline)
             Spacer()
@@ -27,6 +27,29 @@ struct SavedSwingItem: View {
         .padding()
     }
 }
+                  
+// https://stackoverflow.com/questions/31779150/creating-thumbnail-from-local-video-in-swift
+func getThumbnailFrom(path: URL) -> UIImage? {
+
+    do {
+
+        let asset = AVURLAsset(url: path , options: nil)
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        imgGenerator.appliesPreferredTrackTransform = true
+        let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+        let thumbnail = UIImage(cgImage: cgImage)
+
+        return thumbnail
+
+    } catch let error {
+
+        print("*** Error generating thumbnail: \(error.localizedDescription)")
+        return nil
+
+    }
+
+}
+                  
 
 struct SavedSwingItem_Previews: PreviewProvider {
     static let test_swing: Swing = Swing(url: nil)

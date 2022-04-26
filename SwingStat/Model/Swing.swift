@@ -77,6 +77,13 @@ class Swing: ObservableObject {
         }
         return filename
     }
+    
+    /*
+     Returns the url of a swing video for use in generating thumbnail
+     */
+    func getVideoURL() -> URL {
+        return video!
+    }
 
     /*
      Resets the state when an entirely new swing video is selected.
