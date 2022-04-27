@@ -55,14 +55,6 @@ struct Profile: View {
                             
                         }
                     }
-
-                    Section(header: Text("Display")) {
-                        Toggle(isOn: $darkMode,
-                               label:{
-                            Text("Dark Mode")
-                        })
-                    }
-                    
                 }
                 .navigationTitle("My Profile")
             }

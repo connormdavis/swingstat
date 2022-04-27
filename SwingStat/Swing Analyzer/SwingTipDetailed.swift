@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SwingTipDetailed: View {
     @State var swingTip: SwingTip
+    var swing: Swing
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,14 +27,28 @@ struct SwingTipDetailed: View {
                         .foregroundColor(Color.red)
                 }
             }
+
+            if swingTip.type == "Left arm angle" {
+                HStack {
+                    Spacer()
+                    Image(uiImage: swing.backswingImage!)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 250, height: 250, alignment: .center)
+                        .cornerRadius(15)
+                    Spacer()
+                }
+            }
             
             if swingTip.passed {
                 Text(swingTip.passedDescription)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.body)
                     .padding(.top, 15.0)
             } else {
                 Text(swingTip.failedDescription)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.body)
                     .padding(.top, 15.0)
@@ -46,6 +61,7 @@ struct SwingTipDetailed: View {
                 .font(.title3)
                 .padding(.top, 15.0)
             Text("These videos may be helpful in improving this aspect of your swing")
+                .fixedSize(horizontal: false, vertical: true)
                 .font(.caption)
         }
         .padding()
@@ -78,13 +94,16 @@ struct SwingTipDetailed: View {
             .padding()
             
         }
+        
     }
 }
 
 struct SwingTipDetailed_Previews: PreviewProvider {
     static var swingTip = SwingTip(type: "", passed: false, miniDescription: "", passedDescription: "", failedDescription: "", help: "")
     
+    static let test_swing: Swing = Swing(url: nil)
+    
     static var previews: some View {
-        SwingTipDetailed(swingTip: swingTip)
+        SwingTipDetailed(swingTip: swingTip, swing: test_swing)
     }
 }
