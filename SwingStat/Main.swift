@@ -28,11 +28,6 @@ struct Main: View {
                     Image(systemName: "person")
                     Text("Profile")
                 }
-            Settings()
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("Settings")
-                }
         }
         .accentColor(Color.green)
     }

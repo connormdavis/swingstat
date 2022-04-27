@@ -37,7 +37,6 @@
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
 		B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712227C5F35400AA3F7D /* SignIn.swift */; };
 		B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712427C5F3A500AA3F7D /* SignUp.swift */; };
-		B7BA712827C6A42800AA3F7D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712727C6A42800AA3F7D /* Settings.swift */; };
 		B7BA712A27C6A57100AA3F7D /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712927C6A57100AA3F7D /* Main.swift */; };
 		B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712B27C6AAD700AA3F7D /* Profile.swift */; };
 		B7BA712E27C6AAEF00AA3F7D /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712D27C6AAEF00AA3F7D /* Stats.swift */; };
@@ -77,7 +76,6 @@
 		B7BA711E27C5F0A400AA3F7D /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		B7BA712227C5F35400AA3F7D /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		B7BA712427C5F3A500AA3F7D /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
-		B7BA712727C6A42800AA3F7D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B7BA712927C6A57100AA3F7D /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		B7BA712B27C6AAD700AA3F7D /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B7BA712D27C6AAEF00AA3F7D /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				B7BA712927C6A57100AA3F7D /* Main.swift */,
 				B7BA712B27C6AAD700AA3F7D /* Profile.swift */,
 				B7BA712D27C6AAEF00AA3F7D /* Stats.swift */,
-				B7BA712727C6A42800AA3F7D /* Settings.swift */,
 				B7BA712627C5F5B700AA3F7D /* Authentication */,
 				2F82CCCE27D2A9B6006B5B5E /* Model */,
 				2F82CCC927D2A882006B5B5E /* Swing Analyzer */,
@@ -363,7 +360,6 @@
 				2F81E66427C57EA8008DD180 /* CameraView.swift in Sources */,
 				2F93B95527BC5420006FDAA9 /* Swing.swift in Sources */,
 				2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */,
-				B7BA712827C6A42800AA3F7D /* Settings.swift in Sources */,
 				B7BA712C27C6AAD700AA3F7D /* Profile.swift in Sources */,
 				2F7BB03A27CF2D5A00C149DD /* PosturePhoto.swift in Sources */,
 				B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */,
