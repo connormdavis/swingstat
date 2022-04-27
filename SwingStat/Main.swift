@@ -29,6 +29,7 @@ struct Main: View {
                     Text("Profile")
                 }
         }
+        .preferredColorScheme(.light)
         .accentColor(Color.green)
     }
 }

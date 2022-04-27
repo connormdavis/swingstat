@@ -9,13 +9,24 @@ import SwiftUI
 import AVKit
 
 struct SavedSwingList: View {
-    @State var savedSwings: [Swing]
+    @State var savedSwings: [Swing] = []
+    @State var analyzerViewModels: [SwingAnalyzerViewModel] = []
+    
+    func updateSavedSwings() {
+        let savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
+        var swings: [Swing] = []
+        for name in savedSwingVideoNames {
+            let swingUrl = SavedSwingVideoManager.getSavedVideoPathFromName(name: name)
+            swings.append(Swing(url: swingUrl))
+        }
+        self.savedSwings = swings
+    }
     
     var body: some View {
         List {
             ForEach(savedSwings, id: \.id) { swing in
                 NavigationLink {
-                    SwingEventChooser(avPlayer: AVPlayer(url: swing.video!), swingVideo: swing.video!)
+                    SwingEventChooser(analyzerViewModel: SwingAnalyzerViewModel(videoUrl: swing.video!), avPlayer: AVPlayer(url: swing.video!))
                 } label: {
                     SavedSwingItem(swing: swing)
                 }
@@ -26,6 +37,9 @@ struct SavedSwingList: View {
                     self.savedSwings.remove(at: idx)
                 }
             }
+        }
+        .onAppear() {
+            updateSavedSwings()
         }
     }
 }
