@@ -151,6 +151,10 @@ class Swing: ObservableObject {
             let (data, _) = try await URLSession.shared.data(for: request)
             let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
             
+            let swingTempoMiniDesc = "More info"
+            let swingTempoPassedDesc = "Good work, your swing's tempo is very smooth. Maintaining a smooth tempo in your swing is one of the most fundamental aspects to good ball-striking!"
+            let swingTempoFailedDesc = "It looks like you're swinging a little quickly. If you get out-of-tempo, it can cause you to lose control of the club and produce inconsistencies in your ball contact. Try slowing your backswing down."
+            
             // TEMPORARY CONTENT - SHOULD BE MOVED
             let leftArmAngleMiniDesc = "More info"
             let leftArmAnglePassedDesc = "Nice! You maintained a straight left arm in your backswing. This is important for making consistent ball contact."
@@ -170,6 +174,9 @@ class Swing: ObservableObject {
             
             // Create swing tips w/ content
             var tips: [SwingTip] = []
+            
+            let tempoGood = swingTipResults.swingTempo >= 2.0
+            tips.append(SwingTip(type: "Swing tempo", passed: tempoGood, miniDescription: swingTempoMiniDesc, passedDescription: swingTempoPassedDesc, failedDescription: swingTempoFailedDesc, help: ""))
             
             tips.append(SwingTip(type: "Left arm angle", passed: swingTipResults.leftArmAngle, miniDescription: leftArmAngleMiniDesc, passedDescription: leftArmAnglePassedDesc, failedDescription: leftArmAngleFailedDesc, help: ""))
 
