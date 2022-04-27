@@ -12,10 +12,11 @@ struct SwingEventChooser: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     
+    @StateObject var analyzerViewModel: SwingAnalyzerViewModel
+    
     @State var swing: Swing = Swing(url: ContentView.stockUrl)
     
     @State var avPlayer: AVPlayer
-    @State var swingVideo: URL
     @State var setupFrame: Int?
     @State var backswingFrame: Int?
     @State var impactFrame: Int?
@@ -23,6 +24,8 @@ struct SwingEventChooser: View {
     @State var showAnalysis: Bool = false
     
     @State var analysisFailed = false
+    
+    
     
     func framesSet() -> Bool {
         if (setupFrame != nil && backswingFrame != nil && impactFrame != nil) {
@@ -32,7 +35,7 @@ struct SwingEventChooser: View {
     }
     
     func createSwingAndBeginAnalysis() {
-        swing.changeVideo(url: swingVideo)
+        swing.changeVideo(url: analyzerViewModel.videoUrl)
 
         // Save key moments
         swing.backswingFrame = backswingFrame!
@@ -46,7 +49,7 @@ struct SwingEventChooser: View {
     private func getCurrentFrameNum() -> Int {
         let currentTime = avPlayer.currentTime().seconds
         let totalTime = avPlayer.currentItem!.duration.seconds
-        let numFrames = VideoProcessing.countFrames(in: AVAsset(url: swingVideo))
+        let numFrames = VideoProcessing.countFrames(in: AVAsset(url: analyzerViewModel.videoUrl))
         
         print("Current time: \(currentTime)")
         
@@ -80,73 +83,108 @@ struct SwingEventChooser: View {
         }
     }
     
+    func analyze() {
+        createSwingAndBeginAnalysis()
+        showAnalysis = true
+    }
+    
 
     
     var body: some View {
         NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed), isActive: $showAnalysis) { EmptyView() }
         VStack(alignment: .center) {
-            Text("Choose the 3 swing events:")
-                .font(.headline)
+            Text("Select all three swing events:")
+                .font(.system(size: 20))
                 .fontWeight(.bold)
                 .foregroundColor(Color.green)
             VideoPlayer(player: avPlayer)
-                .frame(width: 325, height: 335)
+//                .frame(width: 325, height: 335)
                 .cornerRadius(25)
                 .padding()
+                .background(Color.white)
+            
             Spacer()
-            HStack {
-                Button(action: setSetupTimestamp) {
-                    if self.setupFrame != nil {
-                        Text("Setup ✅")
-                    } else {
-                        Text("Setup   ")
-                    }
-                }
-                .padding()
-                .background(Color.green)
-                .clipShape(Capsule())
-                
-                Button(action: setBackswingTimestamp) {
-                    if self.backswingFrame != nil {
-                        Text("Backswing ✅")
-                    } else {
-                        Text("Backswing   ")
-                    }
-                }
-                .padding()
-                .background(Color.green)
-                .clipShape(Capsule())
-                
-                Button(action: setImpactTimestamp) {
-                    if self.impactFrame != nil {
-                        Text("Impact ✅")
-                    } else {
-                        Text("Impact   ")
-                    }
-                }
-                .padding()
-                .background(Color.green)
-                .clipShape(Capsule())
-            }
-            .padding()
+
             
             if framesSet() {
-                Spacer()
-                Button("Analyze") {
-                    createSwingAndBeginAnalysis()
-                    showAnalysis = true
+                Button(action: analyze) {
+                    Text("Analyze 🔬")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.bold)
                 }
-                    .padding()
-                    .foregroundColor(Color.white)
+                .padding()
                     .background(Color.green)
                     .clipShape(Capsule())
-                Spacer()
             } else {
-                Text("Select landmarks to perform analysis.")
-                Spacer()
+                HStack {
+                    if self.setupFrame != nil {
+                        Button(action: setSetupTimestamp) {
+                            Text("Setup ✅")
+                                .foregroundColor(Color.white)
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green)
+                        .clipShape(Capsule())
+                    } else {
+                        Button(action: setSetupTimestamp) {
+                            Text("Setup  ")
+                                .foregroundColor(Color.white.opacity(0.8))
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green.opacity(0.35))
+                        .clipShape(Capsule())
+
+                    }
+                    
+                    if self.backswingFrame != nil {
+                        Button(action: setBackswingTimestamp) {
+                            Text("Backswing ✅")
+                                .foregroundColor(Color.white)
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green)
+                        .clipShape(Capsule())
+                    } else {
+                        Button(action: setBackswingTimestamp) {
+                            Text("Backswing  ")
+                                .foregroundColor(Color.white.opacity(0.8))
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green.opacity(0.35))
+                        .clipShape(Capsule())
+
+                    }
+                    
+                    if self.impactFrame != nil {
+                        Button(action: setImpactTimestamp) {
+                            Text("Impact ✅")
+                                .foregroundColor(Color.white)
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green)
+                        .clipShape(Capsule())
+                    } else {
+                        Button(action: setImpactTimestamp) {
+                            Text("Impact  ")
+                                .foregroundColor(Color.white.opacity(0.8))
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.green.opacity(0.35))
+                        .clipShape(Capsule())
+
+                    }
+                }
             }
             
         }
+        .padding([.bottom], 20)
         .accentColor(Color.white)
 
 
@@ -155,6 +193,13 @@ struct SwingEventChooser: View {
             if analysisFailed {
                 dismiss()
             }
+            avPlayer = AVPlayer(url: analyzerViewModel.videoUrl)
+            // 1/8 speed -- 30FPS * 8 = 240FPS
+            avPlayer.rate = 0.125
+            
+            // save the vid to documents directory
+            SavedSwingVideoManager.saveSwingVideo(videoUrl: analyzerViewModel.videoUrl)
+            print("changed video url to: \(analyzerViewModel.videoUrl)")
         }
         .onDisappear() {
             self.setupFrame = nil
@@ -166,6 +211,6 @@ struct SwingEventChooser: View {
 
 struct SwingEventChooser_Previews: PreviewProvider {
     static var previews: some View {
-        SwingEventChooser(avPlayer: AVPlayer(url: ContentView.stockUrl), swingVideo: ContentView.stockUrl)
+        SwingEventChooser(analyzerViewModel: SwingAnalyzerViewModel(), avPlayer: AVPlayer(url: ContentView.stockUrl))
     }
 }

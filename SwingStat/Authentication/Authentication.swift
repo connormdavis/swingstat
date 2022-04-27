@@ -155,6 +155,7 @@ struct Authentication: View {
             }
             
         }
+        .preferredColorScheme(.light)
     }
 }
 

@@ -195,13 +195,19 @@ class Swing: ObservableObject {
             
             
             DispatchQueue.main.async {
-                let setupImageAnnotated = Swing.createAnnotatedUIImage(image: setupImage!, pose: self.landmarks[self.setupFrame]!)
-                let backswingImageAnnotated = Swing.createAnnotatedUIImage(image: backswingImage!, pose: self.landmarks[self.backswingFrame]!)
-                let impactImageAnnotated = Swing.createAnnotatedUIImage(image: impactImage!, pose: self.landmarks[self.impactFrame]!)
+                if self.landmarks[self.setupFrame] != nil {
+                    let setupImageAnnotated = Swing.createAnnotatedUIImage(image: setupImage!, pose: self.landmarks[self.setupFrame]!)
+                    let backswingImageAnnotated = Swing.createAnnotatedUIImage(image: backswingImage!, pose: self.landmarks[self.backswingFrame]!)
+                    let impactImageAnnotated = Swing.createAnnotatedUIImage(image: impactImage!, pose: self.landmarks[self.impactFrame]!)
+                    
+                    self.setupImage = setupImageAnnotated.rotate(radians: .pi/2)
+                    self.backswingImage = backswingImageAnnotated.rotate(radians: .pi/2)
+                    self.impactImage = impactImageAnnotated.rotate(radians: .pi/2)
+                } else {
+                    print("ERROR: no human detected")
+                    return
+                }
                 
-                self.setupImage = setupImageAnnotated.rotate(radians: .pi/2)
-                self.backswingImage = backswingImageAnnotated.rotate(radians: .pi/2)
-                self.impactImage = impactImageAnnotated.rotate(radians: .pi/2)
             }
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import AVFoundation
 
 struct SwingAnalysis: View {
     @Environment(\.colorScheme) var colorScheme
@@ -18,6 +19,7 @@ struct SwingAnalysis: View {
     
     @State var viewingAnnotatedImage: Bool = false
     @State var selectedImageIdx = 0
+    @State var showSwingAnalyzer = false
     
     func getSetupImage() -> UIImage {
         if swing.setupImage != nil {
@@ -38,6 +40,15 @@ struct SwingAnalysis: View {
             return swing.impactImage!
         }
         return UIImage(systemName: "photo")!
+    }
+    
+    func showVideoAnalyzer() {
+        showSwingAnalyzer = true
+    }
+    
+    func createPlayer() -> AVPlayer {
+        let player = AVPlayer(url: swing.video!)
+        return player
     }
     
 
@@ -95,36 +106,40 @@ struct SwingAnalysis: View {
         } else {
             
             VStack {
-                Text(swing.video!.lastPathComponent)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.green)
-                    .padding()
                 
-                Button("Share posture file") {
-                    if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
-                        let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
-                        
-                        let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-                        
-                        print("presenting activity VC")
-                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-                    } else {
-                        print("Failed to load documents directory.")
-                        return
+                HStack {
+                    Text(swing.video!.lastPathComponent)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.green)
+                        .padding()
+                    
+                    Button("📥") {
+                        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+                            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
+                            
+                            let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+                            
+                            print("presenting activity VC")
+                            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                        } else {
+                            print("Failed to load documents directory.")
+                            return
+                        }
                     }
                 }
+                
                 
                 HStack(alignment: .center) {
                     VStack(alignment: .center, spacing: 0) {
                         Image(uiImage: getSetupImage())
                             .resizable()
-                            .cornerRadius(10.0)
+                            .cornerRadius(30.0)
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 130)
-                            .cornerRadius(10.0)
+                            .frame(width: 150)
                         Text("Setup")
                             .font(.caption)
+                            .fontWeight(.bold)
                     }
                     .onTapGesture {
                         selectedImageIdx = 0
@@ -133,11 +148,12 @@ struct SwingAnalysis: View {
                     VStack(alignment: .center, spacing: 0) {
                         Image(uiImage: getBackswingImage())
                             .resizable()
-                            .cornerRadius(10.0)
+                            .cornerRadius(30.0)
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 130)
+                            .frame(width: 150)
                         Text("Backswing")
                             .font(.caption)
+                            .fontWeight(.bold)
                     }
                     .onTapGesture {
                         selectedImageIdx = 1
@@ -146,11 +162,12 @@ struct SwingAnalysis: View {
                     VStack(alignment: .center, spacing: 0) {
                         Image(uiImage: getImpactImage())
                             .resizable()
-                            .cornerRadius(10.0)
+                            .cornerRadius(30.0)
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 130)
+                            .frame(width: 150)
                         Text("Impact")
                             .font(.caption)
+                            .fontWeight(.bold)
                     }
                     .onTapGesture {
                         selectedImageIdx = 2
@@ -161,25 +178,70 @@ struct SwingAnalysis: View {
                 
                 Spacer()
                 
+                Button(action: showVideoAnalyzer) {
+                    Text("Video analyzer 📸")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.bold)
+                }
+                .padding()
+                .background(Color.green)
+                .clipShape(Capsule())
+                
                 Text("Swing tips")
                     .font(.headline)
+                    .padding()
                 
                 SwingTipList(savedTips: self.swingTips!)
             }
             .sheet(isPresented: $viewingAnnotatedImage) {
                 if selectedImageIdx == 0 {
-                    Image(uiImage: swing.setupImage!)
-                        .resizable()
-                        .aspectRatio(swing.setupImage!.size, contentMode: .fill)
+                    VStack {
+                        Text("Setup")
+                            .font(.largeTitle)
+                            .foregroundColor(Color.green)
+                        Text("Swipe down to hide")
+                            .font(.subheadline)
+                            .foregroundColor(Color.gray)
+                        Image(uiImage: swing.setupImage!)
+                            .resizable()
+                            .aspectRatio(swing.setupImage!.size, contentMode: .fill)
+                            .cornerRadius(25)
+                    }
+                    .padding()
+                    
                 } else if selectedImageIdx == 1 {
-                    Image(uiImage: swing.backswingImage!)
-                        .resizable()
-                        .aspectRatio(swing.backswingImage!.size, contentMode: .fill)
+                    VStack {
+                        Text("Backswing")
+                            .font(.largeTitle)
+                            .foregroundColor(Color.green)
+                        Text("Swipe down to hide")
+                            .font(.subheadline)
+                            .foregroundColor(Color.gray)
+                        Image(uiImage: swing.backswingImage!)
+                            .resizable()
+                            .aspectRatio(swing.backswingImage!.size, contentMode: .fill)
+                            .cornerRadius(25)
+                    }
+                    .padding()
                 } else {
-                    Image(uiImage: swing.impactImage!)
-                        .resizable()
-                        .aspectRatio(swing.impactImage!.size, contentMode: .fill)
+                    VStack {
+                        Text("Impact")
+                            .font(.largeTitle)
+                            .foregroundColor(Color.green)
+                        Text("Swipe down to hide")
+                            .font(.subheadline)
+                            .foregroundColor(Color.gray)
+                        Image(uiImage: swing.impactImage!)
+                            .resizable()
+                            .aspectRatio(swing.impactImage!.size, contentMode: .fill)
+                            .cornerRadius(25)
+                    }
+                    .padding()
                 }
+            }
+            .sheet(isPresented: $showSwingAnalyzer) {
+                VideoAnalyzer(avPlayer: createPlayer())
             }
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)

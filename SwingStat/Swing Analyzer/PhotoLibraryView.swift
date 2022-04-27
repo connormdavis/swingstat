@@ -11,8 +11,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import MobileCoreServices
 
-struct CameraView: UIViewControllerRepresentable {
-    @Binding var mode: UIImagePickerController.SourceType
+struct PhotoLibraryView: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
     @Binding var videoUrl: URL
     
@@ -22,39 +21,28 @@ struct CameraView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let viewController = UIViewControllerType()
         
-        if self.mode == .photoLibrary {
-            viewController.delegate = context.coordinator
-            viewController.sourceType = .photoLibrary
-            viewController.videoQuality = .typeHigh
-            viewController.allowsEditing = true
-            viewController.mediaTypes = ["public.movie"]
-            return viewController
-        } else {
-            viewController.delegate = context.coordinator
-            viewController.sourceType = .camera
-            viewController.mediaTypes = ["public.movie"]
-            viewController.cameraCaptureMode = .video
-            viewController.videoQuality = .typeHigh
-            viewController.cameraDevice = .rear
-            viewController.allowsEditing = true
-            return viewController
-        }
+        viewController.delegate = context.coordinator
+        viewController.sourceType = .photoLibrary
+        viewController.videoQuality = .typeHigh
+        viewController.allowsEditing = true
+        viewController.mediaTypes = ["public.movie"]
+        return viewController
     }
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
     }
     
-    func makeCoordinator() -> CameraView.Coordinator {
+    func makeCoordinator() -> PhotoLibraryView.Coordinator {
         return Coordinator(self)
     }
 }
 
-extension CameraView {
+extension PhotoLibraryView {
     class Coordinator : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        var parent: CameraView
+        var parent: PhotoLibraryView
         
-        init(_ parent: CameraView) {
+        init(_ parent: PhotoLibraryView) {
             self.parent = parent
         }
         

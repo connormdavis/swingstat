@@ -220,7 +220,7 @@ struct Dashboard: View {
             swing.changeVideo(url: newUrl)      // Change swing representation
         }
         .sheet(isPresented: $showCameraModal) {
-            CameraView(mode: $newVideoMode, isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
+            PhotoLibraryView(isPresented: $showCameraModal, videoUrl: $selectedVideoUrl)
         }
         .accentColor(Color.white)
         .padding()
