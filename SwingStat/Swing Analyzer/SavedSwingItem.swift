@@ -7,28 +7,41 @@
 
 import SwiftUI
 import AVKit
+import AVFoundation
+import CoreMedia
+import Foundation
 
 struct SavedSwingItem: View {
     
     var swing: Swing
+    
+    
 
     
     var body: some View {
         HStack {
-            Image(uiImage: getThumbnailFrom(path: swing.getVideoURL())!)
-                .frame(width: 30, height: 20)
-            Text(swing.getFilename()).lineLimit(1).font(.subheadline)
-            Spacer()
-            Text("03/4/22").font(.caption)
-                .fontWeight(.bold)
-            Text("8s").font(.caption)
-                .fontWeight(.bold)
+            VStack {
+                Image(uiImage: getThumbnailFrom(path: swing.getVideoURL())!)
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width: 60, height: 60)
+            HStack {
+                Text(swing.getFilename()).lineLimit(1).font(.subheadline)
+                Spacer()
+                Text("03/4/22").font(.caption)
+                    .fontWeight(.bold)
+                Text(getDurationFrom(path: swing.getVideoURL())).font(.caption)
+                    .fontWeight(.bold)
+            }
         }
-        .padding()
     }
 }
                   
 // https://stackoverflow.com/questions/31779150/creating-thumbnail-from-local-video-in-swift
+/*
+ Returns the thumbnail of a file given its URL
+ */
 func getThumbnailFrom(path: URL) -> UIImage? {
 
     do {
@@ -45,10 +58,39 @@ func getThumbnailFrom(path: URL) -> UIImage? {
 
         print("*** Error generating thumbnail: \(error.localizedDescription)")
         return nil
-
     }
-
 }
+
+/*
+ Returns the duration of a file given its URL
+ */
+func getDurationFrom(path: URL) -> String {
+ 
+    let asset = AVAsset(url: path)
+
+    let duration = asset.duration
+    let durationTime = CMTimeGetSeconds(duration)
+    let durationTimeStr = String(format: "%.fs", durationTime)
+    
+    return durationTimeStr
+}
+
+/*
+ Returns the date a file was created given its URL
+ */
+func getDateCreatedFrom(path: URL) -> String {
+ 
+    let asset = AVAsset(url: path)
+
+    let date = asset.creationDate
+    let dateConverted = (date?.dateValue)!
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd/YY"
+    return dateFormatter.string(from: dateConverted)
+    
+}
+
                   
 
 struct SavedSwingItem_Previews: PreviewProvider {
