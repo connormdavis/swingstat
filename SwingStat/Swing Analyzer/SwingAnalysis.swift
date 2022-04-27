@@ -192,7 +192,7 @@ struct SwingAnalysis: View {
                     .font(.headline)
                     .padding()
                 
-                SwingTipList(savedTips: self.swingTips!)
+                SwingTipList(savedTips: self.swingTips!, swing: swing)
             }
             .sheet(isPresented: $viewingAnnotatedImage) {
                 if selectedImageIdx == 0 {
