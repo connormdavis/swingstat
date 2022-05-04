@@ -25,10 +25,17 @@ struct SwingEventChooser: View {
     
     @State var analysisFailed = false
     
+    // tracks when background processing began so no duplication happens
+    @State var processing = false
     
     
     func framesSet() -> Bool {
         if (setupFrame != nil && backswingFrame != nil && impactFrame != nil) {
+            // Trigger background processing of posture
+            if !self.swing.processing {
+                createSwingAndBeginAnalysis()
+            }
+            
             return true
         }
         return false
@@ -61,11 +68,13 @@ struct SwingEventChooser: View {
     }
     
     func setSetupTimestamp() {
+        print("setup set")
         let num = getCurrentFrameNum()
         self.setupFrame = num
     }
     
     func setBackswingTimestamp() {
+        print("backswing set")
         if self.setupFrame != nil {
             let num = getCurrentFrameNum()
             if setupFrame != num {
@@ -75,6 +84,7 @@ struct SwingEventChooser: View {
     }
     
     func setImpactTimestamp() {
+        print("impact set")
         if self.setupFrame != nil && self.backswingFrame != nil {
             let num = getCurrentFrameNum()
             if setupFrame != num && backswingFrame != num {
@@ -84,7 +94,6 @@ struct SwingEventChooser: View {
     }
     
     func analyze() {
-        createSwingAndBeginAnalysis()
         showAnalysis = true
     }
     
@@ -97,6 +106,10 @@ struct SwingEventChooser: View {
                 .font(.system(size: 20))
                 .fontWeight(.bold)
                 .foregroundColor(Color.green)
+            Text("Please choose the very top of the backswing")
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundColor(Color.gray)
             VideoPlayer(player: avPlayer)
 //                .frame(width: 325, height: 335)
                 .cornerRadius(25)

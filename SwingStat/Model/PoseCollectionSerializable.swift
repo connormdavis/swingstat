@@ -13,4 +13,5 @@ struct PoseCollectionSerializable: Codable {
     var backswingFrame: Int
     var impactFrame: Int
     var totalFrames: Int
+    var leftArmAngleFrame: Int
 }

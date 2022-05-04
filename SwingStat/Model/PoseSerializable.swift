@@ -12,7 +12,7 @@ struct PoseSerializable: Codable {
     
     var poseLandmarks: [Int: PoseLandmarkSerializable]
     
-    static private func convertTypeToInt(type: PoseLandmarkType) -> Int {
+    static func convertTypeToInt(type: PoseLandmarkType) -> Int {
         switch type {
         case .nose:
             return 0

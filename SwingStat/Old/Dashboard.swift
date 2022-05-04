@@ -76,29 +76,29 @@ struct Dashboard: View {
      Action sheet for sharing the JSON
      */
     func actionSheet() {
-        var serializedPoses: [Int: PoseSerializable] = [:]
-        for (frameNum, pose) in swing.landmarks {
-            let loadedPose = PoseSerializable.loadFromPose(pose: pose)
-            serializedPoses[frameNum] = loadedPose  // added serializable pose to dict mapping frame -> pose
-        }
-        
-        let totalFrames = getTotalFrames()
-        let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: setupFrameNum!, backswingFrame: backswingFrameNum!, impactFrame: impactFrameNum!, totalFrames: totalFrames)
-        
-        let encoder = JSONEncoder()
-        let poseJson = try! encoder.encode(poseCollection)
-        
-        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
-            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
-            
-            Swing.writePoseJsonToFile(fileUrl: fileUrl, json: poseJson)
-            
-            let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-        } else {
-            print("Failed to load documents directory.")
-            return
-        }
+//        var serializedPoses: [Int: PoseSerializable] = [:]
+//        for (frameNum, pose) in swing.landmarks {
+//            let loadedPose = PoseSerializable.loadFromPose(pose: pose)
+//            serializedPoses[frameNum] = loadedPose  // added serializable pose to dict mapping frame -> pose
+//        }
+//        
+//        let totalFrames = getTotalFrames()
+//        let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: setupFrameNum!, backswingFrame: backswingFrameNum!, impactFrame: impactFrameNum!, totalFrames: totalFrames, leftArmAngleFrame: <#T##Int#>)
+//        
+//        let encoder = JSONEncoder()
+//        let poseJson = try! encoder.encode(poseCollection)
+//        
+//        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+//            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
+//            
+//            Swing.writePoseJsonToFile(fileUrl: fileUrl, json: poseJson)
+//            
+//            let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+//            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+//        } else {
+//            print("Failed to load documents directory.")
+//            return
+//        }
     }
 
     
