@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import YouTubePlayerKit
 
 struct SwingTipDetailed: View {
     @State var swingTip: SwingTip
     var swing: Swing
+    
+    // The YouTube Player
+    private let youTubePlayer = YouTubePlayer(
+        source: .url(EmbeddedVid.left_arm_angle_1.youTubeURL)
+    )
+    
+    // All possible videos
+    private let embeddedVids: [EmbeddedVid] = EmbeddedVid.all
+    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,7 +37,7 @@ struct SwingTipDetailed: View {
                         .foregroundColor(Color.red)
                 }
             }
-
+            // only show annotated image if it's the left arm angle swing tip
             if swingTip.type == "Left arm angle" {
                 HStack {
                     Spacer()
@@ -65,36 +75,241 @@ struct SwingTipDetailed: View {
                 .font(.caption)
         }
         .padding()
-        List {
-            HStack(alignment: .center) {
-                Image(uiImage: UIImage(named: "youtube")!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                Text("https://www.youtube.com/watch?v=eyNSo4WrWlU")
-            }
-            .padding()
-            
-            HStack(alignment: .center) {
-                Image(uiImage: UIImage(named: "youtube")!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                Text("https://www.youtube.com/channel/UCfi-mPMOmche6WI-jkvnGXw")
-            }
-            .padding()
-            
-            HStack(alignment: .center) {
-                Image(uiImage: UIImage(named: "youtube")!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                Text("https://golfinsideruk.com/golf-backswing-explained/")
-            }
-            .padding()
-            
-        }
         
+        // Display embeded YouTube videos using YouTubePlayerKit
+        ScrollView {
+            VStack(spacing: 20) {
+//                if swingTip.type == "Left arm angle" {
+//                    ForEach(self.embeddedVids) { embeddedVid in
+//                        if embeddedVid.category == 1 {
+//                            Button(
+//                                action: {
+//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+//                                },
+//                                label: {
+//                                    YouTubePlayerView(
+//                                        .init(
+//                                            source: .url(embeddedVid.youTubeURL),
+//                                            configuration: .init(
+//                                                isUserInteractionEnabled: true
+//                                            )
+//                                        )
+//                                    )
+//                                    .frame(height: 220)
+//                                    .background(Color(.systemBackground))
+//                                    .cornerRadius(12)
+//                                    .shadow(
+//                                        color: .black.opacity(0.1),
+//                                        radius: 46,
+//                                        x: 0,
+//                                        y: 15
+//                                    )
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+//                if swingTip.type == "Lateral head movement" {
+//                    ForEach(self.embeddedVids) { embeddedVid in
+//                        if embeddedVid.category == 2 {
+//                            Button(
+//                                action: {
+//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+//                                },
+//                                label: {
+//                                    YouTubePlayerView(
+//                                        .init(
+//                                            source: .url(embeddedVid.youTubeURL),
+//                                            configuration: .init(
+//                                                isUserInteractionEnabled: true
+//                                            )
+//                                        )
+//                                    )
+//                                    .frame(height: 220)
+//                                    .background(Color(.systemBackground))
+//                                    .cornerRadius(12)
+//                                    .shadow(
+//                                        color: .black.opacity(0.1),
+//                                        radius: 46,
+//                                        x: 0,
+//                                        y: 15
+//                                    )
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+//                if swingTip.type == "Vertical head movement" {
+//                    ForEach(self.embeddedVids) { embeddedVid in
+//                        if embeddedVid.category == 3 {
+//                            Button(
+//                                action: {
+//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+//                                },
+//                                label: {
+//                                    YouTubePlayerView(
+//                                        .init(
+//                                            source: .url(embeddedVid.youTubeURL),
+//                                            configuration: .init(
+//                                                isUserInteractionEnabled: true
+//                                            )
+//                                        )
+//                                    )
+//                                    .frame(height: 220)
+//                                    .background(Color(.systemBackground))
+//                                    .cornerRadius(12)
+//                                    .shadow(
+//                                        color: .black.opacity(0.1),
+//                                        radius: 46,
+//                                        x: 0,
+//                                        y: 15
+//                                    )
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+//                if swingTip.type == "Hip sway" {
+//                    ForEach(self.embeddedVids) { embeddedVid in
+//                        if embeddedVid.category == 4 {
+//                            Button(
+//                                action: {
+//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+//                                },
+//                                label: {
+//                                    YouTubePlayerView(
+//                                        .init(
+//                                            source: .url(embeddedVid.youTubeURL),
+//                                            configuration: .init(
+//                                                isUserInteractionEnabled: true
+//                                            )
+//                                        )
+//                                    )
+//                                    .frame(height: 220)
+//                                    .background(Color(.systemBackground))
+//                                    .cornerRadius(12)
+//                                    .shadow(
+//                                        color: .black.opacity(0.1),
+//                                        radius: 46,
+//                                        x: 0,
+//                                        y: 15
+//                                    )
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+                
+                ForEach(self.embeddedVids) { embeddedVid in
+                
+                    if embeddedVid.category == 1 && swingTip.type == "Left arm angle"{
+                        Button(
+                            action: {
+                                self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+                            },
+                            label: {
+                                YouTubePlayerView(
+                                    .init(
+                                        source: .url(embeddedVid.youTubeURL),
+                                        configuration: .init(
+                                            isUserInteractionEnabled: true
+                                        )
+                                    )
+                                )
+                                .frame(height: 220)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .shadow(
+                                    color: .black.opacity(0.1),
+                                    radius: 46,
+                                    x: 0,
+                                    y: 15
+                                )
+                            }
+                        )
+                    }
+                    else if embeddedVid.category == 2 && swingTip.type == "Lateral head movement" {
+                        Button(
+                            action: {
+                                self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+                            },
+                            label: {
+                                YouTubePlayerView(
+                                    .init(
+                                        source: .url(embeddedVid.youTubeURL),
+                                        configuration: .init(
+                                            isUserInteractionEnabled: true
+                                        )
+                                    )
+                                )
+                                .frame(height: 220)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .shadow(
+                                    color: .black.opacity(0.1),
+                                    radius: 46,
+                                    x: 0,
+                                    y: 15
+                                )
+                            }
+                        )
+                    }
+                    else if embeddedVid.category == 3 && swingTip.type == "Vertical head movement" {
+                        Button(
+                            action: {
+                                self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+                            },
+                            label: {
+                                YouTubePlayerView(
+                                    .init(
+                                        source: .url(embeddedVid.youTubeURL),
+                                        configuration: .init(
+                                            isUserInteractionEnabled: true
+                                        )
+                                    )
+                                )
+                                .frame(height: 220)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .shadow(
+                                    color: .black.opacity(0.1),
+                                    radius: 46,
+                                    x: 0,
+                                    y: 15
+                                )
+                            }
+                        )
+                    }
+                    else if embeddedVid.category == 4 && swingTip.type == "Hip sway" {
+                        Button(
+                            action: {
+                                self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+                            },
+                            label: {
+                                YouTubePlayerView(
+                                    .init(
+                                        source: .url(embeddedVid.youTubeURL),
+                                        configuration: .init(
+                                            isUserInteractionEnabled: true
+                                        )
+                                    )
+                                )
+                                .frame(height: 220)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .shadow(
+                                    color: .black.opacity(0.1),
+                                    radius: 46,
+                                    x: 0,
+                                    y: 15
+                                )
+                            }
+                        )
+                    }
+                }
+                .padding()
+            }
+        }
     }
 }
 
