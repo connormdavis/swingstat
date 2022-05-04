@@ -51,6 +51,21 @@ struct SwingAnalysis: View {
         return player
     }
     
+    
+    func shareJSON() {
+        print("share JSON")
+        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
+            
+            let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+            
+            print("presenting activity VC")
+            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+        } else {
+            print("Failed to load documents directory.")
+            return
+        }
+    }
 
     
     var body: some View {
@@ -104,31 +119,15 @@ struct SwingAnalysis: View {
                 self.swing.analyzing = false
             }
         } else {
-            
             VStack {
                 
-                HStack {
-                    Text(swing.video!.lastPathComponent)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.green)
-                        .padding()
-                    
-                    Button("📥") {
-                        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
-                            let fileUrl = documentsDirectory.appendingPathComponent("swing.json")
-                            
-                            let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-                            
-                            print("presenting activity VC")
-                            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-                        } else {
-                            print("Failed to load documents directory.")
-                            return
-                        }
-                    }
-                }
-                
+
+                Text(swing.video!.lastPathComponent)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.green)
+                    .padding()
+ 
                 
                 HStack(alignment: .center) {
                     VStack(alignment: .center, spacing: 0) {
@@ -186,6 +185,16 @@ struct SwingAnalysis: View {
                 }
                 .padding()
                 .background(Color.green)
+                .clipShape(Capsule())
+                
+                Button(action: shareJSON) {
+                    Text("JSON 📥")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.bold)
+                }
+                .padding()
+                .background(Color.gray)
                 .clipShape(Capsule())
                 
                 Text("Swing tips")

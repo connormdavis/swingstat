@@ -35,10 +35,12 @@ class Swing: ObservableObject {
     var backswingFrame: Int = -1
     var impactFrame: Int = -1
     var totalFrames: Int = -1
+    var leftArmAngleFrame: Int = -1
     
     @Published var setupImage: UIImage?
     @Published var backswingImage: UIImage?
     @Published var impactImage: UIImage?
+    
     
     
     init(url: URL?) {
@@ -127,7 +129,7 @@ class Swing: ObservableObject {
         }
         
         let totalFrames = VideoProcessing.countFrames(in: AVAsset(url: self.video!))
-        let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: self.setupFrame, backswingFrame: self.backswingFrame, impactFrame: self.impactFrame, totalFrames: totalFrames)
+        let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: self.setupFrame, backswingFrame: self.backswingFrame, impactFrame: self.impactFrame, totalFrames: totalFrames, leftArmAngleFrame: self.leftArmAngleFrame)
         
         let encoder = JSONEncoder()
         let poseJson = try! encoder.encode(poseCollection)
@@ -236,6 +238,8 @@ class Swing: ObservableObject {
             
             let asset = AVAsset(url: self.video!)
             let poses = VideoProcessing.extractFramesAndGeneratePoseData(from: asset, at: usingFrames, forSwing: self)
+            let leftArmAngleFrame = self.detectFrameForArmAngle(poses: poses)
+            self.leftArmAngleFrame = leftArmAngleFrame
 
                 
             // Trigger UI updates on main thread
@@ -250,6 +254,52 @@ class Swing: ObservableObject {
             }
         }
         
+    }
+    
+    func detectFrameForArmAngle(poses: [Int: Pose]) -> Int {
+        var minYDiff = Float.greatestFiniteMagnitude
+        var minYDiffFrame = -1
+        
+        for (frame, pose) in poses {
+            // Skip irrelevant frames
+            if frame < self.setupFrame || frame > self.backswingFrame {
+                continue
+            }
+            
+            // find left hand & left shoulder
+            var leftIndexLandmark: PoseLandmark?
+            var leftShoulderLandmark: PoseLandmark?
+            for landmark in pose.landmarks {
+                if landmark.type == PoseLandmarkType.leftIndexFinger {
+                    leftIndexLandmark = landmark
+                }
+                else if landmark.type == PoseLandmarkType.leftShoulder {
+                    leftShoulderLandmark = landmark
+                }
+                if leftIndexLandmark != nil && leftShoulderLandmark != nil {
+                    break
+                }
+            }
+            
+            if leftIndexLandmark == nil || leftShoulderLandmark == nil {
+                continue
+            }
+            
+            let diff = abs(Float(leftIndexLandmark!.position.y) - Float(leftShoulderLandmark!.position.y))
+            if diff < minYDiff {
+                minYDiff = diff
+                minYDiffFrame = frame
+                print("New min diff: \(diff) @ frame \(frame)")
+            }
+        }
+        
+        if minYDiffFrame == -1 {
+            print("ERROR: couldn't detect left arm angle frame")
+            return -1
+        }
+        
+        print("--> Chosen frame: \(minYDiffFrame)")
+        return minYDiffFrame
     }
 
     

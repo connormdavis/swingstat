@@ -99,6 +99,11 @@ class VideoProcessing {
         while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
 //            print("sample at time \(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))")
             
+//            if frameCount < swing.setupFrame || frameCount > swing.impactFrame {
+//                frameCount += 1
+//                continue
+//            }
+            
             // If no indices specified, extract all frames
             if indices.isEmpty || indices.contains(frameCount) {
                 // Optionally save to camera roll for validation
