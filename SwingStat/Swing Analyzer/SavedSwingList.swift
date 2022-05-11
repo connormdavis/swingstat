@@ -33,7 +33,10 @@ struct SavedSwingList: View {
             }
             .onDelete { idxSet in
                 for idx in idxSet {
-                    savedSwings[idx].delete()
+                    Task {
+                        await savedSwings[idx].delete()
+                    }
+                    
                     self.savedSwings.remove(at: idx)
                 }
             }

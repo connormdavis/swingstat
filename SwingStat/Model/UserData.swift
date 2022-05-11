@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+struct UserData: Codable {
+    var firstName: String
+    var lastName: String
+    var height: Float   // number of inches
+    var swings: [SavedSwingAnalysis]
+}

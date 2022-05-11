@@ -11,6 +11,8 @@
 		2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */; };
 		2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */; };
 		2F2ECC5827BAE00200FF7475 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC5727BAE00200FF7475 /* Dashboard.swift */; };
+		2F456CCC282ADD2000028E7A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F456CCB282ADD2000028E7A /* UserData.swift */; };
+		2F456CCE282AE04D00028E7A /* SavedSwingAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F456CCD282AE04D00028E7A /* SavedSwingAnalysis.swift */; };
 		2F7BB02F27CEB36800C149DD /* SwingAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */; };
 		2F7BB03127CEB3B500C149DD /* SavedSwingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */; };
 		2F7BB03327CEB3E400C149DD /* SwingAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */; };
@@ -59,6 +61,8 @@
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F2ECC4027BAD5D800FF7475 /* SwingStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwingStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F2ECC5727BAE00200FF7475 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dashboard.swift; path = SwingStat/Old/Dashboard.swift; sourceTree = SOURCE_ROOT; };
+		2F456CCB282ADD2000028E7A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		2F456CCD282AE04D00028E7A /* SavedSwingAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSwingAnalysis.swift; sourceTree = "<group>"; };
 		2F7BB02E27CEB36800C149DD /* SwingAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwingAnalyzer.swift; path = "SwingStat/Swing Analyzer/SwingAnalyzer.swift"; sourceTree = SOURCE_ROOT; };
 		2F7BB03027CEB3B500C149DD /* SavedSwingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedSwingItem.swift; path = "SwingStat/Swing Analyzer/SavedSwingItem.swift"; sourceTree = SOURCE_ROOT; };
 		2F7BB03227CEB3E400C149DD /* SwingAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwingAnalysis.swift; path = "SwingStat/Swing Analyzer/SwingAnalysis.swift"; sourceTree = SOURCE_ROOT; };
@@ -191,6 +195,8 @@
 				B7886C6927D5555A007BEF8B /* SwingTip.swift */,
 				2F82CCD027D58769006B5B5E /* SwingTipResults.swift */,
 				B7917B792822EC070098D5C9 /* EmbeddedVid.swift */,
+				2F456CCB282ADD2000028E7A /* UserData.swift */,
+				2F456CCD282AE04D00028E7A /* SavedSwingAnalysis.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -389,10 +395,12 @@
 				2F81E66627C67515008DD180 /* PoseSerializable.swift in Sources */,
 				2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */,
 				2F7BB03727CEC8E000C149DD /* SavedSwingVideoManager.swift in Sources */,
+				2F456CCE282AE04D00028E7A /* SavedSwingAnalysis.swift in Sources */,
 				2F2ECC4927BAD5D800FF7475 /* SwingStatApp.swift in Sources */,
 				2F8D5BF6281877F7001D3EBC /* CameraService+Extensions.swift in Sources */,
 				2F8D5BF12818767F001D3EBC /* CameraService.swift in Sources */,
 				2F8D5BFC28188511001D3EBC /* CameraView.swift in Sources */,
+				2F456CCC282ADD2000028E7A /* UserData.swift in Sources */,
 				B7917B7A2822EC070098D5C9 /* EmbeddedVid.swift in Sources */,
 				B7886C6C27D56E99007BEF8B /* SwingTipDetailed.swift in Sources */,
 				2FB2C1162818F01C003C2C95 /* VideoAnalyzer.swift in Sources */,
@@ -558,7 +566,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -593,7 +601,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

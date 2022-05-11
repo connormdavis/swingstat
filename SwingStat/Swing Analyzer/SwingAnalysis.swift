@@ -16,10 +16,13 @@ struct SwingAnalysis: View {
     @ObservedObject var swing: Swing
     @State var swingTips: [SwingTip]?
     @Binding var analysisFailed: Bool
+    @State var previouslySavedSwing: Bool
     
     @State var viewingAnnotatedImage: Bool = false
     @State var selectedImageIdx = 0
     @State var showSwingAnalyzer = false
+    
+   
     
     func getSetupImage() -> UIImage {
         if swing.setupImage != nil {
@@ -90,7 +93,7 @@ struct SwingAnalysis: View {
             }
             .padding()
         }
-        else if swing.processing || swing.analyzing {
+        else if (!previouslySavedSwing && (swing.processing || swing.analyzing)) {
             VStack(alignment: .center) {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color.green))
@@ -114,9 +117,34 @@ struct SwingAnalysis: View {
                 
             }
             .task {
-                let tips = await swing.analyzePostureInformation()
-                self.swingTips = tips
-                self.swing.analyzing = false
+                if !previouslySavedSwing {
+                    let tips = await swing.analyzePostureInformation()
+                    self.swingTips = tips
+                    self.swing.analyzing = false
+                    
+                    // Now store this new swing analysis in the backend
+                    let analysis = self.swing.createSavableAnalysisItem()
+                    let analysisJson = analysis.getJson()
+                    
+                    
+                    var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
+                    request.httpMethod = "POST"
+                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                    
+                    request.httpBody = analysisJson
+                    
+                    do {
+                        // Send request
+                        let (data, _) = try await URLSession.shared.data(for: request)
+                        print("Success saving new analysis to MongoDB.")
+//                        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+                    } catch {
+                        print("Error (couldn't save new swing analysis): \(error.localizedDescription)")
+                    }
+                } else {
+                    // don't request analysis, used previously saved tips
+                    self.swingTips = swing.swingTips
+                }
             }
         } else {
             VStack {
@@ -264,6 +292,6 @@ struct SwingAnalysis_Previews: PreviewProvider {
     @State static var status = false
     
     static var previews: some View {
-        SwingAnalysis(swing: self.swing, analysisFailed: $status)
+        SwingAnalysis(swing: self.swing, analysisFailed: $status, previouslySavedSwing: false)
     }
 }
