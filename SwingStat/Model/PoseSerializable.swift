@@ -99,5 +99,6 @@ struct PoseSerializable: Codable {
         }
         return PoseSerializable(poseLandmarks: poseLandmarks)
     }
+
     
 }

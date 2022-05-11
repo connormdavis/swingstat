@@ -1,6 +1,7 @@
 {
   "pins" : [
     {
+<<<<<<< HEAD
       "identity" : "swifttabler",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openalloc/SwiftTabler.git",
@@ -10,6 +11,8 @@
       }
     },
     {
+=======
+>>>>>>> db_api
       "identity" : "youtubeplayerkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SvenTiigi/YouTubePlayerKit.git",

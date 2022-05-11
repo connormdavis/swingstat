@@ -100,7 +100,7 @@ struct SwingEventChooser: View {
 
     
     var body: some View {
-        NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed), isActive: $showAnalysis) { EmptyView() }
+        NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed, previouslySavedSwing: false), isActive: $showAnalysis) { EmptyView() }
         VStack(alignment: .center) {
             Text("Select all three swing events:")
                 .font(.system(size: 20))
