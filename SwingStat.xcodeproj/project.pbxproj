@@ -44,6 +44,7 @@
 		B7886C6C27D56E99007BEF8B /* SwingTipDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7886C6B27D56E99007BEF8B /* SwingTipDetailed.swift */; };
 		B7917B782822E5160098D5C9 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = B7917B772822E5160098D5C9 /* YouTubePlayerKit */; };
 		B7917B7A2822EC070098D5C9 /* EmbeddedVid.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7917B792822EC070098D5C9 /* EmbeddedVid.swift */; };
+		B7917B7F282BF8390098D5C9 /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = B7917B7E282BF8390098D5C9 /* Tabler */; };
 		B7BA711F27C5F0A400AA3F7D /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA711E27C5F0A400AA3F7D /* Authentication.swift */; };
 		B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712227C5F35400AA3F7D /* SignIn.swift */; };
 		B7BA712527C5F3A500AA3F7D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA712427C5F3A500AA3F7D /* SignUp.swift */; };
@@ -105,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7917B7F282BF8390098D5C9 /* Tabler in Frameworks */,
 				B7917B782822E5160098D5C9 /* YouTubePlayerKit in Frameworks */,
 				5421653BE595C63F0A994D86 /* Pods_SwingStat__iOS_.framework in Frameworks */,
 			);
@@ -265,6 +267,7 @@
 			name = "SwingStat (iOS)";
 			packageProductDependencies = (
 				B7917B772822E5160098D5C9 /* YouTubePlayerKit */,
+				B7917B7E282BF8390098D5C9 /* Tabler */,
 			);
 			productName = "SwingStat (iOS)";
 			productReference = 2F2ECC4027BAD5D800FF7475 /* SwingStat.app */;
@@ -296,6 +299,7 @@
 			mainGroup = 2F2ECC3327BAD5D600FF7475;
 			packageReferences = (
 				B7917B762822E5160098D5C9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				B7917B7D282BF8390098D5C9 /* XCRemoteSwiftPackageReference "SwiftTabler" */,
 			);
 			productRefGroup = 2F2ECC4127BAD5D800FF7475 /* Products */;
 			projectDirPath = "";
@@ -641,6 +645,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		B7917B7D282BF8390098D5C9 /* XCRemoteSwiftPackageReference "SwiftTabler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openalloc/SwiftTabler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -648,6 +660,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B7917B762822E5160098D5C9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
 			productName = YouTubePlayerKit;
+		};
+		B7917B7E282BF8390098D5C9 /* Tabler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7917B7D282BF8390098D5C9 /* XCRemoteSwiftPackageReference "SwiftTabler" */;
+			productName = Tabler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

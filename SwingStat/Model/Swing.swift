@@ -14,11 +14,10 @@ import AVKit
 import UIKit
 
 
-class Swing: ObservableObject {
+class Swing: ObservableObject, Identifiable {
     
     let id: String
     let date: Date
-    let thumbnail: Image
     
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
@@ -42,12 +41,81 @@ class Swing: ObservableObject {
     @Published var impactImage: UIImage?
     
     
+    // added after adding Tabler library for sorting
+    var thumbnail: UIImage! = nil
+    var filename: String! = nil
+    var creationDate: Date! = nil         // based on metadata
+    var videoDuration: Double! = nil
+
+    
     
     init(url: URL?) {
         self.video = url
         self.id = UUID().uuidString
         self.date = Date()
-        self.thumbnail = Image(systemName: "multiply.circle.fill")
+        self.thumbnail = getThumbnailFrom(path: self.getVideoURL())
+        
+        // added after adding Tabler library for sorting
+        self.filename = getFilename()
+        self.creationDate = getDateCreatedFrom(path: self.getVideoURL())
+        self.videoDuration = getDurationFrom(path: self.getVideoURL())
+    }
+    
+    
+    
+    // https://stackoverflow.com/questions/31779150/creating-thumbnail-from-local-video-in-swift
+    /*
+     Returns the thumbnail of a file given its URL
+     */
+    func getThumbnailFrom(path: URL) -> UIImage? {
+
+        do {
+
+            let asset = AVURLAsset(url: path , options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+            let thumbnail = UIImage(cgImage: cgImage)
+
+            return thumbnail
+
+        } catch let error {
+
+            print("*** Error generating thumbnail: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    /*
+     Returns the duration of a file given its URL
+     */
+    func getDurationFrom(path: URL) -> Double {
+     
+        let asset = AVAsset(url: path)
+
+        let duration = asset.duration
+        let durationTime = CMTimeGetSeconds(duration)
+//        let durationTimeStr = String(format: "%.fs", durationTime)
+        
+        return durationTime
+    }
+    
+    /*
+     Returns the date a file was created given its URL (based on metadata)
+     */
+    func getDateCreatedFrom(path: URL) -> Date {
+     
+        let asset = AVAsset(url: path)
+
+        let date = asset.creationDate
+        let dateConverted = (date?.dateValue)!
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "MM/dd/YY"
+//        return dateFormatter.string(from: dateConverted)
+        
+        return dateConverted
+        
     }
     
     /*
