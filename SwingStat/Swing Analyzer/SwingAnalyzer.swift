@@ -21,6 +21,11 @@ struct SwingAnalyzer: View {
     
     @State var savedSwingVideoNames: [String] = SavedSwingVideoManager.getSavedSwingVideoNames()
     
+    @ObservedObject var swingFilterModel = SwingFilterModel()
+    
+    // set initial state of filters to be none
+    @State var filterButtonState: FilterButtonState = .none()
+    
     
     func createSwingsFromVideo() -> [Swing] {
         var swings: [Swing] = []
@@ -80,6 +85,34 @@ struct SwingAnalyzer: View {
                 .padding(.bottom, 10)
                 .padding(.horizontal, 25)
                 
+                VStack {
+                    Text("Filter swings by:")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        ForEach(0..<swingFilterModel.data.count) { index in
+                            SwingFilterTag(swingFilterData: swingFilterModel.data[index])
+                               .onTapGesture {
+                                   
+                                   if filterButtonState == .none {
+                                       toggleFilter(at: index, filterButtonState.passed)
+                                   }
+                                   else if filterButtonState == .passed {
+                                       toggleFilter(at: index, filterButtonState.failed)
+                                   }
+                                   else if filterButtonState == .failed {
+                                       toggleFilter(at: index, filterButtonState.none)
+                                   }
+                                        
+                                   
+//                                   swingFilterModel.toggleFilter(at: index)
+                               }
+                        }
+                    }
+                }
+                .padding(.bottom, 10)
+                .padding(.horizontal, 25)
+                
+               
                 SavedSwingList()
                 
             }
