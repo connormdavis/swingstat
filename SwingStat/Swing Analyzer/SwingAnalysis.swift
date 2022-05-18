@@ -123,24 +123,36 @@ struct SwingAnalysis: View {
                     self.swing.analyzing = false
                     
                     // Now store this new swing analysis in the backend
-                    let analysis = self.swing.createSavableAnalysisItem()
-                    let analysisJson = analysis.getJson()
+                    let analysis = self.swing.createSavableAnalysisItem(tips: tips)
+                    analysis.saveToBackend()
                     
                     
-                    var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
-                    request.httpMethod = "POST"
-                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                    
-                    request.httpBody = analysisJson
-                    
-                    do {
-                        // Send request
-                        let (data, _) = try await URLSession.shared.data(for: request)
-                        print("Success saving new analysis to MongoDB.")
-//                        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
-                    } catch {
-                        print("Error (couldn't save new swing analysis): \(error.localizedDescription)")
-                    }
+//                    let analysisJson = analysis.getJson()
+//
+//                    print("ANALYSIS JSON -> \(analysisJson)")
+//
+//
+//
+//
+//                    var request = URLRequest(url: URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swing")!)
+//                    request.httpMethod = "POST"
+//                    request.httpBody = analysisJson
+//                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//
+//                    //request.addValue("\(analysisJson.count)", forHTTPHeaderField: "Content-Length")
+//
+//
+////                    print("body: \(String(decoding: request.httpBody!, as: UTF8.self))")
+//
+//                    do {
+//                        // Send request
+//                        let (data, _) = try await URLSession.shared.data(for: request)
+//                        print("Success saving new analysis to MongoDB.")
+////                        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+//                    } catch {
+//                        print("Error (couldn't save new swing analysis): \(error.localizedDescription)")
+//                    }
                 } else {
                     // don't request analysis, used previously saved tips
                     self.swingTips = swing.swingTips

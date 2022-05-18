@@ -26,6 +26,7 @@ class Swing: ObservableObject, Identifiable {
     @Published var noPostureDetected = false
     @Published var swingTips: [SwingTip] = []
     
+    
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
     
@@ -49,9 +50,14 @@ class Swing: ObservableObject, Identifiable {
 
     
     
-    init(url: URL?) {
+    init(url: URL?, id: String = "") {
         self.video = url
-        self.id = UUID().uuidString
+        if id == "" {
+            self.id = UUID().uuidString
+        } else {
+            self.id = id
+        }
+        
         self.date = Date()
         self.thumbnail = getThumbnailFrom(path: self.getVideoURL())
         
@@ -119,9 +125,9 @@ class Swing: ObservableObject, Identifiable {
     }
     
     // Converts the swing object to a serializable SavedSwingAnalysis for sending to backend
-    func createSavableAnalysisItem() -> SavedSwingAnalysis {
+    func createSavableAnalysisItem(tips: [SwingTip]) -> SavedSwingAnalysis {
         var passedCount = 0
-        for swingTip in swingTips {
+        for swingTip in tips {
             if swingTip.passed { passedCount += 1 }
         }
         
@@ -135,7 +141,7 @@ class Swing: ObservableObject, Identifiable {
         let impactFramePose = PoseSerializable.loadFromPose(pose: landmarks[impactFrame]!)
     
         
-        let savedAnalysis = SavedSwingAnalysis(id: self.id, video: self.video!, swingTips: self.swingTips, goodSwing: goodSwing, setupFrame: setupFrame, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
+        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, video: self.video!, swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
         
         return savedAnalysis
     }
@@ -410,7 +416,14 @@ class Swing: ObservableObject, Identifiable {
         // create swing object from analysis field
         // will be used by swing analyzer to pass swing object to analysis view
         
-        let swing = Swing(url: savedAnalysis.video)
+        let swing = Swing(url: savedAnalysis.video, id: savedAnalysis.id)
+
+        swing.swingTips = savedAnalysis.swingTips
+        swing.setupFrame = savedAnalysis.setupFrame
+        swing.backswingFrame = savedAnalysis.backswingFrame
+        swing.impactFrame = savedAnalysis.impactFrame
+        swing.totalFrames = savedAnalysis.totalFrames
+        swing.leftArmAngleFrame = savedAnalysis.leftArmAngleFrame
         
         return swing
     }

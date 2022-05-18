@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F2AF99F282C3B0E003E794C /* SavedSwingAnalysisCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AF99E282C3B0E003E794C /* SavedSwingAnalysisCollection.swift */; };
 		2F2ECC4927BAD5D800FF7475 /* SwingStatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */; };
 		2F2ECC4B27BAD5D800FF7475 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */; };
 		2F2ECC4D27BAD5D800FF7475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		1DCACB7F0A46A8042A6AB87B /* Pods-SwingStat (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwingStat (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwingStat (iOS)/Pods-SwingStat (iOS).release.xcconfig"; sourceTree = "<group>"; };
+		2F2AF99E282C3B0E003E794C /* SavedSwingAnalysisCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSwingAnalysisCollection.swift; sourceTree = "<group>"; };
 		2F2ECC3927BAD5D600FF7475 /* SwingStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwingStatApp.swift; sourceTree = "<group>"; };
 		2F2ECC3A27BAD5D600FF7475 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = SwingStat/Old/ContentView.swift; sourceTree = SOURCE_ROOT; };
 		2F2ECC3B27BAD5D800FF7475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				B7917B792822EC070098D5C9 /* EmbeddedVid.swift */,
 				2F456CCB282ADD2000028E7A /* UserData.swift */,
 				2F456CCD282AE04D00028E7A /* SavedSwingAnalysis.swift */,
+				2F2AF99E282C3B0E003E794C /* SavedSwingAnalysisCollection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				2F7BB02F27CEB36800C149DD /* SwingAnalyzer.swift in Sources */,
 				2F82CCD127D58769006B5B5E /* SwingTipResults.swift in Sources */,
 				2F7BB03327CEB3E400C149DD /* SwingAnalysis.swift in Sources */,
+				2F2AF99F282C3B0E003E794C /* SavedSwingAnalysisCollection.swift in Sources */,
 				2F7BB03C27CF2E4A00C149DD /* UIUtilities.swift in Sources */,
 				B7BA712327C5F35400AA3F7D /* SignIn.swift in Sources */,
 				B7886C6627D55163007BEF8B /* SwingTipItem.swift in Sources */,

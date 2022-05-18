@@ -43,11 +43,14 @@ struct SwingEventChooser: View {
     
     func createSwingAndBeginAnalysis() {
         swing.changeVideo(url: analyzerViewModel.videoUrl)
+        
+        let numFrames = VideoProcessing.countFrames(in: AVAsset(url: analyzerViewModel.videoUrl))
 
         // Save key moments
         swing.backswingFrame = backswingFrame!
         swing.setupFrame = setupFrame!
         swing.impactFrame = impactFrame!
+        swing.totalFrames = numFrames
         
         swing.generateLandmarks(usingFrames: [])
         swing.generateImages()

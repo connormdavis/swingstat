@@ -16,6 +16,10 @@ struct SavedSwingList: View {
     @State var savedSwings: [Swing] = []
     @State var analyzerViewModels: [SwingAnalyzerViewModel] = []
     
+    @State private var selected: String? = nil
+    
+    @State var bocceBool: Bool = false
+    
     var gridItems: [GridItem] = [
         GridItem(.flexible(minimum: 35, maximum: 40), alignment: .leading),
         GridItem(.flexible(minimum: 100), alignment: .leading),
@@ -66,25 +70,46 @@ struct SavedSwingList: View {
     }
     
     func updateSavedSwings() {
-        let savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
-        var swings: [Swing] = []
-        for name in savedSwingVideoNames {
-            let swingUrl = SavedSwingVideoManager.getSavedVideoPathFromName(name: name)
-            swings.append(Swing(url: swingUrl))
+        Task {
+            self.savedSwings = await SavedSwingAnalysis.retrieveAllSavedSwings()
         }
-        self.savedSwings = swings
+        
+        
+//        let savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
+//        var swings: [Swing] = []
+//        for name in savedSwingVideoNames {
+//            let swingUrl = SavedSwingVideoManager.getSavedVideoPathFromName(name: name)
+//            swings.append(Swing(url: swingUrl))
+//        }
+//        self.savedSwings = swings
     }
     
     var body: some View {
 
         VStack {
-            TablerList(header: header,
-                       row: row,
-                       results: savedSwings);
+            TablerList1(header: header,
+                row: row,
+                results: savedSwings,
+                selected: $selected);
         }
         .onAppear() {
             updateSavedSwings()
         }
+        .onChange(of: selected, perform: { id in
+            var selectedSwing: Swing?
+            for swing in savedSwings {
+                if swing.id == id {
+                    selectedSwing = swing
+                }
+            }
+            if selectedSwing == nil {
+                print("ERROR no such swing")
+            }
+            
+            NavigationLink {
+                SwingAnalysis(swing: selectedSwing!, analysisFailed: $bocceBool, previouslySavedSwing: false)
+            } label: {}
+        })
 //        List {
 //            ForEach(savedSwings, id: \.id) { swing in
 //                NavigationLink {
