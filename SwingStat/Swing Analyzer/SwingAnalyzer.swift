@@ -92,19 +92,14 @@ struct SwingAnalyzer: View {
                         ForEach(0..<swingFilterModel.data.count) { index in
                             SwingFilterTag(swingFilterData: swingFilterModel.data[index])
                                .onTapGesture {
-                                   
-                                   if filterButtonState == .none {
-                                       toggleFilter(at: index, filterButtonState.passed)
+                                   switch swingFilterModel.data[index].status {
+                                   case .none:
+                                       swingFilterModel.toggleFilter(at: index, state: .passed())
+                                   case .passed:
+                                       swingFilterModel.toggleFilter(at: index, state: .failed())
+                                   case .failed:
+                                       swingFilterModel.toggleFilter(at: index, state: .none())
                                    }
-                                   else if filterButtonState == .passed {
-                                       toggleFilter(at: index, filterButtonState.failed)
-                                   }
-                                   else if filterButtonState == .failed {
-                                       toggleFilter(at: index, filterButtonState.none)
-                                   }
-                                        
-                                   
-//                                   swingFilterModel.toggleFilter(at: index)
                                }
                         }
                     }
@@ -122,11 +117,6 @@ struct SwingAnalyzer: View {
                 self.showSwingAnalysis = true
             }
             .onChange(of: swingAnalyzerViewModel.videoUrl) { newUrl in
-//                print("New url: \(newUrl)")
-//                // save the vid to documents directory
-//                SavedSwingVideoManager.saveSwingVideo(videoUrl: newUrl)
-//                // 'refresh' list
-//                savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
                 // trigger navigation to analysis view
                 self.showSwingAnalysis = true
                 self.showCameraModal = false

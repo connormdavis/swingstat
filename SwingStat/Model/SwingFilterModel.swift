@@ -6,18 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 
-//protocol ButtonState: CaseIterable {
-//    var title: String {get}
-//}
-//
-//extension ButtonState where Self: RawRepresentable, RawValue == String {
-//    var title: String {
-//        self.rawValue
-//    }
-//}
-
-enum FilterButtonState {
+enum FilterButtonState: Equatable {
     case passed(color: Color = .green)
     case failed(color: Color = .red)
     case none(color: Color = .gray)
@@ -42,17 +33,13 @@ struct SwingFilterData: Identifiable {
 }
 
 class SwingFilterModel: NSObject, ObservableObject {
-    
-    // Normally you would get this data from a remote service, so factor that in if you use
-    // this in your own projects. If this data is not static, consider making it @Published
-    // so that any changes to it will get reflected by the UI
-    var data = [
-        SwingFilterData(imageName: "airplane", title: "Tempo"),
-        SwingFilterData(imageName: "tag.fill", title: "Left Arm"),
-        SwingFilterData(imageName: "bed.double.fill", title: "Hip Sway"),
-        SwingFilterData(imageName: "car.fill", title: "Vert Head"),
-        SwingFilterData(imageName: "car.fill", title: "Lat Head")
 
+    var data = [
+        SwingFilterData(imageName: "airplane", title: "Tempo", status: .none()),
+        SwingFilterData(imageName: "tag.fill", title: "Left Arm", status: .none()),
+        SwingFilterData(imageName: "bed.double.fill", title: "Hip Sway", status: .none()),
+        SwingFilterData(imageName: "car.fill", title: "Vert Head", status: .none()),
+        SwingFilterData(imageName: "car.fill", title: "Lat Head", status: .none())
     ]
     
     // These are the FilterData that have been selected using the toggleFilter(at:)
@@ -66,18 +53,11 @@ class SwingFilterModel: NSObject, ObservableObject {
         refreshSelectionStatus()
     }
     
-//    // Clears the selected items
-//    func clearSelection() {
-//        for index in 0..<data.count {
-//            data[index].isSelected = false
-//        }
-//        refreshSelection()
-//    }
     
     // Remakes the published selectionStatus list
     private func refreshSelectionStatus() {
         // add the selected buttons to the selectionStatus array
-        let result = data.filter{ $0.status == FilterButtonState.passed || $0.status == FilterButtonState.failed }
+        let result = data.filter{ $0.status == .passed() || $0.status == .failed() }
 //        withAnimation {
             selectionStatus = result
 //        }

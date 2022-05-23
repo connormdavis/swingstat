@@ -10,9 +10,7 @@ import SwiftUI
 struct SwingFilterTag: View {
 
     var swingFilterData: SwingFilterData
-    
-   
-    
+
     var body: some View {
         Label(swingFilterData.title, systemImage: swingFilterData.imageName)
             .labelStyle(.titleOnly)
@@ -21,7 +19,7 @@ struct SwingFilterTag: View {
             .foregroundColor(.white)
             .background(
                 RoundedRectangle(cornerRadius: 16)  // 3
-                    .foregroundColor(swingFilterData.isSelected ? Color.green : Color.black.opacity(0.6))
+                    .foregroundColor(swingFilterData.status.color)
             )
             .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
     }
