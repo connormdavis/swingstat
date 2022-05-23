@@ -105,19 +105,19 @@ struct SwingAnalyzer: View {
                                    Button {
                                        swingFilterModel.toggleFilter(at: index, state: .passed())
                                    } label: {
-                                       Label("Passed tip", systemImage: "checkmark")
+                                       Label("Passed \(swingFilterModel.data[index].title)", systemImage: "checkmark")
                                    }
  
                                    Button {
                                        swingFilterModel.toggleFilter(at: index, state: .failed())
                                    } label: {
-                                       Label("Failed tip", systemImage: "xmark")
+                                       Label("Failed \(swingFilterModel.data[index].title)", systemImage: "xmark")
                                    }
                   
                                    Button {
                                        swingFilterModel.toggleFilter(at: index, state: .none())
                                    } label: {
-                                       Label("None", systemImage: "").labelStyle(.titleOnly)
+                                       Label("Don't filter by \(swingFilterModel.data[index].title)", systemImage: "").labelStyle(.titleOnly)
                                    }
          
                                }
