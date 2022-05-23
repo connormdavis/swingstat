@@ -101,6 +101,26 @@ struct SwingAnalyzer: View {
                                        swingFilterModel.toggleFilter(at: index, state: .none())
                                    }
                                }
+                               .contextMenu {
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .passed())
+                                   } label: {
+                                       Label("Passed tip", systemImage: "checkmark")
+                                   }
+ 
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .failed())
+                                   } label: {
+                                       Label("Failed tip", systemImage: "xmark")
+                                   }
+                  
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .none())
+                                   } label: {
+                                       Label("None", systemImage: "").labelStyle(.titleOnly)
+                                   }
+         
+                               }
                         }
                     }
                 }
