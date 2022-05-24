@@ -43,11 +43,14 @@ struct SwingEventChooser: View {
     
     func createSwingAndBeginAnalysis() {
         swing.changeVideo(url: analyzerViewModel.videoUrl)
+        
+        let numFrames = VideoProcessing.countFrames(in: AVAsset(url: analyzerViewModel.videoUrl))
 
         // Save key moments
         swing.backswingFrame = backswingFrame!
         swing.setupFrame = setupFrame!
         swing.impactFrame = impactFrame!
+        swing.totalFrames = numFrames
         
         swing.generateLandmarks(usingFrames: [])
         swing.generateImages()
@@ -100,7 +103,7 @@ struct SwingEventChooser: View {
 
     
     var body: some View {
-        NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed), isActive: $showAnalysis) { EmptyView() }
+        NavigationLink(destination: SwingAnalysis(swing: swing, analysisFailed: $analysisFailed, previouslySavedSwing: false), isActive: $showAnalysis) { EmptyView() }
         VStack(alignment: .center) {
             Text("Select all three swing events:")
                 .font(.system(size: 20))

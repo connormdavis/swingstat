@@ -26,6 +26,7 @@ class Swing: ObservableObject, Identifiable {
     @Published var noPostureDetected = false
     @Published var swingTips: [SwingTip] = []
     
+    
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
     
@@ -50,9 +51,14 @@ class Swing: ObservableObject, Identifiable {
 
     
     
-    init(url: URL?) {
+    init(url: URL?, id: String = "") {
         self.video = url
-        self.id = UUID().uuidString
+        if id == "" {
+            self.id = UUID().uuidString
+        } else {
+            self.id = id
+        }
+        
         self.date = Date()
         self.thumbnail = getThumbnailFrom(path: self.getVideoURL())
         
@@ -150,12 +156,35 @@ class Swing: ObservableObject, Identifiable {
         
     }
     
+
 //    func getSwingScoreFrom(path: URL) -> Double {
 //
 //        let swingScore = self.swingTips
 //        return swingScore
 //    }
+
+    // Converts the swing object to a serializable SavedSwingAnalysis for sending to backend
+    func createSavableAnalysisItem(tips: [SwingTip]) -> SavedSwingAnalysis {
+        var passedCount = 0
+        for swingTip in tips {
+            if swingTip.passed { passedCount += 1 }
+        }
+        
+        var goodSwing = false
+        if passedCount >= 3 {
+            goodSwing = true
+        }
+        
+        let setupFramePose = PoseSerializable.loadFromPose(pose: landmarks[setupFrame]!)
+        let backswingFramePose = PoseSerializable.loadFromPose(pose: landmarks[backswingFrame]!)
+        let impactFramePose = PoseSerializable.loadFromPose(pose: landmarks[impactFrame]!)
     
+        
+        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, video: self.video!, swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
+        
+        return savedAnalysis
+    }
+
     /*
      Writes JSON to a given file URL
      */
@@ -170,7 +199,21 @@ class Swing: ObservableObject, Identifiable {
     /*
      Deletes the video associated with a swing object
      */
-    func delete() {
+    func delete() async {
+        // Remove associated swing analysis from backend
+        var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
+        request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            // Send request
+            let (data, _) = try await URLSession.shared.data(for: request)
+            print("Success deleting swing w/ ID \(self.id) from DB.")
+//                        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+        } catch {
+            print("Error (couldn't delete saved swing analysis): \(error.localizedDescription)")
+        }
+        
         VideoProcessing.deleteVideo(at: self.video!)
     }
     
@@ -406,6 +449,22 @@ class Swing: ObservableObject, Identifiable {
         
         print("--> Chosen frame: \(minYDiffFrame)")
         return minYDiffFrame
+    }
+    
+    static func loadFromSavedAnalysis(savedAnalysis: SavedSwingAnalysis) -> Swing {
+        // create swing object from analysis field
+        // will be used by swing analyzer to pass swing object to analysis view
+        
+        let swing = Swing(url: savedAnalysis.video, id: savedAnalysis.id)
+
+        swing.swingTips = savedAnalysis.swingTips
+        swing.setupFrame = savedAnalysis.setupFrame
+        swing.backswingFrame = savedAnalysis.backswingFrame
+        swing.impactFrame = savedAnalysis.impactFrame
+        swing.totalFrames = savedAnalysis.totalFrames
+        swing.leftArmAngleFrame = savedAnalysis.leftArmAngleFrame
+        
+        return swing
     }
 
     

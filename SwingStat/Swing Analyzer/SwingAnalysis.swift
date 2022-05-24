@@ -16,10 +16,13 @@ struct SwingAnalysis: View {
     @ObservedObject var swing: Swing
     @State var swingTips: [SwingTip]?
     @Binding var analysisFailed: Bool
+    @State var previouslySavedSwing: Bool
     
     @State var viewingAnnotatedImage: Bool = false
     @State var selectedImageIdx = 0
     @State var showSwingAnalyzer = false
+    
+   
     
     func getSetupImage() -> UIImage {
         if swing.setupImage != nil {
@@ -90,7 +93,7 @@ struct SwingAnalysis: View {
             }
             .padding()
         }
-        else if swing.processing || swing.analyzing {
+        else if (!previouslySavedSwing && (swing.processing || swing.analyzing)) {
             VStack(alignment: .center) {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: Color.green))
@@ -114,9 +117,46 @@ struct SwingAnalysis: View {
                 
             }
             .task {
-                let tips = await swing.analyzePostureInformation()
-                self.swingTips = tips
-                self.swing.analyzing = false
+                if !previouslySavedSwing {
+                    let tips = await swing.analyzePostureInformation()
+                    self.swingTips = tips
+                    self.swing.analyzing = false
+                    
+                    // Now store this new swing analysis in the backend
+                    let analysis = self.swing.createSavableAnalysisItem(tips: tips)
+                    analysis.saveToBackend()
+                    
+                    
+//                    let analysisJson = analysis.getJson()
+//
+//                    print("ANALYSIS JSON -> \(analysisJson)")
+//
+//
+//
+//
+//                    var request = URLRequest(url: URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swing")!)
+//                    request.httpMethod = "POST"
+//                    request.httpBody = analysisJson
+//                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//
+//                    //request.addValue("\(analysisJson.count)", forHTTPHeaderField: "Content-Length")
+//
+//
+////                    print("body: \(String(decoding: request.httpBody!, as: UTF8.self))")
+//
+//                    do {
+//                        // Send request
+//                        let (data, _) = try await URLSession.shared.data(for: request)
+//                        print("Success saving new analysis to MongoDB.")
+////                        let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+//                    } catch {
+//                        print("Error (couldn't save new swing analysis): \(error.localizedDescription)")
+//                    }
+                } else {
+                    // don't request analysis, used previously saved tips
+                    self.swingTips = swing.swingTips
+                }
             }
         } else {
             VStack {
@@ -264,6 +304,6 @@ struct SwingAnalysis_Previews: PreviewProvider {
     @State static var status = false
     
     static var previews: some View {
-        SwingAnalysis(swing: self.swing, analysisFailed: $status)
+        SwingAnalysis(swing: self.swing, analysisFailed: $status, previouslySavedSwing: false)
     }
 }
