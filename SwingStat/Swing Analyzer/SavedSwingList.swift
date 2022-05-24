@@ -16,9 +16,11 @@ struct SavedSwingList: View {
     @State var savedSwings: [Swing] = []
     @State var analyzerViewModels: [SwingAnalyzerViewModel] = []
     
-    @State private var selected: String? = nil
+    @State private var selected: Swing.ID? = nil
+    @State private var selectedSwingIdx: Int = -1
     
     @State var bocceBool: Bool = false
+    @State var navigateToAnalysis: Bool = false
     
     var gridItems: [GridItem] = [
         GridItem(.flexible(minimum: 35, maximum: 40), alignment: .leading),
@@ -50,15 +52,22 @@ struct SavedSwingList: View {
             Image(uiImage: swing.thumbnail)
                 .resizable()
                 .scaledToFit()
+
+          
             Text(swing.filename).lineLimit(1).font(.caption)
             
             Text("5/6").font(.caption2)
+
             
             // might want to change this to be the day of the analysis of the video, which we can store in the database
             Text(getDateString(date: swing.creationDate)).font(.caption2)
             
             Text(String(format: "%.fs", swing.videoDuration)).font(.caption2)
                 
+        }
+        .onTapGesture {
+            // Update selected swing
+            selected = swing.id
         }
     }
     
@@ -72,10 +81,17 @@ struct SavedSwingList: View {
         return stringDate
     }
     
+    func swingsUpdated(swings: [Swing]) {
+        self.savedSwings = swings
+    }
+    
     func updateSavedSwings() {
         Task {
-            self.savedSwings = await SavedSwingAnalysis.retrieveAllSavedSwings()
+            await SavedSwingAnalysis.retrieveAllSavedSwings(handler: swingsUpdated)
+            
+//            print("Saved swings: \(savedSwings)")
         }
+        
         
         
 //        let savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
@@ -87,31 +103,43 @@ struct SavedSwingList: View {
 //        self.savedSwings = swings
     }
     
+    func printSwings() {
+        print(savedSwings)
+        print(savedSwings.count)
+    }
+    
     var body: some View {
-
         VStack {
             TablerList1(header: header,
                 row: row,
                 results: savedSwings,
                 selected: $selected);
+            if selectedSwingIdx > -1 {
+                NavigationLink(destination: SwingAnalysis(swing: savedSwings[selectedSwingIdx], analysisFailed: $bocceBool, previouslySavedSwing: true), isActive: $navigateToAnalysis) { EmptyView() }
+            }
         }
         .onAppear() {
+            selected = nil
+            
+            
             updateSavedSwings()
         }
         .onChange(of: selected, perform: { id in
-            var selectedSwing: Swing?
-            for swing in savedSwings {
-                if swing.id == id {
-                    selectedSwing = swing
+            
+            var i = 0
+            while i < savedSwings.count {
+                if savedSwings[i].id == id {
+                    selectedSwingIdx = i
                 }
+                i += 1
             }
-            if selectedSwing == nil {
+            
+            if selectedSwingIdx == -1 {
                 print("ERROR no such swing")
             }
             
-            NavigationLink {
-                SwingAnalysis(swing: selectedSwing!, analysisFailed: $bocceBool, previouslySavedSwing: false)
-            } label: {}
+            // Trigger navigation
+            navigateToAnalysis = true
         })
 //        List {
 //            ForEach(savedSwings, id: \.id) { swing in

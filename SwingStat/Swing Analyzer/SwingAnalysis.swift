@@ -93,6 +93,20 @@ struct SwingAnalysis: View {
             }
             .padding()
         }
+        else if (swing.regeneratingImages) {
+            VStack(alignment: .center) {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.green))
+                    .scaleEffect(3.0, anchor: .center)
+                    .padding()
+                Text("Retrieving analysis...")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.green)
+                    .padding()
+                
+            }
+        }
         else if (!previouslySavedSwing && (swing.processing || swing.analyzing)) {
             VStack(alignment: .center) {
                 ProgressView()
@@ -241,7 +255,12 @@ struct SwingAnalysis: View {
                     .font(.headline)
                     .padding()
                 
-                SwingTipList(savedTips: self.swingTips!, swing: swing)
+                if previouslySavedSwing {
+                    SwingTipList(savedTips: swing.swingTips, swing: swing)
+                } else {
+                    SwingTipList(savedTips: self.swingTips!, swing: swing)
+                }
+                
             }
             .sheet(isPresented: $viewingAnnotatedImage) {
                 if selectedImageIdx == 0 {
