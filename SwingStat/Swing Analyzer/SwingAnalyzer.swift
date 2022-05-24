@@ -21,6 +21,11 @@ struct SwingAnalyzer: View {
     
     @State var savedSwingVideoNames: [String] = SavedSwingVideoManager.getSavedSwingVideoNames()
     
+    @ObservedObject var swingFilterModel = SwingFilterModel()
+    
+    // set initial state of filters to be none
+    @State var filterButtonState: FilterButtonState = .none()
+    
     
     func createSwingsFromVideo() -> [Swing] {
         var swings: [Swing] = []
@@ -80,6 +85,49 @@ struct SwingAnalyzer: View {
                 .padding(.bottom, 10)
                 .padding(.horizontal, 25)
                 
+                VStack {
+                    Text("Filter swings by:")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        ForEach(0..<swingFilterModel.data.count) { index in
+                            SwingFilterTag(swingFilterData: swingFilterModel.data[index])
+                               .onTapGesture {
+                                   switch swingFilterModel.data[index].status {
+                                   case .none:
+                                       swingFilterModel.toggleFilter(at: index, state: .passed())
+                                   case .passed:
+                                       swingFilterModel.toggleFilter(at: index, state: .failed())
+                                   case .failed:
+                                       swingFilterModel.toggleFilter(at: index, state: .none())
+                                   }
+                               }
+                               .contextMenu {
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .passed())
+                                   } label: {
+                                       Label("Passed \(swingFilterModel.data[index].title)", systemImage: "checkmark")
+                                   }
+ 
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .failed())
+                                   } label: {
+                                       Label("Failed \(swingFilterModel.data[index].title)", systemImage: "xmark")
+                                   }
+                  
+                                   Button {
+                                       swingFilterModel.toggleFilter(at: index, state: .none())
+                                   } label: {
+                                       Label("Don't filter by \(swingFilterModel.data[index].title)", systemImage: "").labelStyle(.titleOnly)
+                                   }
+         
+                               }
+                        }
+                    }
+                }
+                .padding(.bottom, 10)
+                .padding(.horizontal, 25)
+                
+               
                 SavedSwingList()
                 
             }
@@ -89,11 +137,6 @@ struct SwingAnalyzer: View {
                 self.showSwingAnalysis = true
             }
             .onChange(of: swingAnalyzerViewModel.videoUrl) { newUrl in
-//                print("New url: \(newUrl)")
-//                // save the vid to documents directory
-//                SavedSwingVideoManager.saveSwingVideo(videoUrl: newUrl)
-//                // 'refresh' list
-//                savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
                 // trigger navigation to analysis view
                 self.showSwingAnalysis = true
                 self.showCameraModal = false

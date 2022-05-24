@@ -47,6 +47,7 @@ class Swing: ObservableObject, Identifiable {
     var filename: String! = nil
     var creationDate: Date! = nil         // based on metadata
     var videoDuration: Double! = nil
+//    var swingScore: Double! = nil
 
     
     
@@ -65,8 +66,39 @@ class Swing: ObservableObject, Identifiable {
         self.filename = getFilename()
         self.creationDate = getDateCreatedFrom(path: self.getVideoURL())
         self.videoDuration = getDurationFrom(path: self.getVideoURL())
+//        self.swingScore = getSwingScoreFrom(path: self.getVideoURL())
     }
     
+    
+    func filterSwings() -> SwingTipFiltered {
+        var tempo = true
+        var leftArm = true
+        var hipSway = true
+        var vertHead = true
+        var latHead = true
+                
+        for tip in swingTips {
+            if tip.type == "Swing tempo" {
+                tempo = tip.passed
+            }
+            else if tip.type == "Left arm angle" {
+                leftArm = tip.passed
+            }
+            else if tip.type == "Hip sway" {
+                hipSway = tip.passed
+            }
+            else if tip.type == "Vertical head movement" {
+                vertHead = tip.passed
+            }
+            else if tip.type == "Lateral head movement" {
+                latHead = tip.passed
+            }
+        }
+        
+        let results = SwingTipFiltered(leftArmAngle: leftArm, lateralHeadMovement: latHead, verticalHeadMovement: vertHead, hipSway: hipSway, swingTempo: tempo)
+        
+        return results
+    }
     
     
     // https://stackoverflow.com/questions/31779150/creating-thumbnail-from-local-video-in-swift
@@ -124,6 +156,13 @@ class Swing: ObservableObject, Identifiable {
         
     }
     
+
+//    func getSwingScoreFrom(path: URL) -> Double {
+//
+//        let swingScore = self.swingTips
+//        return swingScore
+//    }
+
     // Converts the swing object to a serializable SavedSwingAnalysis for sending to backend
     func createSavableAnalysisItem(tips: [SwingTip]) -> SavedSwingAnalysis {
         var passedCount = 0
@@ -145,7 +184,7 @@ class Swing: ObservableObject, Identifiable {
         
         return savedAnalysis
     }
-    
+
     /*
      Writes JSON to a given file URL
      */

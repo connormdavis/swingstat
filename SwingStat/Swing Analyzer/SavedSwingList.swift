@@ -22,9 +22,10 @@ struct SavedSwingList: View {
     
     var gridItems: [GridItem] = [
         GridItem(.flexible(minimum: 35, maximum: 40), alignment: .leading),
-        GridItem(.flexible(minimum: 100), alignment: .leading),
-        GridItem(.flexible(minimum: 40, maximum: 80), alignment: .trailing),
-        GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 100), alignment: .leading),
+        GridItem(.flexible(minimum: 10, maximum: 65), alignment: .center),
+        GridItem(.flexible(minimum: 40, maximum: 80), alignment: .center),
+        GridItem(.flexible(minimum: 10, maximum: 65), alignment: .center),
     ]
 
     typealias Context = TablerContext<Swing>
@@ -32,13 +33,14 @@ struct SavedSwingList: View {
 
     func header(ctx: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems) {
-            Text("Name")
-//            Sort.columnTitle("Score", ctx, \.score)
-//                .onTapGesture(tablerSort(ctx, &savedSwings, \.score) { $0.score < $1.score })
-            Text("Score")
-            Sort.columnTitle("Date", ctx, \.creationDate)
+            Text("    ").font(.system(size: 10))
+            Text("Name").font(.system(size: 10))
+            Text("Score").font(.system(size: 10))
+//            Sort.columnTitle("Score", ctx, \.swingScore).font(.system(size: 10))
+//                .onTapGesture{tablerSort(ctx, &savedSwings, \.swingScore) { $0.swingScore < $1.swingScore }}
+            Sort.columnTitle("Date", ctx, \.creationDate).font(.system(size: 10))
                 .onTapGesture{tablerSort(ctx, &savedSwings, \.creationDate) { $0.creationDate < $1.creationDate }}
-            Sort.columnTitle("Duration", ctx, \.videoDuration)
+            Sort.columnTitle("Duration", ctx, \.videoDuration).font(.system(size: 8))
                 .onTapGesture{tablerSort(ctx, &savedSwings, \.videoDuration) { $0.videoDuration < $1.videoDuration }}
        }
     }
@@ -48,14 +50,15 @@ struct SavedSwingList: View {
             Image(uiImage: swing.thumbnail)
                 .resizable()
                 .scaledToFit()
-            Text(swing.filename).lineLimit(1).font(.subheadline)
+            Text(swing.filename).lineLimit(1).font(.caption)
+            
+            Text("5/6").font(.caption2)
             
             // might want to change this to be the day of the analysis of the video, which we can store in the database
-            Text(getDateString(date: swing.creationDate)).font(.caption)
-                .fontWeight(.bold)
+            Text(getDateString(date: swing.creationDate)).font(.caption2)
             
-            Text(String(format: "%.fs", swing.videoDuration)).font(.caption)
-                .fontWeight(.bold)
+            Text(String(format: "%.fs", swing.videoDuration)).font(.caption2)
+                
         }
     }
     
@@ -156,6 +159,9 @@ struct SavedSwingList_Previews: PreviewProvider {
     static let test_swing: Swing = Swing(url: nil)
     
     static var previews: some View {
-        SavedSwingList(savedSwings: self.swings)
+        Group {
+            SavedSwingList(savedSwings: self.swings)
+            SavedSwingList(savedSwings: self.swings)
+        }
     }
 }
