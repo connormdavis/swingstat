@@ -200,6 +200,37 @@ class VideoProcessing {
         }
     }
     
+    static func loadImage(imageName: String) -> UIImage {
+        let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagesDir = docDirectory.appendingPathComponent("images")
+        
+        let filePath = imagesDir.appendingPathComponent(imageName)
+        
+        var image: UIImage?
+        if let data = try? Data(contentsOf: filePath), let loaded = UIImage(data: data) {
+            image = loaded
+        } else {
+            print("Error, couldn't load image: \(imageName)")
+        }
+        return image!
+    }
+    
+    static func saveImage(imageName: String, image: UIImage) {
+        let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let imagesDir = docDirectory.appendingPathComponent("images")
+        
+        let filePath = imagesDir.appendingPathComponent(imageName)
+        do {
+            if !FileManager.default.fileExists(atPath: imagesDir.path) {
+                try FileManager.default.createDirectory(at: imagesDir, withIntermediateDirectories: true)
+            }
+            
+            filePath.saveImage(image)
+        } catch {
+            print("Couldn't save image (\(imageName)): \(error)")
+        }
+    }
+    
     
 }
 

@@ -31,8 +31,6 @@ struct SwingAnalyzer: View {
         return swings
     }
     
-
-    
     
     var body: some View {
         NavigationView {
@@ -45,8 +43,9 @@ struct SwingAnalyzer: View {
                         .font(.title2)
                 }
                 .onAppear() {
-                    savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
-                    print("VIDEO NAMES: \(savedSwingVideoNames)")
+                    
+//                    savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
+//                    print("VIDEO NAMES: \(savedSwingVideoNames)")
                 }
                 
                 .padding(.horizontal, 25)

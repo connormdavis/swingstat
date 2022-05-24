@@ -23,12 +23,20 @@ class Swing: ObservableObject, Identifiable {
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
     @Published var processing = false            // 'true' when the landmarks are in the process of being generated
     @Published var analyzing = false
+    
+    // Indicates a previously saved swing is using
+    @Published var regeneratingImages = false
+    
     @Published var noPostureDetected = false
     @Published var swingTips: [SwingTip] = []
     
     
     var landmarksText: String = ""
     var landmarks: [Int: Pose] = [:]
+    
+    var savedSetupPose: PoseSerializable? = nil
+    var savedBackswingPose: PoseSerializable? = nil
+    var savedImpactPose: PoseSerializable? = nil
     
     // Frame no's for specific moments
     var setupFrame: Int = -1
@@ -139,9 +147,18 @@ class Swing: ObservableObject, Identifiable {
         let setupFramePose = PoseSerializable.loadFromPose(pose: landmarks[setupFrame]!)
         let backswingFramePose = PoseSerializable.loadFromPose(pose: landmarks[backswingFrame]!)
         let impactFramePose = PoseSerializable.loadFromPose(pose: landmarks[impactFrame]!)
-    
         
-        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, video: self.video!, swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
+        // Save images to disc
+        let setupImageName = "\(self.id)-setup.jpg"
+        let backswingImageName = "\(self.id)-bacskwing.jpg"
+        let impactImageName = "\(self.id)-impact.jpg"
+        VideoProcessing.saveImage(imageName: setupImageName, image: setupImage!)
+        VideoProcessing.saveImage(imageName: backswingImageName, image: backswingImage!)
+        VideoProcessing.saveImage(imageName: impactImageName, image: impactImage!)
+        
+        
+        
+        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, videoName: self.getFilename(), swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupImage: setupImageName, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingImage: backswingImageName,  backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactImage: impactImageName, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
         
         return savedAnalysis
     }
@@ -416,7 +433,9 @@ class Swing: ObservableObject, Identifiable {
         // create swing object from analysis field
         // will be used by swing analyzer to pass swing object to analysis view
         
-        let swing = Swing(url: savedAnalysis.video, id: savedAnalysis.id)
+        let videoUrl = SavedSwingVideoManager.getSavedSwingVideoURL(videoName: savedAnalysis.videoName)
+        
+        let swing = Swing(url: videoUrl, id: savedAnalysis.id)
 
         swing.swingTips = savedAnalysis.swingTips
         swing.setupFrame = savedAnalysis.setupFrame
@@ -425,7 +444,48 @@ class Swing: ObservableObject, Identifiable {
         swing.totalFrames = savedAnalysis.totalFrames
         swing.leftArmAngleFrame = savedAnalysis.leftArmAngleFrame
         
+        swing.savedSetupPose = savedAnalysis.setupFramePose
+        swing.savedBackswingPose = savedAnalysis.backswingFramePose
+        swing.savedImpactPose = savedAnalysis.impactFramePose
+        
+        // load UIImages
+        let setupImage = VideoProcessing.loadImage(imageName: savedAnalysis.setupImage)
+        let backswingImage = VideoProcessing.loadImage(imageName: savedAnalysis.backswingImage)
+        let impactImage = VideoProcessing.loadImage(imageName: savedAnalysis.impactImage)
+        
+        swing.setupImage = setupImage
+        swing.backswingImage = backswingImage
+        swing.impactImage = impactImage
+        
         return swing
+    }
+    
+    func regenerateImages() {
+        
+        DispatchQueue.global().async {
+            let setupImage = VideoProcessing.getFrameAsImage(frameNum: self.setupFrame, url: self.video!)
+            let backswingImage = VideoProcessing.getFrameAsImage(frameNum: self.backswingFrame, url: self.video!)
+            let impactImage = VideoProcessing.getFrameAsImage(frameNum: self.impactFrame, url: self.video!)
+            
+            
+            DispatchQueue.main.async {
+                if self.landmarks[self.setupFrame] != nil {
+                    let setupImageAnnotated = Swing.createAnnotatedUIImage(image: setupImage!, pose: self.landmarks[self.setupFrame]!)
+                    let backswingImageAnnotated = Swing.createAnnotatedUIImage(image: backswingImage!, pose: self.landmarks[self.backswingFrame]!)
+                    let impactImageAnnotated = Swing.createAnnotatedUIImage(image: impactImage!, pose: self.landmarks[self.impactFrame]!)
+                    
+                    self.setupImage = setupImageAnnotated.rotate(radians: .pi/2)
+                    self.backswingImage = backswingImageAnnotated.rotate(radians: .pi/2)
+                    self.impactImage = impactImageAnnotated.rotate(radians: .pi/2)
+                    
+                    self.regeneratingImages = false
+                } else {
+                    print("ERROR: no human detected")
+                    return
+                }
+                
+            }
+        }
     }
 
     
