@@ -55,7 +55,8 @@ class Swing: ObservableObject, Identifiable {
     var filename: String! = nil
     var creationDate: Date! = nil         // based on metadata
     var videoDuration: Double! = nil
-//    var swingScore: Double! = nil
+    var swingScore: Double! = nil
+    var swingScoreString: String! = nil
 
     
     
@@ -74,7 +75,8 @@ class Swing: ObservableObject, Identifiable {
         self.filename = getFilename()
         self.creationDate = getDateCreatedFrom(path: self.getVideoURL())
         self.videoDuration = getDurationFrom(path: self.getVideoURL())
-//        self.swingScore = getSwingScoreFrom(path: self.getVideoURL())
+        self.swingScore = getSwingScoreFrom(path: self.getVideoURL())
+        self.swingScoreString = getSwingScoreStringFrom(score: getSwingScoreFrom(path: self.getVideoURL()))
     }
     
     
@@ -164,14 +166,61 @@ class Swing: ObservableObject, Identifiable {
         
     }
     
+    /*
+     Returns a score for a swing that is a double
+     */
+    func getSwingScoreFrom(path: URL) -> Double {
+        
+        var swingScore = 0.0
 
-//    func getSwingScoreFrom(path: URL) -> Double {
-//
-//        let swingScore = self.swingTips
-//        return swingScore
-//    }
+        
+        for tip in swingTips {
+            if tip.type == "Swing tempo" && tip.passed {
+                swingScore += 1.0
+            }
+            else if tip.type == "Left arm angle" && tip.passed  {
+                swingScore += 1.0
+            }
+            else if tip.type == "Hip sway" && tip.passed {
+                swingScore += 1.0
+            }
+            else if tip.type == "Vertical head movement" && tip.passed {
+                swingScore += 1.0
+            }
+            else if tip.type == "Lateral head movement" && tip.passed {
+                swingScore += 1.0
+            }
+        }
+        return swingScore
+    }
+    
+    /*
+     Returns a score for a swing that is in the form of a fraction over 6 (for display use)
+     */
+    func getSwingScoreStringFrom(score: Double) -> String {
+        
+        var swingScoreString = ""
+        
+        if score == 0.0 {
+            swingScoreString = "0/5"
+        } else if score == 1.0 {
+            swingScoreString = "1/5"
+        } else if score == 2.0 {
+            swingScoreString = "2/5"
+        } else if score == 3.0 {
+            swingScoreString = "3/5"
+        } else if score == 4.0 {
+            swingScoreString = "4/5"
+        } else if score == 5.0 {
+            swingScoreString = "5/5"
+        }
+        
+        return swingScoreString
+    }
 
-    // Converts the swing object to a serializable SavedSwingAnalysis for sending to backend
+    /*
+     Converts the swing object to a serializable SavedSwingAnalysis for sending to backend
+     */
     func createSavableAnalysisItem(tips: [SwingTip]) -> SavedSwingAnalysis {
         var passedCount = 0
         for swingTip in tips {
