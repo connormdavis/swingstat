@@ -8,9 +8,56 @@
 import SwiftUI
 
 struct Stats: View {
+    
+    @State var savedSwings: [Swing] = []
+    
+    // Stat varaiables
+    var totalSwings: Int! = nil
+    var percentPassed: Double! = nil
+    var mostPassed: String! = nil
+    var leastPassed: String! = nil
+    var leftArmAnglePct: Double! = nil
+    var hipSwayPct: Double! = nil
+    var swingTempoPct: Double! = nil
+    var vertHeadPct: Double! = nil
+    var latHeadPct: Double! = nil
+    
+    init() {
+        self.totalSwings = getTotalSwings(swings: savedSwings)
+//        self.percentPassed =
+//        self.mostPassed =
+//        self.leastPassed =
+//        self.leftArmAnglePct =
+//        self.hipSwayPct =
+//        self.swingTempoPct =
+//        self.vertHeadPct =
+//        self.latHeadPct =
+    }
+    
+    
+    func populateSavedSwings() {
+        Task {
+            await SavedSwingAnalysis.retrieveAllSavedSwings(handler: swingsRetrieved)
+            print("-----> RETRIEVING SWINGS FROM BACKEND")
+        }
+    }
+    
+    func swingsRetrieved(swings: [Swing]) {
+        self.savedSwings = swings
+    }
+    
+
+    func getTotalSwings(swings: [Swing]) -> Int {
+//        var swingCount = 0
+//        for swing in swings {
+//            swingCount += 1
+//        }
+       return swings.count
+    }
+    
     var body: some View {
         NavigationView{
-            VStack{
+            VStack {
                 Form {
                     Section(header: Text("Overview")) {
                         HStack {
@@ -63,6 +110,9 @@ struct Stats: View {
                     }
                 }
                 .font(.subheadline)
+            }
+            .onAppear() {
+                populateSavedSwings()
             }
             .navigationTitle("Swing Statistics")
         }
