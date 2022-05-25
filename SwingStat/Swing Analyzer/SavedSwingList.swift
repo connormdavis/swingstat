@@ -41,7 +41,6 @@ struct SavedSwingList: View {
         LazyVGrid(columns: gridItems) {
             Text("    ").font(.system(size: 10))
             Text("Name").font(.system(size: 10))
-//            Text("Score").font(.system(size: 10))
             Sort.columnTitle("Score", ctx, \.swingScore).font(.system(size: 10))
                 .onTapGesture{tablerSort(ctx, &currSwings, \.swingScore) { $0.swingScore < $1.swingScore }}
             Sort.columnTitle("Date", ctx, \.creationDate).font(.system(size: 10))

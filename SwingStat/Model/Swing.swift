@@ -202,19 +202,17 @@ class Swing: ObservableObject, Identifiable {
         var swingScoreString = ""
         
         if score == 0.0 {
-            swingScoreString = "0/6"
+            swingScoreString = "0/5"
         } else if score == 1.0 {
-            swingScoreString = "1/6"
+            swingScoreString = "1/5"
         } else if score == 2.0 {
-            swingScoreString = "2/6"
-        } else if score == 2.0 {
-            swingScoreString = "3/6"
-        } else if score == 2.0 {
-            swingScoreString = "4/6"
-        } else if score == 2.0 {
-            swingScoreString = "5/6"
-        } else if score == 2.0 {
-            swingScoreString = "6/6"
+            swingScoreString = "2/5"
+        } else if score == 3.0 {
+            swingScoreString = "3/5"
+        } else if score == 4.0 {
+            swingScoreString = "4/5"
+        } else if score == 5.0 {
+            swingScoreString = "5/5"
         }
         
         return swingScoreString
