@@ -25,7 +25,7 @@ enum FilterButtonState: Equatable {
     }
 }
 
-struct SwingFilterData: Identifiable {
+struct SwingFilterData: Identifiable, Equatable {
     var id = UUID()
     var imageName: String
     var title: String
@@ -41,6 +41,8 @@ class SwingFilterModel: NSObject, ObservableObject {
         SwingFilterData(imageName: "car.fill", title: "Vert Head", status: .none()),
         SwingFilterData(imageName: "car.fill", title: "Lat Head", status: .none())
     ]
+    
+    
     
     // These are the FilterData that have been selected using the toggleFilter(at:)
     // function.

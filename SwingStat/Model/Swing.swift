@@ -78,7 +78,7 @@ class Swing: ObservableObject, Identifiable {
     }
     
     
-    func filterSwings() -> SwingTipFiltered {
+    func getTipResults() -> SwingTipFiltered {
         var tempo = true
         var leftArm = true
         var hipSway = true
