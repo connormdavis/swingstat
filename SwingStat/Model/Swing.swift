@@ -55,7 +55,8 @@ class Swing: ObservableObject, Identifiable {
     var filename: String! = nil
     var creationDate: Date! = nil         // based on metadata
     var videoDuration: Double! = nil
-    var swingScore: String! = nil
+    var swingScore: Double! = nil
+    var swingScoreString: String! = nil
 
     
     
@@ -75,6 +76,7 @@ class Swing: ObservableObject, Identifiable {
         self.creationDate = getDateCreatedFrom(path: self.getVideoURL())
         self.videoDuration = getDurationFrom(path: self.getVideoURL())
         self.swingScore = getSwingScoreFrom(path: self.getVideoURL())
+        self.swingScoreString = getSwingScoreStringFrom(score: getSwingScoreFrom(path: self.getVideoURL()))
     }
     
     
@@ -165,48 +167,57 @@ class Swing: ObservableObject, Identifiable {
     }
     
     /*
-     Returns a score for a swing that is a fraction out of 6
+     Returns a score for a swing that is a double
      */
-    func getSwingScoreFrom(path: URL) -> String {
+    func getSwingScoreFrom(path: URL) -> Double {
         
-        var score = 0.0
-        var swingScore: String
+        var swingScore = 0.0
+
         
         for tip in swingTips {
             if tip.type == "Swing tempo" && tip.passed {
-                score += 1.0
+                swingScore += 1.0
             }
             else if tip.type == "Left arm angle" && tip.passed  {
-                score += 1.0
+                swingScore += 1.0
             }
             else if tip.type == "Hip sway" && tip.passed {
-                score += 1.0
+                swingScore += 1.0
             }
             else if tip.type == "Vertical head movement" && tip.passed {
-                score += 1.0
+                swingScore += 1.0
             }
             else if tip.type == "Lateral head movement" && tip.passed {
-                score += 1.0
+                swingScore += 1.0
             }
         }
+        return swingScore
+    }
+    
+    /*
+     Returns a score for a swing that is in the form of a fraction over 6 (for display use)
+     */
+    func getSwingScoreStringFrom(score: Double) -> String {
+        
+        var swingScoreString = ""
         
         if score == 0.0 {
-            swingScore = "0/6"
+            swingScoreString = "0/6"
         } else if score == 1.0 {
-            swingScore = "1/6"
+            swingScoreString = "1/6"
         } else if score == 2.0 {
-            swingScore = "2/6"
+            swingScoreString = "2/6"
         } else if score == 2.0 {
-            swingScore = "3/6"
+            swingScoreString = "3/6"
         } else if score == 2.0 {
-            swingScore = "4/6"
+            swingScoreString = "4/6"
         } else if score == 2.0 {
-            swingScore = "5/6"
+            swingScoreString = "5/6"
         } else if score == 2.0 {
-            swingScore = "6/6"
+            swingScoreString = "6/6"
         }
         
-        return swingScore
+        return swingScoreString
     }
 
     /*

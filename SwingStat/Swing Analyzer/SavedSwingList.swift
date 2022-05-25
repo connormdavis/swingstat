@@ -41,9 +41,9 @@ struct SavedSwingList: View {
         LazyVGrid(columns: gridItems) {
             Text("    ").font(.system(size: 10))
             Text("Name").font(.system(size: 10))
-            Text("Score").font(.system(size: 10))
-//            Sort.columnTitle("Score", ctx, \.swingScore).font(.system(size: 10))
-//                .onTapGesture{tablerSort(ctx, &savedSwings, \.swingScore) { $0.swingScore < $1.swingScore }}
+//            Text("Score").font(.system(size: 10))
+            Sort.columnTitle("Score", ctx, \.swingScore).font(.system(size: 10))
+                .onTapGesture{tablerSort(ctx, &currSwings, \.swingScore) { $0.swingScore < $1.swingScore }}
             Sort.columnTitle("Date", ctx, \.creationDate).font(.system(size: 10))
                 .onTapGesture{tablerSort(ctx, &currSwings, \.creationDate) { $0.creationDate < $1.creationDate }}
             Sort.columnTitle("Duration", ctx, \.videoDuration).font(.system(size: 8))
@@ -56,18 +56,11 @@ struct SavedSwingList: View {
             Image(uiImage: swing.thumbnail)
                 .resizable()
                 .scaledToFit()
-
-          
             Text(swing.filename).lineLimit(1).font(.caption)
-            
-            Text("5/6").font(.caption2)
-
-            
+            Text(swing.swingScoreString).font(.caption2)
             // might want to change this to be the day of the analysis of the video, which we can store in the database
             Text(getDateString(date: swing.creationDate)).font(.caption2)
-            
             Text(String(format: "%.fs", swing.videoDuration)).font(.caption2)
-                
         }
         .onTapGesture {
             // Update selected swing
