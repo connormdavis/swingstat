@@ -81,6 +81,11 @@ class Swing: ObservableObject, Identifiable {
         self.swingScoreString = getSwingScoreStringFrom(score: getSwingScoreFrom(path: self.getVideoURL()))
     }
     
+    func updateScore() {
+        self.swingScore = getSwingScoreFrom(path: self.getVideoURL())
+        self.swingScoreString = getSwingScoreStringFrom(score: getSwingScoreFrom(path: self.getVideoURL()))
+    }
+    
     
     func getTipResults() -> SwingTipFiltered {
         var tempo = true
@@ -541,6 +546,9 @@ class Swing: ObservableObject, Identifiable {
         swing.savedSetupPose = savedAnalysis.setupFramePose
         swing.savedBackswingPose = savedAnalysis.backswingFramePose
         swing.savedImpactPose = savedAnalysis.impactFramePose
+        
+        // Update score
+        swing.updateScore()
         
         // load UIImages
         let setupImage = VideoProcessing.loadImage(imageName: savedAnalysis.setupImage)
