@@ -49,6 +49,8 @@ class Swing: ObservableObject, Identifiable {
     @Published var backswingImage: UIImage?
     @Published var impactImage: UIImage?
     
+    var estimatedDistance: Float = 200.0    //default
+    
     
     // added after adding Tabler library for sorting
     var thumbnail: UIImage! = nil
@@ -246,7 +248,7 @@ class Swing: ObservableObject, Identifiable {
         
         
         
-        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, videoName: self.getFilename(), swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupImage: setupImageName, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingImage: backswingImageName,  backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactImage: impactImageName, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames)
+        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, videoName: self.getFilename(), swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupImage: setupImageName, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingImage: backswingImageName,  backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactImage: impactImageName, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames, estimatedDistance: self.estimatedDistance)
         
         return savedAnalysis
     }
@@ -367,6 +369,8 @@ class Swing: ObservableObject, Identifiable {
             // Send request
             let (data, _) = try await URLSession.shared.data(for: request)
             let swingTipResults = try JSONDecoder().decode(SwingTipResults.self, from: data)
+            
+            self.estimatedDistance = swingTipResults.estimatedDistance
             
             let swingTempoMiniDesc = "More info"
             let swingTempoPassedDesc = "Good work, your swing's tempo is very smooth. Maintaining a smooth tempo in your swing is one of the most fundamental aspects to good ball-striking!"
@@ -524,6 +528,8 @@ class Swing: ObservableObject, Identifiable {
         let videoUrl = SavedSwingVideoManager.getSavedSwingVideoURL(videoName: savedAnalysis.videoName)
         
         let swing = Swing(url: videoUrl, id: savedAnalysis.id)
+        
+        swing.estimatedDistance = savedAnalysis.estimatedDistance
 
         swing.swingTips = savedAnalysis.swingTips
         swing.setupFrame = savedAnalysis.setupFrame

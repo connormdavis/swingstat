@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct SignUp: View {
-    @State var user = ""
-    @State var password = ""
+    @Binding var email: String
+    @Binding var password: String
     @State var confirmPassword = ""
+    
+
+    
+    func requestSignIn() {
+        
+    }
     
     var body: some View{
         
@@ -39,7 +45,7 @@ struct SignUp: View {
                     .fontWeight(.bold)
                     .foregroundColor(.gray)
                 
-                TextField("email", text: $user)
+                TextField("email", text: $email)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .disableAutocorrection(true)
@@ -95,8 +101,8 @@ struct SignUp: View {
 
 
 
-struct SignUp_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUp()
-    }
-}
+//struct SignUp_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SignUp()
+//    }
+//}

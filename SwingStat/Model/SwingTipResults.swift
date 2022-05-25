@@ -13,4 +13,5 @@ struct SwingTipResults: Codable {
     var verticalHeadMovement: Bool
     var hipSway: Bool
     var swingTempo: Float
+    var estimatedDistance: Float
 }
