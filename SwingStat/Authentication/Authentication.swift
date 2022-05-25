@@ -14,8 +14,180 @@ class AuthenticationState: ObservableObject {
 struct Authentication: View {
     @ObservedObject var authState = AuthenticationState()
     
+    @State var email = ""
+    @State var password = ""
+    
+    
     @State var index = 0
     @Namespace var name
+    
+    func loginSuccess(id: String) {
+        UserData.saveUserId(userId: id)
+        authState.loggedIn = true
+    }
+    
+    func loginFailed(reason: String) {
+        print("Login failed: \(reason)")
+    }
+    
+    func requestLogin() async {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/login"
+        let url = components.url!
+
+        //create the session object
+        let session = URLSession.shared
+
+        //now create the Request object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+        
+        let signupCreds: [String: Any] = [
+            "email": email,
+            "password": password
+        ]
+        
+        var signinData: Data = Data()
+        do {
+            signinData = try JSONSerialization.data(withJSONObject: signupCreds)
+        } catch {
+            print("Couldn't serialize signin credentials.")
+        }
+        
+
+        request.httpBody = signinData
+
+        //HTTP Headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            guard let data = data else {
+                print("Data returned is nil. Error.")
+                return
+            }
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+                let result = json?["result"] as? String
+                
+                if result == "success" {
+                    let id = json?["id"] as? String
+                    loginSuccess(id: id!)
+                } else {
+                    let reason = json?["reason"] as? String
+                    loginFailed(reason: reason!)
+                }
+                
+    //            print("Recieved JSON: \(String(data: data, encoding: .utf8))")
+                
+                 
+                
+//                print("recieved: \(String(bytes: data, encoding: String.Encoding.utf8))")
+//                let cleanJsonData = SavedSwingAnalysis.cleanEjsonTypes(data: data)
+
+                
+            
+
+            } catch let error {
+                print(String(describing: error))
+            }
+        })
+
+        task.resume()
+    }
+    
+    func signupSuccess(id: String) {
+        UserData.saveUserId(userId: id)
+        authState.loggedIn = true
+    }
+    
+    func signupFailed() {
+        print("too bad")
+    }
+    
+    func requestSignup() async {
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/signup"
+        let url = components.url!
+
+        //create the session object
+        let session = URLSession.shared
+
+        //now create the Request object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+        
+        let signupCreds: [String: Any] = [
+            "email": email,
+            "password": password
+        ]
+        
+        var signupData: Data = Data()
+        do {
+            signupData = try JSONSerialization.data(withJSONObject: signupCreds)
+        } catch {
+            print("Couldn't serialize signup credentials.")
+        }
+        
+
+        request.httpBody = signupData
+
+        //HTTP Headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            guard let data = data else {
+                print("Data returned is nil. Error.")
+                return
+            }
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+                var id = json?["id"] as? String
+                
+                if id != nil {
+                    signupSuccess(id: id!)
+                } else {
+                    signupFailed()
+                }
+    //            print("Recieved JSON: \(String(data: data, encoding: .utf8))")
+                
+                 
+                
+//                print("recieved: \(String(bytes: data, encoding: String.Encoding.utf8))")
+//                let cleanJsonData = SavedSwingAnalysis.cleanEjsonTypes(data: data)
+
+                
+            
+
+            } catch let error {
+                print(String(describing: error))
+            }
+        })
+
+        task.resume()
+    }
     
     var body: some View{
         VStack {
@@ -109,12 +281,14 @@ struct Authentication: View {
                 
                 // Change views based on index
                 if index == 0{
-                    SignIn()
+                    SignIn(email: self.$email, password: self.$password)
                     
                     VStack{
                         // Log in
                         Button(action: {
-                            authState.loggedIn = true
+                            Task {
+                                await requestLogin()
+                            }
                         }, label: {
                             Text("Login")
                                 .font(.system(size: 20))
@@ -131,12 +305,14 @@ struct Authentication: View {
                     Spacer()
                     
                 } else{
-                    SignUp()
+                    SignUp(email: self.$email, password: self.$password)
 
                     VStack{
                         // Sign up
                         Button(action: {
-                            authState.loggedIn = true
+                            Task {
+                                await requestSignup()
+                            }
                         }, label: {
                             Text("Sign up")
                                 .font(.system(size: 20))

@@ -30,6 +30,8 @@ struct SavedSwingAnalysis: Codable {
     var leftArmAngleFrame: Int
     var totalFrames: Int
     
+    var estimatedDistance: Float
+    
     func getJson() -> Data {
         let encoder = JSONEncoder()
         let analysisJson = try! encoder.encode(self)
@@ -40,7 +42,18 @@ struct SavedSwingAnalysis: Codable {
     func saveToBackend() {
 
         //create the url with NSURL
-        let url = URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swing")!
+//        let url = URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swing")!
+        
+        let userId = UserData.getUserId()
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/swing"
+        components.queryItems = [
+            URLQueryItem(name: "userId", value: userId)
+        ]
+        let url = components.url!
 
         //create the session object
         let session = URLSession.shared
@@ -91,7 +104,18 @@ struct SavedSwingAnalysis: Codable {
         var swingsList: [Swing] = []
         
         //create the url with NSURL
-        let url = URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swings")!
+//        let url = URL(string: "https://us-east-1.aws.data.mongodb-api.com/app/swingstat_swings-lotdm/endpoint/swings")!
+        
+        let userId = UserData.getUserId()
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/swings"
+        components.queryItems = [
+            URLQueryItem(name: "userId", value: userId)
+        ]
+        let url = components.url!
 
         //create the session object
         let session = URLSession.shared
@@ -118,8 +142,7 @@ struct SavedSwingAnalysis: Codable {
             }
 
             do {
-
-                
+                print("recieved: \(String(bytes: data, encoding: String.Encoding.utf8))")
 //                let cleanJsonData = SavedSwingAnalysis.cleanEjsonTypes(data: data)
 
                 

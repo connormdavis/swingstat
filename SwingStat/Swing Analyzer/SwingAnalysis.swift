@@ -241,15 +241,20 @@ struct SwingAnalysis: View {
                 .background(Color.green)
                 .clipShape(Capsule())
                 
-                Button(action: shareJSON) {
-                    Text("JSON 📥")
-                        .font(.headline)
-                        .foregroundColor(Color.white)
-                        .fontWeight(.bold)
-                }
-                .padding()
-                .background(Color.gray)
-                .clipShape(Capsule())
+                Text("Distance: \(String(format: "%g", swing.estimatedDistance)) yds")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+                
+//                Button(action: shareJSON) {
+//                    Text("JSON 📥")
+//                        .font(.headline)
+//                        .foregroundColor(Color.white)
+//                        .fontWeight(.bold)
+//                }
+//                .padding()
+//                .background(Color.gray)
+//                .clipShape(Capsule())
                 
                 Text("Swing tips")
                     .font(.headline)
