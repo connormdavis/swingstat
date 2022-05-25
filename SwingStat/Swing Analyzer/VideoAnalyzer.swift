@@ -16,7 +16,7 @@ struct VideoAnalyzer: View {
     
     func toggleSpeed() {
         if currentPlaybackRate == 1.0 {
-            currentPlaybackRate = 0.125
+            currentPlaybackRate = 0.25
         } else {
             currentPlaybackRate = 1.0
         }

@@ -13,7 +13,11 @@ import CoreMedia
 import Foundation
 
 struct SavedSwingList: View {
+    @Binding var selectionStatus: [SwingFilterData]
+    
     @State var savedSwings: [Swing] = []
+    @State var currSwings: [Swing] = []
+    
     @State var analyzerViewModels: [SwingAnalyzerViewModel] = []
     
     @State private var selected: Swing.ID? = nil
@@ -41,9 +45,9 @@ struct SavedSwingList: View {
 //            Sort.columnTitle("Score", ctx, \.swingScore).font(.system(size: 10))
 //                .onTapGesture{tablerSort(ctx, &savedSwings, \.swingScore) { $0.swingScore < $1.swingScore }}
             Sort.columnTitle("Date", ctx, \.creationDate).font(.system(size: 10))
-                .onTapGesture{tablerSort(ctx, &savedSwings, \.creationDate) { $0.creationDate < $1.creationDate }}
+                .onTapGesture{tablerSort(ctx, &currSwings, \.creationDate) { $0.creationDate < $1.creationDate }}
             Sort.columnTitle("Duration", ctx, \.videoDuration).font(.system(size: 8))
-                .onTapGesture{tablerSort(ctx, &savedSwings, \.videoDuration) { $0.videoDuration < $1.videoDuration }}
+                .onTapGesture{tablerSort(ctx, &currSwings, \.videoDuration) { $0.videoDuration < $1.videoDuration }}
        }
     }
 
@@ -81,14 +85,120 @@ struct SavedSwingList: View {
         return stringDate
     }
     
-    func swingsUpdated(swings: [Swing]) {
+    func swingsRetrieved(swings: [Swing]) {
         self.savedSwings = swings
+        if selectionStatus == [] {
+            self.currSwings = swings
+        }
     }
+    
+    func filtersChanged() {
+        // New filters, assemble new 'currSwings'
+        var filteredSwings: [Swing] = []
+        
+        for swing in self.savedSwings {
+            
+    
+            let swingResults = swing.getTipResults()
+            var passedFilters = true
+            
+            for filter in self.selectionStatus {
+                
+                switch filter.title {
+                case "Tempo":
+                    let desiredResult = filter.status
+                    let passed = swingResults.swingTempo
+                    if desiredResult == .passed() {
+                        // In this case, we look for failed
+                        if !passed {
+                            passedFilters = false
+                        }
+                    } else if desiredResult == .failed() {
+                        // In this case, we look for passed
+                        if passed {
+                            passedFilters = false
+                        }
+                    }
+                    
+                case "Left Arm":
+                    let desiredResult = filter.status
+                    let passed = swingResults.leftArmAngle
+                    if desiredResult == .passed() {
+                        // In this case, we look for failed
+                        if !passed {
+                            passedFilters = false
+                        }
+                    } else if desiredResult == .failed() {
+                        // In this case, we look for passed
+                        if passed {
+                            passedFilters = false
+                        }
+                    }
+                    
+                case "Hip Sway":
+                    let desiredResult = filter.status
+                    let passed = swingResults.hipSway
+                    if desiredResult == .passed() {
+                        // In this case, we look for failed
+                        if !passed {
+                            passedFilters = false
+                        }
+                    } else if desiredResult == .failed() {
+                        // In this case, we look for passed
+                        if passed {
+                            passedFilters = false
+                        }
+                    }
+                    
+                case "Vert Head":
+                    let desiredResult = filter.status
+                    let passed = swingResults.verticalHeadMovement
+                    if desiredResult == .passed() {
+                        // In this case, we look for failed
+                        if !passed {
+                            passedFilters = false
+                        }
+                    } else if desiredResult == .failed() {
+                        // In this case, we look for passed
+                        if passed {
+                            passedFilters = false
+                        }
+                    }
+                    
+                case "Lat Head":
+                    let desiredResult = filter.status
+                    let passed = swingResults.lateralHeadMovement
+                    if desiredResult == .passed() {
+                        // In this case, we look for failed
+                        if !passed {
+                            passedFilters = false
+                        }
+                    } else if desiredResult == .failed() {
+                        // In this case, we look for passed
+                        if passed {
+                            passedFilters = false
+                        }
+                    }
+                default:
+                    print("ERROR: Unknown filter. What the hell is that")
+                    
+                }
+                
+                
+            }
+            if passedFilters {
+                filteredSwings.append(swing)
+            }
+            
+        }
+        self.currSwings = filteredSwings
+    }
+
     
     func updateSavedSwings() {
         Task {
-            await SavedSwingAnalysis.retrieveAllSavedSwings(handler: swingsUpdated)
-            
+            await SavedSwingAnalysis.retrieveAllSavedSwings(handler: swingsRetrieved)
+            print("-----> RETRIEVING SWINGS FROM BACKEND")
 //            print("Saved swings: \(savedSwings)")
         }
         
@@ -112,7 +222,7 @@ struct SavedSwingList: View {
         VStack {
             TablerList1(header: header,
                 row: row,
-                results: savedSwings,
+                results: currSwings,
                 selected: $selected);
             if selectedSwingIdx > -1 {
                 NavigationLink(destination: SwingAnalysis(swing: savedSwings[selectedSwingIdx], analysisFailed: $bocceBool, previouslySavedSwing: true), isActive: $navigateToAnalysis) { EmptyView() }
@@ -124,6 +234,9 @@ struct SavedSwingList: View {
             
             updateSavedSwings()
         }
+        .onChange(of: selectionStatus, perform: { _ in
+            self.filtersChanged()
+        })
         .onChange(of: selected, perform: { id in
             
             var i = 0
@@ -180,16 +293,16 @@ struct SavedSwingList: View {
 //        }
     }
 }
-
-struct SavedSwingList_Previews: PreviewProvider {
-    static let swings = [Swing(url: ContentView.stockUrl)]
-    
-    static let test_swing: Swing = Swing(url: nil)
-    
-    static var previews: some View {
-        Group {
-            SavedSwingList(savedSwings: self.swings)
-            SavedSwingList(savedSwings: self.swings)
-        }
-    }
-}
+//
+//struct SavedSwingList_Previews: PreviewProvider {
+//    static let swings = [Swing(url: ContentView.stockUrl)]
+//
+//    static let test_swing: Swing = Swing(url: nil)
+//
+//    static var previews: some View {
+//        Group {
+//            SavedSwingList(savedSwings: self.swings)
+//            SavedSwingList(savedSwings: self.swings)
+//        }
+//    }
+//}

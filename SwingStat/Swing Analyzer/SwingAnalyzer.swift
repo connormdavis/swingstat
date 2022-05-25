@@ -23,6 +23,7 @@ struct SwingAnalyzer: View {
     
     @ObservedObject var swingFilterModel = SwingFilterModel()
     
+    
     // set initial state of filters to be none
     @State var filterButtonState: FilterButtonState = .none()
     
@@ -48,6 +49,7 @@ struct SwingAnalyzer: View {
                         .font(.title2)
                 }
                 .onAppear() {
+                    
                     
 //                    savedSwingVideoNames = SavedSwingVideoManager.getSavedSwingVideoNames()
 //                    print("VIDEO NAMES: \(savedSwingVideoNames)")
@@ -99,6 +101,8 @@ struct SwingAnalyzer: View {
                                    case .failed:
                                        swingFilterModel.toggleFilter(at: index, state: .none())
                                    }
+                                   
+                                   //
                                }
                                .contextMenu {
                                    Button {
@@ -127,7 +131,7 @@ struct SwingAnalyzer: View {
                 .padding(.horizontal, 25)
                 
                
-                SavedSwingList()
+                SavedSwingList(selectionStatus: self.$swingFilterModel.selectionStatus)
                 
             }
             .onChange(of: selectedVideoUrl) { newUrl in

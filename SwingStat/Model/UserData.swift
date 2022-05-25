@@ -9,8 +9,9 @@ import Foundation
 
 
 struct UserData: Codable {
+    var id: String
     var firstName: String
     var lastName: String
     var height: Float   // number of inches
-    var swings: [SavedSwingAnalysis]
+
 }
