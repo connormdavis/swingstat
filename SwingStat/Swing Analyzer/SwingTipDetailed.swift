@@ -79,126 +79,6 @@ struct SwingTipDetailed: View {
         // Display embeded YouTube videos using YouTubePlayerKit
         ScrollView {
             VStack(spacing: 20) {
-//                if swingTip.type == "Left arm angle" {
-//                    ForEach(self.embeddedVids) { embeddedVid in
-//                        if embeddedVid.category == 1 {
-//                            Button(
-//                                action: {
-//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
-//                                },
-//                                label: {
-//                                    YouTubePlayerView(
-//                                        .init(
-//                                            source: .url(embeddedVid.youTubeURL),
-//                                            configuration: .init(
-//                                                isUserInteractionEnabled: true
-//                                            )
-//                                        )
-//                                    )
-//                                    .frame(height: 220)
-//                                    .background(Color(.systemBackground))
-//                                    .cornerRadius(12)
-//                                    .shadow(
-//                                        color: .black.opacity(0.1),
-//                                        radius: 46,
-//                                        x: 0,
-//                                        y: 15
-//                                    )
-//                                }
-//                            )
-//                        }
-//                    }
-//                }
-//                if swingTip.type == "Lateral head movement" {
-//                    ForEach(self.embeddedVids) { embeddedVid in
-//                        if embeddedVid.category == 2 {
-//                            Button(
-//                                action: {
-//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
-//                                },
-//                                label: {
-//                                    YouTubePlayerView(
-//                                        .init(
-//                                            source: .url(embeddedVid.youTubeURL),
-//                                            configuration: .init(
-//                                                isUserInteractionEnabled: true
-//                                            )
-//                                        )
-//                                    )
-//                                    .frame(height: 220)
-//                                    .background(Color(.systemBackground))
-//                                    .cornerRadius(12)
-//                                    .shadow(
-//                                        color: .black.opacity(0.1),
-//                                        radius: 46,
-//                                        x: 0,
-//                                        y: 15
-//                                    )
-//                                }
-//                            )
-//                        }
-//                    }
-//                }
-//                if swingTip.type == "Vertical head movement" {
-//                    ForEach(self.embeddedVids) { embeddedVid in
-//                        if embeddedVid.category == 3 {
-//                            Button(
-//                                action: {
-//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
-//                                },
-//                                label: {
-//                                    YouTubePlayerView(
-//                                        .init(
-//                                            source: .url(embeddedVid.youTubeURL),
-//                                            configuration: .init(
-//                                                isUserInteractionEnabled: true
-//                                            )
-//                                        )
-//                                    )
-//                                    .frame(height: 220)
-//                                    .background(Color(.systemBackground))
-//                                    .cornerRadius(12)
-//                                    .shadow(
-//                                        color: .black.opacity(0.1),
-//                                        radius: 46,
-//                                        x: 0,
-//                                        y: 15
-//                                    )
-//                                }
-//                            )
-//                        }
-//                    }
-//                }
-//                if swingTip.type == "Hip sway" {
-//                    ForEach(self.embeddedVids) { embeddedVid in
-//                        if embeddedVid.category == 4 {
-//                            Button(
-//                                action: {
-//                                    self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
-//                                },
-//                                label: {
-//                                    YouTubePlayerView(
-//                                        .init(
-//                                            source: .url(embeddedVid.youTubeURL),
-//                                            configuration: .init(
-//                                                isUserInteractionEnabled: true
-//                                            )
-//                                        )
-//                                    )
-//                                    .frame(height: 220)
-//                                    .background(Color(.systemBackground))
-//                                    .cornerRadius(12)
-//                                    .shadow(
-//                                        color: .black.opacity(0.1),
-//                                        radius: 46,
-//                                        x: 0,
-//                                        y: 15
-//                                    )
-//                                }
-//                            )
-//                        }
-//                    }
-//                }
                 
                 ForEach(self.embeddedVids) { embeddedVid in
                 
@@ -281,6 +161,32 @@ struct SwingTipDetailed: View {
                         )
                     }
                     else if embeddedVid.category == 4 && swingTip.type == "Hip sway" {
+                        Button(
+                            action: {
+                                self.youTubePlayer.source = .url(embeddedVid.youTubeURL)
+                            },
+                            label: {
+                                YouTubePlayerView(
+                                    .init(
+                                        source: .url(embeddedVid.youTubeURL),
+                                        configuration: .init(
+                                            isUserInteractionEnabled: true
+                                        )
+                                    )
+                                )
+                                .frame(height: 220)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .shadow(
+                                    color: .black.opacity(0.1),
+                                    radius: 46,
+                                    x: 0,
+                                    y: 15
+                                )
+                            }
+                        )
+                    }
+                    else if embeddedVid.category == 5 && swingTip.type == "Swing tempo" {
                         Button(
                             action: {
                                 self.youTubePlayer.source = .url(embeddedVid.youTubeURL)

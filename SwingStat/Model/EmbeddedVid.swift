@@ -41,6 +41,9 @@ extension EmbeddedVid {
         .hip_sway_1,
         .hip_sway_2,
         .hip_sway_3,
+        .swing_tempo_1,
+        .swing_tempo_2,
+        .swing_tempo_3
     ]
 }
 
@@ -117,5 +120,21 @@ extension EmbeddedVid {
         category: 4,
         youTubeURL: "https://www.youtube.com/watch?v=99Hm22-188s"
     )
+    static let swing_tempo_1: Self = .init(
+        uniqueID: 13,
+        category: 5,
+        youTubeURL: "https://www.youtube.com/watch?v=DywlZqQzOMc"
+    )
     
+    static let swing_tempo_2: Self = .init(
+        uniqueID: 14,
+        category: 5,
+        youTubeURL: "https://www.youtube.com/watch?v=t8npyrOQ9Os"
+    )
+    
+    static let swing_tempo_3: Self = .init(
+        uniqueID: 15,
+        category: 5,
+        youTubeURL: "https://www.youtube.com/watch?v=5HpuSI8MYlo"
+    )
 }
