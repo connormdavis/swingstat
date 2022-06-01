@@ -9,8 +9,8 @@ import SwiftUI
 
 struct Stats: View {
     var body: some View {
-        NavigationView{
-            VStack{
+        NavigationView {
+            VStack {
                 Form {
                     Section(header: Text("Overview")) {
                         HStack {
