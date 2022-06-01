@@ -14,8 +14,12 @@ class AuthenticationState: ObservableObject {
 struct Authentication: View {
     @ObservedObject var authState = AuthenticationState()
     
+    @State var invalidInput = false
+    @State var invalidInputReason = "Invalid input."
+    
     @State var email = ""
     @State var password = ""
+    @State var confirmPassword = ""
     
     
     @State var index = 0
@@ -30,7 +34,75 @@ struct Authentication: View {
         print("Login failed: \(reason)")
     }
     
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    func validateInput(email: String, password: String, confirmPassword: String = "", method: String) -> Bool {
+        var valid = true
+        var invalidReason = ""
+        
+        // Require valid length values
+        let emailLength = email.count
+        let passwordLength = password.count
+        
+        // Require valid email
+        let emailCheck = isValidEmail(email)
+        
+        // Require at least one number
+        let numbers = CharacterSet(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
+        let passwordNumberCheck = password.rangeOfCharacter(from: numbers) != nil
+        
+        var matchingPasswords = true
+        if method == "signup" {
+            // Check for matching passwords
+            if password != confirmPassword {
+                matchingPasswords = false
+            }
+        }
+        
+        
+        if emailLength == 0 {
+            valid = false
+            invalidReason = "An e-mail is required for \(method)."
+        } else if passwordLength == 0 {
+            valid = false
+            invalidReason = "A password is required for \(method)."
+        } else if !emailCheck {
+            valid = false
+            invalidReason = "Please enter a valid e-mail address for \(method)."
+        } else if !passwordNumberCheck {
+            valid = false
+            invalidReason = "Your password requires at least one number."
+        } else if !matchingPasswords {
+            valid = false
+            invalidReason = "Please make sure the passwords match."
+        }
+        
+        // Update UI to  indicate invalid input
+        if !valid {
+            self.invalidInput = true
+            self.invalidInputReason = invalidReason
+            
+            // Hide view after some time
+            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+                withAnimation {
+                    self.invalidInput = false
+                }
+            }
+        }
+        
+        return valid
+    }
+    
     func requestLogin() async {
+        if !validateInput(email: email, password: password, method: "login") {
+            return
+        }
+        
         var components = URLComponents()
         components.scheme = "https"
         components.host = "us-east-1.aws.data.mongodb-api.com"
@@ -108,6 +180,7 @@ struct Authentication: View {
     
     func signupSuccess(id: String) {
         UserData.saveUserId(userId: id)
+        UserData.saveDesiredTempo(tempo: 3.0)
         authState.loggedIn = true
     }
     
@@ -116,6 +189,9 @@ struct Authentication: View {
     }
     
     func requestSignup() async {
+        if !validateInput(email: email, password: password, confirmPassword: confirmPassword, method: "signup") {
+            return
+        }
         
         var components = URLComponents()
         components.scheme = "https"
@@ -211,6 +287,15 @@ struct Authentication: View {
                 }
                 .offset(y: 20)
                 .padding(.bottom, 30)
+                
+                if invalidInput {
+                    Text("\(invalidInputReason)")
+                        .padding()
+                        .background(.red)
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .cornerRadius(20.0)
+                }
                                 
                 HStack(spacing: 0){
                     Button(action: {
@@ -305,7 +390,7 @@ struct Authentication: View {
                     Spacer()
                     
                 } else{
-                    SignUp(email: self.$email, password: self.$password)
+                    SignUp(email: self.$email, password: self.$password, confirmPassword: self.$confirmPassword)
 
                     VStack{
                         // Sign up

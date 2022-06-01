@@ -17,8 +17,7 @@ fileprivate enum BackswingOpenSetting {
 
 struct Profile: View {
     // User info variables
-    @State private var firstName = ""
-    @State private var lastName = ""
+    @State private var email = ""
     @State private var userFeet = 0
     @State private var userInches = 0
     @State private var heightOpenSetting = HeightOpenSetting.none
@@ -27,38 +26,135 @@ struct Profile: View {
     @State private var swingTempo = 1.0
     @State private var backswingOpenSetting = BackswingOpenSetting.none
     
+
     @Binding var loggedOut: Bool
 
     
+
+    
+    
+    func updateTempo() async {
+        
+        UserData.saveDesiredTempo(tempo: swingTempo)
+        
+        let userId = UserData.getUserId()
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/update_tempo"
+        components.queryItems = [
+            URLQueryItem(name: "userId", value: userId),
+            URLQueryItem(name: "newTempo", value: "\(swingTempo)")
+        ]
+        let url = components.url!
+
+        //create the session object
+        let session = URLSession.shared
+
+        //now create the Request object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+
+        //HTTP Headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            guard let _ = data else {
+                print("Data returned is nil. Error.")
+                return
+            }
+
+        })
+
+        task.resume()
+    }
+    
+    func retrieveAndLoadUserData() async {
+        let userId = UserData.getUserId()
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/get_user_data"
+        components.queryItems = [
+            URLQueryItem(name: "userId", value: userId)
+        ]
+        let url = components.url!
+
+        //create the session object
+        let session = URLSession.shared
+
+        //now create the Request object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET" //set http method as POST
+
+        //HTTP Headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            guard let data = data else {
+                print("Data returned is nil. Error.")
+                return
+            }
+
+            do {
+//                print("recieved: \(String(bytes: data, encoding: String.Encoding.utf8))")
+//                let cleanJsonData = SavedSwingAnalysis.cleanEjsonTypes(data: data)
+
+                
+                // de-serialize swing JSON
+                let userData = try JSONDecoder().decode(UserData.self, from: data)
+//                print("SAVED SWINGS: \(savedSwings)")
+
+                self.email = userData.email
+                self.swingTempo = userData.desiredTempo
+                self.userFeet = userData.heightFeet
+                self.userInches = userData.heightInches
+
+            } catch let error {
+                print(String(describing: error))
+            }
+        })
+
+        task.resume()
+    }
     
     var body: some View {
         
         NavigationView {
             VStack {
                 VStack {
-                    if !(firstName.isEmpty) && !(lastName.isEmpty){
-                        Text("\(firstName) \(lastName)")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.title)
-                    } else {
-                        Text("SwingStat User")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.title)
-                    }
+
+                    Text(email)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.title)
+                    
                 }
                 .padding(.horizontal, 15)
                 .padding(.top, 20)
                 Form {
                     Section(header: Text("User Info")) {
                         HStack {
-                            Text("First Name")
+                            Text("E-mail")
                             Spacer()
-                            TextField("John", text: $firstName).multilineTextAlignment(.trailing)
-                        }
-                        HStack {
-                            Text("Last Name")
-                            Spacer()
-                            TextField("Doe", text: $lastName).multilineTextAlignment(.trailing)
+                            TextField("e-mail", text: $email).multilineTextAlignment(.trailing)
                         }
                         HeightSetting(title: "Height",
                                       feet: userFeet,
@@ -71,7 +167,7 @@ struct Profile: View {
                         HStack {
                             Text("Member Since")
                             Spacer()
-                            Text("5/4/2022")
+                            Text("6/1/2022")
                         }
                     }
                     Section(header: Text("Swing Info")) {
@@ -100,6 +196,20 @@ struct Profile: View {
                 }
             }
             .navigationTitle("Profile")
+            .onAppear() {
+                Task {
+                    await retrieveAndLoadUserData()
+                }
+            }
+            .onChange(of: backswingOpenSetting, perform: { newValue in
+                print("not updating: \(newValue)")
+                if newValue == .none {
+                    print("Updating tempo to \(swingTempo)")
+                    Task {
+                        await updateTempo()
+                    }
+                }
+            })
         }
     }
 }

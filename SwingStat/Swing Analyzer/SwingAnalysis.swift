@@ -22,6 +22,23 @@ struct SwingAnalysis: View {
     @State var selectedImageIdx = 0
     @State var showSwingAnalyzer = false
     
+    @State var isEditingName = false
+    @State var currName = ""
+    
+    func beginEditingName() {
+        currName = swing.swingName
+        isEditingName = true
+    }
+    
+    
+    func endEditingName() {
+        swing.swingName = currName
+        isEditingName = false
+        
+        Task {
+            await swing.updateSwingName(name: currName)
+        }
+    }
    
     
     func getSetupImage() -> UIImage {
@@ -175,12 +192,41 @@ struct SwingAnalysis: View {
         } else {
             VStack {
                 
-
-                Text(swing.video!.lastPathComponent)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.green)
-                    .padding()
+                HStack {
+                    
+                    
+                    if isEditingName {
+                        TextField("", text: $currName)
+                            .multilineTextAlignment(.center)
+                            .font(Font.system(size: 30, weight: .bold, design: .default))
+                            .foregroundColor(Color.green)
+                            .background(Color.green.opacity(0.2))
+                            .cornerRadius(20.0)
+                            .padding()
+                        Button("✅") {
+                            endEditingName()
+                        }
+                            .tint(.green)
+                            .buttonStyle(.bordered)
+                            .buttonBorderShape(.capsule)
+                            .controlSize(.large)
+                            .padding()
+                    } else {
+                        Text(swing.swingName)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.green)
+                            .padding()
+                        Button("✏️") {
+                            beginEditingName()
+                        }
+                            .tint(.green)
+                            .buttonStyle(.bordered)
+                            .buttonBorderShape(.capsule)
+                            .controlSize(.large)
+                    }
+                }
+                .zIndex(1)
  
                 
                 HStack(alignment: .center) {
@@ -241,10 +287,16 @@ struct SwingAnalysis: View {
                 .background(Color.green)
                 .clipShape(Capsule())
                 
-                Text("Distance: \(String(format: "%g", swing.estimatedDistance)) yds")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
+                VStack {
+                    Text("Estimated Drive Distance")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    Text("\(String(format: "%g", swing.estimatedDistance)) yds")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                }
+                .padding()
+                
                 
 //                Button(action: shareJSON) {
 //                    Text("JSON 📥")
@@ -321,6 +373,24 @@ struct SwingAnalysis: View {
 
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        print("sharing analysis")
+                        let sharableImage = body.snapshot()
+                        let activityController = UIActivityViewController(activityItems: [sharableImage], applicationActivities: nil)
+
+                        UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
+                        
+                    } label: {
+                        Image(systemName: "square.and.arrow.up").font(.body)
+                    }
+                    
+//                    NavigationLink(destination: ContentView()) {
+//                        Image(systemName: "person.crop.circle").font(.title)
+//                    }
+                }
+            }
         }
     }
 }

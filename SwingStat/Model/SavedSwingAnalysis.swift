@@ -11,6 +11,7 @@ struct SavedSwingAnalysis: Codable {
     var id: String
     var _id: String
     var videoName: String
+    var swingName: String
     
     var swingTips: [SwingTip]
     var goodSwing: Bool
