@@ -316,6 +316,9 @@ struct SwingAnalysis: View {
             .sheet(isPresented: $showSwingAnalyzer) {
                 VideoAnalyzer(avPlayer: createPlayer())
             }
+            
+            ShareAnalysisItem(swing: swing)
+
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)
         }

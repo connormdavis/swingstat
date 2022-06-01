@@ -332,6 +332,11 @@ struct Authentication: View {
             
         }
         .preferredColorScheme(.light)
+        .onAppear() {
+            if UserData.getUserId() != "" {
+                authState.loggedIn = true
+            }
+        }
     }
 }
 

@@ -54,7 +54,7 @@ struct Stats: View {
         var latHeadPassedCount = 0
 
         // probably going to want to only loop through swings once and fill out the variables as we go
-        if totalSwings >= 2 {
+        if totalSwings >= 1 {
             for swing in swings {
                 for tip in swing.swingTips {
                     // check every swing tip

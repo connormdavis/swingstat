@@ -11,26 +11,33 @@ struct Main: View {
     
     @StateObject var swing = Swing(url: ContentView.stockUrl)
     
+    @State var loggedOut = false
+
+    
     var body: some View {
-        TabView {
-            SwingAnalyzer()
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("Home")
-                }
-            Stats()
-                .tabItem {
-                    Image(systemName: "chart.bar.xaxis")
-                    Text("Stats")
-                }
-            Profile()
-                .tabItem {
-                    Image(systemName: "person")
-                    Text("Profile")
-                }
+        if loggedOut {
+            Authentication().transition(.opacity)
+        } else {
+            TabView {
+                SwingAnalyzer()
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Home")
+                    }
+                Stats()
+                    .tabItem {
+                        Image(systemName: "chart.bar.xaxis")
+                        Text("Stats")
+                    }
+                Profile(loggedOut: $loggedOut)
+                    .tabItem {
+                        Image(systemName: "person")
+                        Text("Profile")
+                    }
+            }
+            .preferredColorScheme(.light)
+            .accentColor(Color.green)
         }
-        .preferredColorScheme(.light)
-        .accentColor(Color.green)
     }
 }
 
