@@ -28,10 +28,12 @@ struct SwingAnalysis: View {
     func beginEditingName() {
         currName = swing.swingName
         isEditingName = true
+        print("edit button pressed")
     }
     
     
     func endEditingName() {
+        print("save button pressed")
         swing.swingName = currName
         isEditingName = false
         
@@ -192,9 +194,7 @@ struct SwingAnalysis: View {
         } else {
             VStack {
                 
-                HStack {
-                    
-                    
+                HStack(alignment: .center) {
                     if isEditingName {
                         TextField("", text: $currName)
                             .multilineTextAlignment(.center)
@@ -202,31 +202,79 @@ struct SwingAnalysis: View {
                             .foregroundColor(Color.green)
                             .background(Color.green.opacity(0.2))
                             .cornerRadius(20.0)
-                            .padding()
-                        Button("✅") {
+//                            .padding()
+                        
+                        VStack {
+                            Text("✅").frame(width: 50, height: 30)
+//                            Spacer().frame(height: 50)
+                            Text("Save")
+                                .font(.caption)
+                        }
+                        .background(Color.green.opacity(0.2))
+                        .contentShape(Rectangle())
+                        .cornerRadius(10)
+                        .onTapGesture {
                             endEditingName()
                         }
-                            .tint(.green)
-                            .buttonStyle(.bordered)
-                            .buttonBorderShape(.capsule)
-                            .controlSize(.large)
-                            .padding()
+                        
+//                        Button(action: {
+//                            print("editing done")
+//                            endEditingName()
+//                        }, label: {
+//                            Text("✅")
+//
+//                                .frame(minWidth: 40, minHeight: 40, alignment: .center)
+//                                .clipped()
+//                                .background(Color.green.opacity(0.2))
+//                                .cornerRadius(7)
+////                                .padding()
+//                        })
+                            
+                            
+                        
+                        
                     } else {
                         Text(swing.swingName)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(Color.green)
-                            .padding()
-                        Button("✏️") {
+//                            .padding()
+                        
+                        VStack {
+                            Text("✏️").frame(width: 50, height: 30)
+//                            Spacer().frame(height: 50)
+                            Text("Edit")
+                                .font(.caption)
+                        }
+                        .background(Color.green.opacity(0.2))
+                        .contentShape(Rectangle())
+                        .cornerRadius(10)
+                        .onTapGesture {
                             beginEditingName()
                         }
-                            .tint(.green)
-                            .buttonStyle(.bordered)
-                            .buttonBorderShape(.capsule)
-                            .controlSize(.large)
+                        
+//                        Button(action: {
+//                            print("began editing")
+//                            beginEditingName()
+//                        }, label: {
+//                            Text("✏️")
+//                                .frame(minWidth: 40, minHeight: 40, alignment: .center)
+//                                .clipped()
+//                                .background(Color.green.opacity(0.2))
+//                                .cornerRadius(7)
+////                                .padding()
+//                        })
+            
+                            
+                            
+                        
+               
                     }
                 }
-                .zIndex(1)
+//                .zIndex(1)
+                .padding(.top, 20)
+                .padding(.leading, 10)
+                .padding(.trailing, 10)
  
                 
                 HStack(alignment: .center) {
@@ -273,7 +321,10 @@ struct SwingAnalysis: View {
                         viewingAnnotatedImage = true
                     }
                 }
-                .padding()
+                .padding(.bottom, 10)
+                .padding(.leading, 10)
+                .padding(.trailing, 10)
+
                 
                 Spacer()
                 
@@ -291,7 +342,7 @@ struct SwingAnalysis: View {
                     Text("Estimated Drive Distance")
                         .font(.headline)
                         .fontWeight(.bold)
-                    Text("\(String(format: "%g", swing.estimatedDistance)) yds")
+                    Text("\(String(format: "%.1f", swing.estimatedDistance)) yds")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                 }
@@ -369,7 +420,7 @@ struct SwingAnalysis: View {
                 VideoAnalyzer(avPlayer: createPlayer())
             }
             
-            ShareAnalysisItem(swing: swing)
+//            ShareAnalysisItem(swing: swing)
 
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)
@@ -377,7 +428,52 @@ struct SwingAnalysis: View {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         print("sharing analysis")
-                        let sharableImage = body.snapshot()
+                        
+                        var leftArmAngleTip: SwingTip?
+                        var latHeadMovTip: SwingTip?
+                        var vertHeadMovTip: SwingTip?
+                        var swingTempoTip: SwingTip?
+                        var hipSwayTip: SwingTip?
+                        if previouslySavedSwing {
+                            for tip in swing.swingTips {
+                                if tip.type == "Left arm angle" {
+                                    leftArmAngleTip = tip
+                                } else if tip.type == "Lateral head movement" {
+                                    latHeadMovTip = tip
+                                } else if tip.type == "Vertical head movement" {
+                                    vertHeadMovTip = tip
+                                } else if tip.type == "Swing tempo" {
+                                    swingTempoTip = tip
+                                } else {
+                                    hipSwayTip = tip
+                                }
+                            }
+                        } else {
+                            for tip in self.swingTips! {
+                                if tip.type == "Left arm angle" {
+                                    leftArmAngleTip = tip
+                                } else if tip.type == "Lateral head movement" {
+                                    latHeadMovTip = tip
+                                } else if tip.type == "Vertical head movement" {
+                                    vertHeadMovTip = tip
+                                } else if tip.type == "Swing tempo" {
+                                    swingTempoTip = tip
+                                } else {
+                                    hipSwayTip = tip
+                                }
+                            }
+                        }
+                        
+                        
+                        let shareAnalysisView = ShareAnalysisItem(swing: self.swing, leftArmAngleTip: leftArmAngleTip!, latHeadMovTip: latHeadMovTip!, vertHeadMovTip: vertHeadMovTip!, swingTempoTip: swingTempoTip!, hipSwayTip: hipSwayTip!)
+                        
+                        
+//                        try await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
+                        
+//                        print(shareAnalysisView.leftArmAngleTip)
+//                        print(shareAnalysisView.latHeadMovTip)
+                        
+                        let sharableImage = shareAnalysisView.snapshot()
                         let activityController = UIActivityViewController(activityItems: [sharableImage], applicationActivities: nil)
 
                         UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)

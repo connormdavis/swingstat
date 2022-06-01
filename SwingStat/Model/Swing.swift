@@ -704,9 +704,9 @@ class Swing: ObservableObject, Identifiable {
             let res = imageView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
         }
         
-        if saveToPhotos {
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        }
+//        if saveToPhotos {
+//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//        }
         
         return image
     }

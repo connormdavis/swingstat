@@ -9,54 +9,57 @@ import SwiftUI
 
 struct ShareAnalysisItem: View {
     
-    var swing: Swing
+    @State var swing: Swing
 
-    var leftArmAngleTip: SwingTip
-    var latHeadMovTip: SwingTip
-    var vertHeadMovTip: SwingTip
-    var swingTempoTip: SwingTip
-    var hipSwayTip: SwingTip
+    @State var leftArmAngleTip: SwingTip
+    @State var latHeadMovTip: SwingTip
+    @State var vertHeadMovTip: SwingTip
+    @State var swingTempoTip: SwingTip
+    @State var hipSwayTip: SwingTip
     
-    init() {
-        for tip in swing.swingTips {
-            if tip.type == "Left arm angle" {
-                leftArmAngleTip = tip
-            } else if tip.type == "Lateral head movement" {
-                latHeadMovTip = tip
-            } else if tip.type == "Vertical head movement" {
-                vertHeadMovTip = tip
-            } else if tip.type == "Swing tempo" {
-                swingTempoTip = tip
-            } else {
-                hipSwayTip = tip
-            }
-
-            
-//            if tip.type == "Lateral head movement" && tip.passed  {
-//                Text("Lateral Head Movement ✅")
+    
+//    init(swing: Swing, swingTips: [SwingTip]) {
+//        self.swingTips = swingTips
+//        self.swing = swing
+//        for tip in swing.swingTips {
+//            if tip.type == "Left arm angle" {
+//                self.leftArmAngleTip = tip
+//            } else if tip.type == "Lateral head movement" {
+//                self.latHeadMovTip = tip
+//            } else if tip.type == "Vertical head movement" {
+//                self.vertHeadMovTip = tip
+//            } else if tip.type == "Swing tempo" {
+//                self.swingTempoTip = tip
 //            } else {
-//                Text("Lateral Head Movement ❌")
+//                self.hipSwayTip = tip
 //            }
 //
-//            if tip == "Vertical head movement" && tip.passed  {
-//                Text("Vertical Head Movement ✅")
-//            } else {
-//                Text("Vertical Head Movement ❌")
-//            }
 //
-//            if tip == "Swing tempo" && tip.passed  {
-//                Text("Swing Tempo ✅")
-//            } else {
-//                Text("Swing Tempo ❌")
-//            }
-//
-//            if tip == "Hip sway" && tip.passed  {
-//                Text("Hip Sway ✅")
-//            } else {
-//                Text("Hip Sway ❌")
-//            }
-        }
-    }
+////            if tip.type == "Lateral head movement" && tip.passed  {
+////                Text("Lateral Head Movement ✅")
+////            } else {
+////                Text("Lateral Head Movement ❌")
+////            }
+////
+////            if tip == "Vertical head movement" && tip.passed  {
+////                Text("Vertical Head Movement ✅")
+////            } else {
+////                Text("Vertical Head Movement ❌")
+////            }
+////
+////            if tip == "Swing tempo" && tip.passed  {
+////                Text("Swing Tempo ✅")
+////            } else {
+////                Text("Swing Tempo ❌")
+////            }
+////
+////            if tip == "Hip sway" && tip.passed  {
+////                Text("Hip Sway ✅")
+////            } else {
+////                Text("Hip Sway ❌")
+////            }
+//        }
+//    }
     
     var body: some View {
         VStack {
@@ -65,43 +68,78 @@ struct ShareAnalysisItem: View {
                     
                     if leftArmAngleTip.passed {
                         Text("Left arm angle ✅")
+                            .foregroundColor(Color.black)
                     } else {
                         Text("Left arm angle ❌")
+                            .foregroundColor(Color.black)
                     }
                     
                     if latHeadMovTip.passed {
                         Text("Lateral Head Movement ✅")
+                            .foregroundColor(Color.black)
                     } else {
                         Text("Lateral Head Movement ❌")
+                            .foregroundColor(Color.black)
                     }
                     
                     if vertHeadMovTip.passed {
                         Text("Vertical Head Movement ✅")
+                            .foregroundColor(Color.black)
                     } else {
                         Text("Vertical Head Movement ❌")
+                            .foregroundColor(Color.black)
                     }
                     
                     if swingTempoTip.passed {
                         Text("Swing Tempo ✅")
+                            .foregroundColor(Color.black)
                     } else {
                         Text("Swing Tempo ❌")
+                            .foregroundColor(Color.black)
                     }
                     
                     if hipSwayTip.passed {
                         Text("Hip Sway ✅")
+                            .foregroundColor(Color.black)
                     } else {
                         Text("Hip Sway ❌")
+                            .foregroundColor(Color.black)
                     }
+                    
+                    
+                    
                    
-                }.font(.subheadline)
+                }
+                .font(.subheadline)
+                .padding()
                 VStack {
                     Image(uiImage: getImpactImage())
+                        .resizable()
+                        .cornerRadius(20.0)
+                        .aspectRatio(contentMode: .fit)
+                        
+                        .frame(width: 250)
+                        
                 }
             }
             HStack {
-                Text("\(swing.estimatedDistance) yards").font(.headline)
+                Text("Estimated distance: ")
+                    .font(.largeTitle)
+                    .foregroundColor(Color.black)
+                Text("\(String(format: "%.1f", swing.estimatedDistance)) yards")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.green)
+            }
+            .padding()
+            HStack {
+                Text("Powered by SwingStat")
+                    .font(.callout)
+                    .foregroundColor(Color.gray)
+                    .padding()
             }
         }
+        .background(Color.white)
     }
     func getImpactImage() -> UIImage {
         if swing.impactImage != nil {
