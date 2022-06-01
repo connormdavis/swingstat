@@ -10,13 +10,10 @@ import SwiftUI
 struct SignUp: View {
     @Binding var email: String
     @Binding var password: String
-    @State var confirmPassword = ""
+    @Binding var confirmPassword: String
     
 
-    
-    func requestSignIn() {
-        
-    }
+
     
     var body: some View{
         

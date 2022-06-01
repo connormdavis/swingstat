@@ -19,6 +19,8 @@ class Swing: ObservableObject, Identifiable {
     let id: String
     let date: Date
     
+    var swingName: String
+    
     @Published var video: URL?
     @Published var landmarksGenerated = false    // determines whether this swing's landmarks have been generated yet
     @Published var processing = false            // 'true' when the landmarks are in the process of being generated
@@ -71,6 +73,12 @@ class Swing: ObservableObject, Identifiable {
         }
         
         self.date = Date()
+        let dateFormatter = DateFormatter()
+        // Set Date Format
+        dateFormatter.dateFormat = "YY, MMM d"
+        // Convert Date to String
+        self.swingName = dateFormatter.string(from: date)
+        
         self.thumbnail = getThumbnailFrom(path: self.getVideoURL())
         
         // added after adding Tabler library for sorting
@@ -253,7 +261,7 @@ class Swing: ObservableObject, Identifiable {
         
         
         
-        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, videoName: self.getFilename(), swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupImage: setupImageName, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingImage: backswingImageName,  backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactImage: impactImageName, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames, estimatedDistance: self.estimatedDistance)
+        let savedAnalysis = SavedSwingAnalysis(id: self.id, _id: self.id, videoName: self.getFilename(), swingName: self.swingName, swingTips: tips, goodSwing: goodSwing, setupFrame: setupFrame, setupImage: setupImageName, setupFramePose: setupFramePose, backswingFrame: backswingFrame, backswingImage: backswingImageName,  backswingFramePose: backswingFramePose, impactFrame: impactFrame, impactImage: impactImageName, impactFramePose: impactFramePose, leftArmAngleFrame: leftArmAngleFrame, totalFrames: totalFrames, estimatedDistance: self.estimatedDistance)
         
         return savedAnalysis
     }
@@ -327,6 +335,70 @@ class Swing: ObservableObject, Identifiable {
         return false
     }
     
+    func updateSwingName(name: String) async {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "us-east-1.aws.data.mongodb-api.com"
+        components.path = "/app/swingstat_swings-lotdm/endpoint/update_swing"
+        
+        let userId = UserData.getUserId()
+        components.queryItems = [
+            URLQueryItem(name: "userId", value: userId),
+            URLQueryItem(name: "swingId", value: self.id),
+            URLQueryItem(name: "swingName", value: name)
+        ]
+        let url = components.url!
+
+        //create the session object
+        let session = URLSession.shared
+
+        //now create the Request object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+        
+
+        //HTTP Headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        //create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            guard let _ = data else {
+                print("Data returned is nil. Error.")
+                return
+            }
+
+//            do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+//                var id = json?["id"] as? String
+//
+//                if id != nil {
+//                    signupSuccess(id: id!)
+//                } else {
+//                    signupFailed()
+//                }
+    //            print("Recieved JSON: \(String(data: data, encoding: .utf8))")
+                
+                 
+                
+//                print("recieved: \(String(bytes: data, encoding: String.Encoding.utf8))")
+//                let cleanJsonData = SavedSwingAnalysis.cleanEjsonTypes(data: data)
+
+                
+            
+
+    
+        })
+
+        task.resume()
+    }
+    
     func analyzePostureInformation() async -> [SwingTip] {
         while self.processing {
             // Wait here until we have our posture info
@@ -339,7 +411,7 @@ class Swing: ObservableObject, Identifiable {
         }
         
         print("-> MARK: Requesting backend analysis!")
-        
+    
         var request = URLRequest(url: URL(string: "https://swingstat-backend.herokuapp.com/swing")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -349,6 +421,8 @@ class Swing: ObservableObject, Identifiable {
             let loadedPose = PoseSerializable.loadFromPose(pose: pose)
             serializedPoses[frameNum] = loadedPose  // added serializable pose to dict mapping frame -> pose
         }
+        
+
         
         let totalFrames = VideoProcessing.countFrames(in: AVAsset(url: self.video!))
         let poseCollection = PoseCollectionSerializable(poses: serializedPoses, setupFrame: self.setupFrame, backswingFrame: self.backswingFrame, impactFrame: self.impactFrame, totalFrames: totalFrames, leftArmAngleFrame: self.leftArmAngleFrame)
@@ -401,7 +475,10 @@ class Swing: ObservableObject, Identifiable {
             // Create swing tips w/ content
             var tips: [SwingTip] = []
             
-            let tempoGood = swingTipResults.swingTempo >= 2.0
+            let desiredTempo = UserData.getDesiredTempo()
+            
+            let tempoGood = swingTipResults.swingTempo >= desiredTempo
+            
             tips.append(SwingTip(type: "Swing tempo", passed: tempoGood, miniDescription: swingTempoMiniDesc, passedDescription: swingTempoPassedDesc, failedDescription: swingTempoFailedDesc, help: ""))
             
             tips.append(SwingTip(type: "Left arm angle", passed: swingTipResults.leftArmAngle, miniDescription: leftArmAngleMiniDesc, passedDescription: leftArmAnglePassedDesc, failedDescription: leftArmAngleFailedDesc, help: ""))
@@ -533,6 +610,8 @@ class Swing: ObservableObject, Identifiable {
         let videoUrl = SavedSwingVideoManager.getSavedSwingVideoURL(videoName: savedAnalysis.videoName)
         
         let swing = Swing(url: videoUrl, id: savedAnalysis.id)
+        
+        swing.swingName = savedAnalysis.swingName
         
         swing.estimatedDistance = savedAnalysis.estimatedDistance
 

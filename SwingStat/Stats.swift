@@ -112,7 +112,8 @@ struct Stats: View {
     }
     
     var body: some View {
-        NavigationView{
+
+        NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Overview")) {

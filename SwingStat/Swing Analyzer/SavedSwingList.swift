@@ -55,7 +55,7 @@ struct SavedSwingList: View {
             Image(uiImage: swing.thumbnail)
                 .resizable()
                 .scaledToFit()
-            Text(swing.filename).lineLimit(1).font(.caption)
+            Text(swing.swingName).lineLimit(1).font(.caption)
             Text(swing.swingScoreString).font(.caption2)
             // might want to change this to be the day of the analysis of the video, which we can store in the database
             Text(getDateString(date: swing.creationDate)).font(.caption2)
