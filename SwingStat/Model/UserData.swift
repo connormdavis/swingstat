@@ -167,7 +167,10 @@ struct UserData: Codable {
     }
     
     static func getUserId() -> String {
-        let id = UserDefaults.standard.string(forKey: "userId")
+        var id = UserDefaults.standard.string(forKey: "userId")
+        if id == nil {
+            id = ""
+        }
 //        let tempId = "628e4c291caa1512e05d7172"
         return id!
     }

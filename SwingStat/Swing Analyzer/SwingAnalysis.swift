@@ -287,20 +287,26 @@ struct SwingAnalysis: View {
                 .background(Color.green)
                 .clipShape(Capsule())
                 
-//                Text("Distance: \(String(format: "%g", swing.estimatedDistance)) yds")
-//                    .font(.largeTitle)
-//                    .fontWeight(.bold)
-//                    .padding()
-                
-                Button(action: shareJSON) {
-                    Text("JSON 📥")
+                VStack {
+                    Text("Estimated Drive Distance")
                         .font(.headline)
-                        .foregroundColor(Color.white)
+                        .fontWeight(.bold)
+                    Text("\(String(format: "%g", swing.estimatedDistance)) yds")
+                        .font(.largeTitle)
                         .fontWeight(.bold)
                 }
                 .padding()
-                .background(Color.gray)
-                .clipShape(Capsule())
+                
+                
+//                Button(action: shareJSON) {
+//                    Text("JSON 📥")
+//                        .font(.headline)
+//                        .foregroundColor(Color.white)
+//                        .fontWeight(.bold)
+//                }
+//                .padding()
+//                .background(Color.gray)
+//                .clipShape(Capsule())
                 
                 Text("Swing tips")
                     .font(.headline)
@@ -367,6 +373,24 @@ struct SwingAnalysis: View {
 
             .navigationTitle("Swing Analysis")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        print("sharing analysis")
+                        let sharableImage = body.snapshot()
+                        let activityController = UIActivityViewController(activityItems: [sharableImage], applicationActivities: nil)
+
+                        UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
+                        
+                    } label: {
+                        Image(systemName: "square.and.arrow.up").font(.body)
+                    }
+                    
+//                    NavigationLink(destination: ContentView()) {
+//                        Image(systemName: "person.crop.circle").font(.title)
+//                    }
+                }
+            }
         }
     }
 }
