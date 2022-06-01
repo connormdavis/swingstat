@@ -26,6 +26,11 @@ struct Profile: View {
     @State private var swingTempo = 1.0
     @State private var backswingOpenSetting = BackswingOpenSetting.none
     
+
+    @Binding var loggedOut: Bool
+
+    
+
     
     
     func updateTempo() async {
@@ -132,6 +137,7 @@ struct Profile: View {
     }
     
     var body: some View {
+        
         NavigationView {
             VStack {
                 VStack {
@@ -181,7 +187,11 @@ struct Profile: View {
                         }
                     }
                     Section(header: Text("Logout")) {
-                        Button("Logout") {}
+                        Button("Logout") {
+//                            Authentication().transition(.opacity)
+                            loggedOut = true
+                            UserData.saveUserId(userId: "")
+                        }
                     }
                 }
             }
@@ -310,9 +320,9 @@ extension UIPickerView {
       return CGSize(width: UIView.noIntrinsicMetric, height: super.intrinsicContentSize.height)}
 }
 
-
-struct Profile_Previews: PreviewProvider {
-    static var previews: some View {
-        Profile()
-    }
-}
+//
+//struct Profile_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Profile()
+//    }
+//}

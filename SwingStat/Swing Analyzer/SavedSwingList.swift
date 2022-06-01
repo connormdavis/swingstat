@@ -246,43 +246,6 @@ struct SavedSwingList: View {
             // Trigger navigation
             navigateToAnalysis = true
         })
-//        List {
-//            ForEach(savedSwings, id: \.id) { swing in
-//                NavigationLink {
-//                    SwingEventChooser(analyzerViewModel: SwingAnalyzerViewModel(videoUrl: swing.video!), avPlayer: AVPlayer(url: swing.video!))
-//                } label: {
-//                    SavedSwingItem(swing: swing)
-//                }
-//            }
-//            .onDelete { idxSet in
-//                for idx in idxSet {
-//                    Task {
-//                        await savedSwings[idx].delete()
-//                    }
-//
-//                    self.savedSwings.remove(at: idx)
-//                }
-//            }
-//        }
-//
-        
-//        List {
-//            ForEach(savedSwings, id: \.id) { swing in
-//                NavigationLink {
-//                } label: {
-//                    SavedSwingItem(swing: swing)
-//                }
-//            }
-//            .onDelete { idxSet in
-//                for idx in idxSet {
-//                    savedSwings[idx].delete()
-//                    self.savedSwings.remove(at: idx)
-//                }
-//            }
-//        }
-//        .onAppear() {
-//            updateSavedSwings()
-//        }
     }
 }
 //
